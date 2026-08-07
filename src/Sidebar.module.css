@@ -1,0 +1,38 @@
+.sidebar {
+    min-height: 100vh;
+    padding: 24px 18px;
+
+    background: white;
+    border-right: 1px solid #e5e7eb;
+}
+
+.brand {
+    margin: 0 0 32px;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.navButton{
+    width: 100%;
+    padding: 10px 12px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background: #f3f4f6;
+    }
+}
