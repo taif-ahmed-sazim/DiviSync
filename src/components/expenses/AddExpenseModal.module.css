@@ -1,0 +1,109 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+
+  padding: 24px;
+
+  background: white;
+  border-radius: 14px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.closeButton {
+  padding: 0 4px;
+
+  color: #64748b;
+  background: transparent;
+
+  border: 0;
+
+  font-size: 22px;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: #1f2937;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 8px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+
+  color: #1f2937;
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.cancelButton:hover {
+  background: #f8fafc;
+}
+
+.submitButton {
+  padding: 10px 16px;
+
+  color: white;
+  background: #4f46e5;
+
+  border: 0;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.submitButton:hover {
+  background: #4338ca;
+}
