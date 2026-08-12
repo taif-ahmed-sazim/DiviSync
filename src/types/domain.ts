@@ -17,4 +17,9 @@ export interface Expense {
 
 }
 
+export interface CreateExpenseInput {
+    title: string;
+    amount: number;
+}
+
 
