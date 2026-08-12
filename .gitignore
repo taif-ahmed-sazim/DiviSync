@@ -27,3 +27,4 @@ dist-ssr
 ENGINEERING_CONVENTIONS.md
 .specstory/
 .cursorindexingignore
+.envrc
