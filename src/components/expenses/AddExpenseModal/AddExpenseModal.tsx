@@ -17,6 +17,11 @@ export function AddExpenseModal({ onClose, onSubmit }: AddExpenseModalProps) {
   const [values, setValues] = useState(addExpenseFormInitialValues);
   const [errors, setErrors] = useState<AddExpenseFormErrors>({});
 
+  const resetForm = () => {
+    setValues(addExpenseFormInitialValues);
+    setErrors({});
+  };
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -28,6 +33,7 @@ export function AddExpenseModal({ onClose, onSubmit }: AddExpenseModalProps) {
     }
 
     onSubmit(values);
+    resetForm();
   };
 
   return (
