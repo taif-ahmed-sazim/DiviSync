@@ -68,6 +68,27 @@
   gap: 20px;
 }
 
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  font-weight: 600;
+}
+
+.field input {
+  padding: 12px 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  outline: none;
+}
+
+.field input:focus {
+  border-color: #6366f1;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
