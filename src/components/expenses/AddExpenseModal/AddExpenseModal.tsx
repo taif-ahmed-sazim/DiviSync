@@ -1,14 +1,34 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
+
+import {
+  addExpenseFormInitialValues,
+  hasFormErrors,
+  validateAddExpenseForm,
+} from "./AddExpenseModal.helpers";
+import type {
+  AddExpenseFormErrors,
+  AddExpenseModalProps,
+} from "./AddExpenseModal.interfaces";
 
 import styles from "./AddExpenseModal.module.css";
 
-interface AddExpenseModalProps {
-  onClose: () => void;
-}
+export function AddExpenseModal({ onClose, onSubmit }: AddExpenseModalProps) {
+  const [values, setValues] = useState(addExpenseFormInitialValues);
+  const [errors, setErrors] = useState<AddExpenseFormErrors>({});
 
-export function AddExpenseModal({ onClose }: AddExpenseModalProps) {
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const nextErrors = validateAddExpenseForm(values);
+    setErrors(nextErrors);
+
+    if (hasFormErrors(nextErrors)) {
+      return;
+    }
+
+    onSubmit(values);
+  };
 
   return (
     <div className={styles.backdrop}>
@@ -36,30 +56,50 @@ export function AddExpenseModal({ onClose }: AddExpenseModalProps) {
           </button>
         </header>
 
-        <form className={styles.form}>
+        <form className={styles.form} noValidate onSubmit={handleSubmit}>
           <label className={styles.field}>
             <span>Description</span>
 
             <input
-              onChange={(event) => setDescription(event.target.value)}
+              aria-invalid={errors.description !== undefined}
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  description: event.target.value,
+                }))
+              }
               placeholder="Dinner, Airbnb, groceries..."
               type="text"
-              value={description}
+              value={values.description}
             />
+
+            {errors.description ? (
+              <span className={styles.error}>{errors.description}</span>
+            ) : null}
           </label>
 
           <label className={styles.field}>
             <span>Amount</span>
 
             <input
+              aria-invalid={errors.amount !== undefined}
               inputMode="decimal"
               min="0"
-              onChange={(event) => setAmount(event.target.value)}
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  amount: event.target.value,
+                }))
+              }
               placeholder="0.00"
               step="0.01"
               type="number"
-              value={amount}
+              value={values.amount}
             />
+
+            {errors.amount ? (
+              <span className={styles.error}>{errors.amount}</span>
+            ) : null}
           </label>
 
           <div className={styles.actions}>

@@ -60,7 +60,10 @@ function App() {
       </div>
 
       {isAddExpenseModalOpen ? (
-        <AddExpenseModal onClose={() => setIsAddExpenseModalOpen(false)} />
+        <AddExpenseModal
+          onClose={() => setIsAddExpenseModalOpen(false)}
+          onSubmit={() => setIsAddExpenseModalOpen(false)}
+        />
       ) : null}
     </div>
   );
