@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import { BalanceCard } from "./components/balances/BalanceCard";
+import { AddExpenseModal } from "./components/expenses/AddExpenseModal";
 import { ExpenseRow } from "./components/expenses/ExpenseRow";
 import { GroupHeader } from "./components/group/GroupHeader";
 import { Sidebar } from "./components/layout/Sidebar";
@@ -9,6 +12,8 @@ import { balances, expenses } from "./data/mockData";
 import styles from "./App.module.css";
 
 function App() {
+  const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
+
   return (
     <div className={styles.shell}>
       <Sidebar />
@@ -17,7 +22,7 @@ function App() {
         <TopBar />
 
         <main className={styles.main}>
-          <GroupHeader />
+          <GroupHeader onNewExpense={() => setIsAddExpenseModalOpen(true)} />
 
           <nav className={styles.tabs}>
             <button className={styles.activeTab}>
@@ -53,6 +58,10 @@ function App() {
           </section>
         </main>
       </div>
+
+      {isAddExpenseModalOpen ? (
+        <AddExpenseModal onClose={() => setIsAddExpenseModalOpen(false)} />
+      ) : null}
     </div>
   );
 }
