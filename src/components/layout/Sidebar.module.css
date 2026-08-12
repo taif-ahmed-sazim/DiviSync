@@ -1,0 +1,69 @@
+.sidebar {
+  min-height: 100vh;
+  padding: 24px 18px;
+
+  background: white;
+  border-right: 1px solid #e5e7eb;
+}
+
+.brand {
+  margin: 0 0 32px;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.navButton {
+  width: 100%;
+  padding: 10px 12px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  text-align: left;
+}
+
+.navButton:hover {
+  background: #f3f4f6;
+}
+
+.section {
+  margin-top: 36px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  padding: 0 12px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.groupButton {
+  display: block;
+
+  width: 100%;
+  padding: 9px 12px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  text-align: left;
+}
+
+.groupButton:hover {
+  background: #f8fafc;
+}
