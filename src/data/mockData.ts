@@ -37,7 +37,7 @@ export const expenses: Expense[] = [
   {
     id: "expense-1",
     title: "Shawpno groceries",
-    date: "Jan 18",
+    date: "2026-01-18",
     amount: 100,
     paidBy: "Turjo",
     participantCount: 5,
@@ -45,7 +45,7 @@ export const expenses: Expense[] = [
   {
     id: "expense-2",
     title: "Hotel booking",
-    date: "Jan 16",
+    date: "2026-01-16",
     amount: 5562,
     paidBy: "Turjo",
     participantCount: 6,
@@ -53,7 +53,7 @@ export const expenses: Expense[] = [
   {
     id: "expense-3",
     title: "Lunch",
-    date: "Jan 13",
+    date: "2026-01-13",
     amount: 5613,
     paidBy: "Turjo",
     participantCount: 6,
@@ -61,7 +61,7 @@ export const expenses: Expense[] = [
   {
     id: "expense-4",
     title: "Snacks",
-    date: "Jan 7",
+    date: "2026-01-07",
     amount: 42,
     paidBy: "Turjo",
     participantCount: 5,
