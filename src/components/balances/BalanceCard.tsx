@@ -1,6 +1,6 @@
-import type { MemberBalance } from "../../types/domain";
+import type { MemberBalance } from "@/types/domain";
 
-import { formatCurrency } from "../../utils/formatCurrency";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 import styles from "./BalanceCard.module.css";
 

@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-import { BalanceCard } from "./components/balances/BalanceCard";
-import { AddExpenseModal } from "./components/expenses/AddExpenseModal";
-import type { AddExpenseFormValues } from "./components/expenses/AddExpenseModal";
-import { ExpenseRow } from "./components/expenses/ExpenseRow";
-import { GroupHeader } from "./components/group/GroupHeader";
-import { Sidebar } from "./components/layout/Sidebar";
-import { TopBar } from "./components/layout/TopBar";
+import { BalanceCard } from "@/components/balances/BalanceCard";
+import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
+import type { AddExpenseFormValues } from "@/components/expenses/AddExpenseModal";
+import { ExpenseRow } from "@/components/expenses/ExpenseRow";
+import { GroupHeader } from "@/components/group/GroupHeader";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { TopBar } from "@/components/layout/TopBar";
 
-import { balances } from "./data/mockData";
-import { useGroupExpenses } from "./hooks/useGroupExpenses";
+import { balances } from "@/data/mockData";
+import { useGroupExpenses } from "@/hooks/useGroupExpenses";
 
 import styles from "./App.module.css";
 

@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 import {
   CURRENT_USER_NAME,
   GROUP_MEMBER_COUNT,
-} from "../constants/group.constants";
-import type { CreateExpenseInput, Expense } from "../types/domain";
+} from "@/constants/group.constants";
+import type { CreateExpenseInput, Expense } from "@/types/domain";
 
 const ISO_DATE_FORMAT = "YYYY-MM-DD";
 

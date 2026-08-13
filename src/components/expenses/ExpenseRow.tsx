@@ -1,7 +1,7 @@
-import type { Expense } from "../../types/domain";
+import type { Expense } from "@/types/domain";
 
-import { formatCurrency } from "../../utils/formatCurrency";
-import { formatExpenseDate } from "../../utils/formatDate";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { formatExpenseDate } from "@/utils/formatDate";
 
 import styles from "./ExpenseRow.module.css";
 

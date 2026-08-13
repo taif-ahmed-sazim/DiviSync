@@ -1,4 +1,4 @@
-import type { Expense, MemberBalance } from "../types/domain";
+import type { Expense, MemberBalance } from "@/types/domain";
 
 export const balances: MemberBalance[] = [
   {
