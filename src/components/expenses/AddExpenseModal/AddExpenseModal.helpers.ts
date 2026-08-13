@@ -7,11 +7,11 @@ import {
   DESCRIPTION_REQUIRED_MESSAGE,
 } from "./AddExpenseModal.constants";
 import type {
-  AddExpenseFormErrors,
-  AddExpenseFormValues,
+  IAddExpenseFormErrors,
+  IAddExpenseFormValues,
 } from "./AddExpenseModal.interfaces";
 
-export const addExpenseFormInitialValues: AddExpenseFormValues = {
+export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   description: "",
   amount: "",
 };
@@ -51,14 +51,14 @@ export function getAmountError(amount: string): string | undefined {
 }
 
 export function validateAddExpenseForm(
-  values: AddExpenseFormValues,
-): AddExpenseFormErrors {
+  values: IAddExpenseFormValues,
+): IAddExpenseFormErrors {
   return {
     description: getDescriptionError(values.description),
     amount: getAmountError(values.amount),
   };
 }
 
-export function hasFormErrors(errors: AddExpenseFormErrors): boolean {
+export function hasFormErrors(errors: IAddExpenseFormErrors): boolean {
   return Object.values(errors).some((error) => error !== undefined);
 }

@@ -7,15 +7,15 @@ import {
   validateAddExpenseForm,
 } from "./AddExpenseModal.helpers";
 import type {
-  AddExpenseFormErrors,
-  AddExpenseModalProps,
+  IAddExpenseFormErrors,
+  IAddExpenseModalProps,
 } from "./AddExpenseModal.interfaces";
 
 import styles from "./AddExpenseModal.module.css";
 
-export function AddExpenseModal({ onClose, onSubmit }: AddExpenseModalProps) {
+export function AddExpenseModal({ onClose, onSubmit }: IAddExpenseModalProps) {
   const [values, setValues] = useState(addExpenseFormInitialValues);
-  const [errors, setErrors] = useState<AddExpenseFormErrors>({});
+  const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
 
   const resetForm = () => {
     setValues(addExpenseFormInitialValues);

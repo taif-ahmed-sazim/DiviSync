@@ -1,14 +1,14 @@
-export interface AddExpenseFormValues {
+export interface IAddExpenseFormValues {
   description: string;
   amount: string;
 }
 
-export interface AddExpenseFormErrors {
+export interface IAddExpenseFormErrors {
   description?: string;
   amount?: string;
 }
 
-export interface AddExpenseModalProps {
+export interface IAddExpenseModalProps {
   onClose: () => void;
-  onSubmit: (values: AddExpenseFormValues) => void;
+  onSubmit: (values: IAddExpenseFormValues) => void;
 }

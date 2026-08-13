@@ -1,39 +1,40 @@
-import type { Expense, MemberBalance } from "@/types/domain";
+import { EBalanceStatus } from "@/types/domain.enums";
+import type { IExpense, IMemberBalance } from "@/types/domain.interfaces";
 
-export const balances: MemberBalance[] = [
+export const balances: IMemberBalance[] = [
   {
     id: "member-1",
     name: "Turjo",
     amount: 3805,
-    status: "gets",
+    status: EBalanceStatus.GETS,
   },
   {
     id: "member-2",
     name: "Asif",
     amount: 20,
-    status: "owes",
+    status: EBalanceStatus.OWES,
   },
   {
     id: "member-3",
     name: "Sadik",
     amount: 20,
-    status: "owes",
+    status: EBalanceStatus.OWES,
   },
   {
     id: "member-4",
     name: "Wardat",
     amount: 1882.5,
-    status: "owes",
+    status: EBalanceStatus.OWES,
   },
   {
     id: "member-5",
     name: "Amio",
     amount: 1882.5,
-    status: "owes",
+    status: EBalanceStatus.OWES,
   },
 ];
 
-export const expenses: Expense[] = [
+export const expenses: IExpense[] = [
   {
     id: "expense-1",
     title: "Shawpno groceries",

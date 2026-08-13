@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { BalanceCard } from "@/components/balances/BalanceCard";
 import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
-import type { AddExpenseFormValues } from "@/components/expenses/AddExpenseModal";
+import type { IAddExpenseFormValues } from "@/components/expenses/AddExpenseModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
 import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -17,7 +17,7 @@ function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
   const { expenses, addExpense } = useGroupExpenses();
 
-  const handleAddExpense = (values: AddExpenseFormValues) => {
+  const handleAddExpense = (values: IAddExpenseFormValues) => {
     addExpense(values);
     setIsAddExpenseModalOpen(false);
   };

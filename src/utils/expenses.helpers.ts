@@ -4,11 +4,11 @@ import {
   CURRENT_USER_NAME,
   GROUP_MEMBER_COUNT,
 } from "@/constants/group.constants";
-import type { CreateExpenseInput, Expense } from "@/types/domain";
+import type { ICreateExpenseInput, IExpense } from "@/types/domain.interfaces";
 
 const ISO_DATE_FORMAT = "YYYY-MM-DD";
 
-export function createExpense(input: CreateExpenseInput): Expense {
+export function createExpense(input: ICreateExpenseInput): IExpense {
   return {
     id: crypto.randomUUID(),
     title: input.title,

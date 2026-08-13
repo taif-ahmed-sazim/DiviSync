@@ -1,14 +1,15 @@
-import type { MemberBalance } from "@/types/domain";
+import { EBalanceStatus } from "@/types/domain.enums";
+import type { IMemberBalance } from "@/types/domain.interfaces";
 
 import { formatCurrency } from "@/utils/formatCurrency";
 
 import styles from "./BalanceCard.module.css";
 
-interface BalanceCardProps {
-  balance: MemberBalance;
+interface IBalanceCardProps {
+  balance: IMemberBalance;
 }
 
-export function BalanceCard({ balance }: BalanceCardProps) {
+export function BalanceCard({ balance }: IBalanceCardProps) {
   const formattedAmount = formatCurrency(balance.amount);
 
   return (
@@ -18,12 +19,12 @@ export function BalanceCard({ balance }: BalanceCardProps) {
 
         <span
           className={
-            balance.status === "gets"
+            balance.status === EBalanceStatus.GETS
               ? styles.positive
               : styles.negative
           }
         >
-          {balance.status === "gets" ? " gets " : " owes "}
+          {balance.status === EBalanceStatus.GETS ? " gets " : " owes "}
           {formattedAmount}
         </span>
       </div>
