@@ -28,7 +28,7 @@ export function ExpenseRow({ expense, payerName }: IExpenseRowProps) {
         </div>
 
         <span className={styles.participants}>
-          {expense.participantCount} people
+          {expense.participantIds.length} people
         </span>
       </div>
     </article>

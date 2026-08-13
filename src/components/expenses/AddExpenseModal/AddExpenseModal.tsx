@@ -2,8 +2,9 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 import {
-  addExpenseFormInitialValues,
+  buildAddExpenseFormInitialValues,
   hasFormErrors,
+  toggleParticipantId,
   validateAddExpenseForm,
 } from "./AddExpenseModal.helpers";
 import type {
@@ -18,12 +19,21 @@ export function AddExpenseModal({
   onClose,
   onSubmit,
 }: IAddExpenseModalProps) {
-  const [values, setValues] = useState(addExpenseFormInitialValues);
+  const [values, setValues] = useState(() =>
+    buildAddExpenseFormInitialValues(members),
+  );
   const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
 
   const resetForm = () => {
-    setValues(addExpenseFormInitialValues);
+    setValues(buildAddExpenseFormInitialValues(members));
     setErrors({});
+  };
+
+  const handleParticipantToggle = (memberId: string) => {
+    setValues((current) => ({
+      ...current,
+      participantIds: toggleParticipantId(current.participantIds, memberId),
+    }));
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -131,6 +141,22 @@ export function AddExpenseModal({
               ))}
             </select>
           </label>
+
+          <fieldset className={styles.participants}>
+            <legend>Split between</legend>
+
+            {members.map((member) => (
+              <label className={styles.participant} key={member.id}>
+                <input
+                  checked={values.participantIds.includes(member.id)}
+                  onChange={() => handleParticipantToggle(member.id)}
+                  type="checkbox"
+                />
+
+                <span>{member.name}</span>
+              </label>
+            ))}
+          </fieldset>
 
           <div className={styles.actions}>
             <button

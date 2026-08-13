@@ -18,11 +18,12 @@ export interface IExpense {
   date: string;
   amount: number;
   paidById: string;
-  participantCount: number;
+  participantIds: string[];
 }
 
 export interface ICreateExpenseInput {
   title: string;
   amount: number;
   paidById: string;
+  participantIds: string[];
 }

@@ -53,7 +53,7 @@ export const expenses: IExpense[] = [
     date: "2026-01-18",
     amount: 100,
     paidById: "member-1",
-    participantCount: 5,
+    participantIds: ["member-1", "member-2", "member-3", "member-4", "member-5"],
   },
   {
     id: "expense-2",
@@ -61,7 +61,7 @@ export const expenses: IExpense[] = [
     date: "2026-01-16",
     amount: 5562,
     paidById: "member-1",
-    participantCount: 5,
+    participantIds: ["member-1", "member-2", "member-3", "member-4", "member-5"],
   },
   {
     id: "expense-3",
@@ -69,7 +69,7 @@ export const expenses: IExpense[] = [
     date: "2026-01-13",
     amount: 5613,
     paidById: "member-4",
-    participantCount: 4,
+    participantIds: ["member-1", "member-2", "member-3", "member-4"],
   },
   {
     id: "expense-4",
@@ -77,6 +77,6 @@ export const expenses: IExpense[] = [
     date: "2026-01-07",
     amount: 42,
     paidById: "member-2",
-    participantCount: 3,
+    participantIds: ["member-1", "member-2", "member-3"],
   },
 ];

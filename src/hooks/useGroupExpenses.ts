@@ -13,6 +13,7 @@ export function useGroupExpenses() {
       title: values.description.trim(),
       amount: Number(values.amount),
       paidById: values.paidById,
+      participantIds: values.participantIds,
     });
 
     setExpenses((currentExpenses) => [expense, ...currentExpenses]);

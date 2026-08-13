@@ -4,6 +4,7 @@ export interface IAddExpenseFormValues {
   description: string;
   amount: string;
   paidById: string;
+  participantIds: string[];
 }
 
 export interface IAddExpenseFormErrors {

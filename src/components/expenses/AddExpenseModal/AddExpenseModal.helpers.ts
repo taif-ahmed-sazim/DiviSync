@@ -1,4 +1,5 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
+import type { IGroupMember } from "@/types/domain.interfaces";
 
 import {
   AMOUNT_INVALID_MESSAGE,
@@ -17,7 +18,30 @@ export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   description: "",
   amount: "",
   paidById: CURRENT_USER_ID,
+  participantIds: [],
 };
+
+export function buildAddExpenseFormInitialValues(
+  members: IGroupMember[],
+): IAddExpenseFormValues {
+  return {
+    ...addExpenseFormInitialValues,
+    participantIds: members.map((member) => member.id),
+  };
+}
+
+export function toggleParticipantId(
+  participantIds: string[],
+  memberId: string,
+): string[] {
+  if (participantIds.includes(memberId)) {
+    return participantIds.filter(
+      (participantId) => participantId !== memberId,
+    );
+  }
+
+  return [...participantIds, memberId];
+}
 
 export function getDescriptionError(description: string): string | undefined {
   const trimmedDescription = description.trim();
