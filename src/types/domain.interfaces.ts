@@ -32,4 +32,5 @@ export interface ICreateExpenseInput {
   amount: number;
   paidById: string;
   participantIds: string[];
+  shares: IExpenseShare[];
 }

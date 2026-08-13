@@ -1,4 +1,7 @@
-import type { IGroupMember } from "@/types/domain.interfaces";
+import type {
+  IExpenseShare,
+  IGroupMember,
+} from "@/types/domain.interfaces";
 
 export interface IAddExpenseFormValues {
   description: string;
@@ -14,8 +17,13 @@ export interface IAddExpenseFormErrors {
   participantIds?: string;
 }
 
+export interface IAddExpenseSubmitPayload {
+  values: IAddExpenseFormValues;
+  shares: IExpenseShare[];
+}
+
 export interface IAddExpenseModalProps {
   members: IGroupMember[];
   onClose: () => void;
-  onSubmit: (values: IAddExpenseFormValues) => void;
+  onSubmit: (payload: IAddExpenseSubmitPayload) => void;
 }
