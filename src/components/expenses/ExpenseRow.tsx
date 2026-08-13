@@ -7,9 +7,10 @@ import styles from "./ExpenseRow.module.css";
 
 interface IExpenseRowProps {
   expense: IExpense;
+  payerName: string;
 }
 
-export function ExpenseRow({ expense }: IExpenseRowProps) {
+export function ExpenseRow({ expense, payerName }: IExpenseRowProps) {
   const formattedAmount = formatCurrency(expense.amount);
   const formattedDate = formatExpenseDate(expense.date);
 
@@ -22,7 +23,7 @@ export function ExpenseRow({ expense }: IExpenseRowProps) {
 
       <div className={styles.details}>
         <div>
-          <span>{expense.paidBy} paid </span>
+          <span>{payerName} paid </span>
           <strong>{formattedAmount}</strong>
         </div>
 

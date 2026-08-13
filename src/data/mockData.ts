@@ -1,5 +1,17 @@
 import { EBalanceStatus } from "@/types/domain.enums";
-import type { IExpense, IMemberBalance } from "@/types/domain.interfaces";
+import type {
+  IExpense,
+  IGroupMember,
+  IMemberBalance,
+} from "@/types/domain.interfaces";
+
+export const members: IGroupMember[] = [
+  { id: "member-1", name: "Turjo" },
+  { id: "member-2", name: "Asif" },
+  { id: "member-3", name: "Sadik" },
+  { id: "member-4", name: "Wardat" },
+  { id: "member-5", name: "Amio" },
+];
 
 export const balances: IMemberBalance[] = [
   {
@@ -40,7 +52,7 @@ export const expenses: IExpense[] = [
     title: "Shawpno groceries",
     date: "2026-01-18",
     amount: 100,
-    paidBy: "Turjo",
+    paidById: "member-1",
     participantCount: 5,
   },
   {
@@ -48,23 +60,23 @@ export const expenses: IExpense[] = [
     title: "Hotel booking",
     date: "2026-01-16",
     amount: 5562,
-    paidBy: "Turjo",
-    participantCount: 6,
+    paidById: "member-1",
+    participantCount: 5,
   },
   {
     id: "expense-3",
     title: "Lunch",
     date: "2026-01-13",
     amount: 5613,
-    paidBy: "Turjo",
-    participantCount: 6,
+    paidById: "member-4",
+    participantCount: 4,
   },
   {
     id: "expense-4",
     title: "Snacks",
     date: "2026-01-07",
     amount: 42,
-    paidBy: "Turjo",
-    participantCount: 5,
+    paidById: "member-2",
+    participantCount: 3,
   },
 ];

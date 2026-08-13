@@ -1,3 +1,5 @@
+import { CURRENT_USER_ID } from "@/constants/group.constants";
+
 import {
   AMOUNT_INVALID_MESSAGE,
   AMOUNT_MIN_MESSAGE,
@@ -14,6 +16,7 @@ import type {
 export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   description: "",
   amount: "",
+  paidById: CURRENT_USER_ID,
 };
 
 export function getDescriptionError(description: string): string | undefined {

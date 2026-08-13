@@ -1,5 +1,10 @@
 import type { EBalanceStatus } from "@/types/domain.enums";
 
+export interface IGroupMember {
+  id: string;
+  name: string;
+}
+
 export interface IMemberBalance {
   id: string;
   name: string;
@@ -12,11 +17,12 @@ export interface IExpense {
   title: string;
   date: string;
   amount: number;
-  paidBy: string;
+  paidById: string;
   participantCount: number;
 }
 
 export interface ICreateExpenseInput {
   title: string;
   amount: number;
+  paidById: string;
 }

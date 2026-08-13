@@ -8,8 +8,9 @@ import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
 
-import { balances } from "@/data/mockData";
+import { balances, members } from "@/data/mockData";
 import { useGroupExpenses } from "@/hooks/useGroupExpenses";
+import { findMemberName } from "@/utils/members.helpers";
 
 import styles from "./App.module.css";
 
@@ -60,6 +61,7 @@ function App() {
                 <ExpenseRow
                   expense={expense}
                   key={expense.id}
+                  payerName={findMemberName(members, expense.paidById)}
                 />
               ))}
             </div>
@@ -69,6 +71,7 @@ function App() {
 
       {isAddExpenseModalOpen ? (
         <AddExpenseModal
+          members={members}
           onClose={() => setIsAddExpenseModalOpen(false)}
           onSubmit={handleAddExpense}
         />

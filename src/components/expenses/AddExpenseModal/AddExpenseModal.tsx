@@ -13,7 +13,11 @@ import type {
 
 import styles from "./AddExpenseModal.module.css";
 
-export function AddExpenseModal({ onClose, onSubmit }: IAddExpenseModalProps) {
+export function AddExpenseModal({
+  members,
+  onClose,
+  onSubmit,
+}: IAddExpenseModalProps) {
   const [values, setValues] = useState(addExpenseFormInitialValues);
   const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
 
@@ -106,6 +110,26 @@ export function AddExpenseModal({ onClose, onSubmit }: IAddExpenseModalProps) {
             {errors.amount ? (
               <span className={styles.error}>{errors.amount}</span>
             ) : null}
+          </label>
+
+          <label className={styles.field}>
+            <span>Paid by</span>
+
+            <select
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  paidById: event.target.value,
+                }))
+              }
+              value={values.paidById}
+            >
+              {members.map((member) => (
+                <option key={member.id} value={member.id}>
+                  {member.name}
+                </option>
+              ))}
+            </select>
           </label>
 
           <div className={styles.actions}>

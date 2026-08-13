@@ -12,6 +12,7 @@ export function useGroupExpenses() {
     const expense = createExpense({
       title: values.description.trim(),
       amount: Number(values.amount),
+      paidById: values.paidById,
     });
 
     setExpenses((currentExpenses) => [expense, ...currentExpenses]);
