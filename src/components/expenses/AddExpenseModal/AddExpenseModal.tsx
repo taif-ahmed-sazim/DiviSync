@@ -3,16 +3,20 @@ import type { FormEvent } from "react";
 
 import { ESplitMode } from "@/types/domain.enums";
 import { findMemberName } from "@/utils/members.helpers";
+import { sumShareAmounts } from "@/utils/splits.helpers";
 
 import {
+  ASSIGNED_LABEL,
   EQUAL_SPLIT_LABEL,
   SPLIT_MODE_LEGEND,
   SPLIT_MODE_OPTIONS,
 } from "./AddExpenseModal.constants";
 import {
   buildAddExpenseFormInitialValues,
+  buildAssignedSummary,
   buildPerPersonSummary,
   hasFormErrors,
+  parseAmount,
   setCustomShare,
   toggleParticipantId,
   validateAddExpenseForm,
@@ -52,7 +56,7 @@ export function AddExpenseModal({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateAddExpenseForm(values, members);
+    const nextErrors = validateAddExpenseForm(values, members, shares);
     setErrors(nextErrors);
 
     if (hasFormErrors(nextErrors)) {
@@ -227,6 +231,21 @@ export function AddExpenseModal({
                   />
                 </label>
               ))}
+
+              <p className={styles.summary}>
+                <span>{ASSIGNED_LABEL}</span>
+
+                <strong>
+                  {buildAssignedSummary(
+                    sumShareAmounts(shares),
+                    parseAmount(values.amount),
+                  )}
+                </strong>
+              </p>
+
+              {errors.customShares ? (
+                <span className={styles.error}>{errors.customShares}</span>
+              ) : null}
             </div>
           ) : null}
 

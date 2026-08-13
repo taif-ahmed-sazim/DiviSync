@@ -20,6 +20,7 @@ export interface IAddExpenseFormErrors {
   amount?: string;
   paidById?: string;
   participantIds?: string;
+  customShares?: string;
 }
 
 export interface IAddExpenseSubmitPayload {

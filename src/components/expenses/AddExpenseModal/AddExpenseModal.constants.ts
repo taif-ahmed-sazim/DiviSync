@@ -15,6 +15,10 @@ export const SPLIT_MODE_OPTIONS = [
   { value: ESplitMode.CUSTOM, label: CUSTOM_SPLIT_LABEL },
 ] as const;
 
+export const ASSIGNED_LABEL = "Assigned";
+export const SPLIT_TOTAL_MISMATCH_MESSAGE =
+  "Custom amounts must add up to the expense total";
+
 export const PAYER_REQUIRED_MESSAGE = "Select who paid for this expense";
 export const PARTICIPANTS_REQUIRED_MESSAGE =
   "Select at least one participant";

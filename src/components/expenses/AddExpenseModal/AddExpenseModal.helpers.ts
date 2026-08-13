@@ -5,6 +5,7 @@ import type {
   IGroupMember,
 } from "@/types/domain.interfaces";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { sumShareAmounts, toCents } from "@/utils/splits.helpers";
 
 import {
   AMOUNT_INVALID_MESSAGE,
@@ -16,6 +17,7 @@ import {
   PARTICIPANTS_REQUIRED_MESSAGE,
   PAYER_REQUIRED_MESSAGE,
   PER_PERSON_LABEL,
+  SPLIT_TOTAL_MISMATCH_MESSAGE,
 } from "./AddExpenseModal.constants";
 import type {
   IAddExpenseFormErrors,
@@ -143,15 +145,40 @@ export function getParticipantsError(
   return undefined;
 }
 
+export function getCustomSplitError(
+  splitMode: ESplitMode,
+  amount: string,
+  shares: IExpenseShare[],
+): string | undefined {
+  if (splitMode !== ESplitMode.CUSTOM) {
+    return undefined;
+  }
+
+  if (toCents(sumShareAmounts(shares)) !== toCents(parseAmount(amount))) {
+    return SPLIT_TOTAL_MISMATCH_MESSAGE;
+  }
+
+  return undefined;
+}
+
+export function buildAssignedSummary(
+  assignedAmount: number,
+  totalAmount: number,
+): string {
+  return `${formatCurrency(assignedAmount)} of ${formatCurrency(totalAmount)}`;
+}
+
 export function validateAddExpenseForm(
   values: IAddExpenseFormValues,
   members: IGroupMember[],
+  shares: IExpenseShare[],
 ): IAddExpenseFormErrors {
   return {
     description: getDescriptionError(values.description),
     amount: getAmountError(values.amount),
     paidById: getPayerError(values.paidById, members),
     participantIds: getParticipantsError(values.participantIds),
+    customShares: getCustomSplitError(values.splitMode, values.amount, shares),
   };
 }
 
