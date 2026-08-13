@@ -1,7 +1,11 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
-import { EQUAL_SPLIT_LABEL } from "./AddExpenseModal.constants";
+import {
+  EQUAL_SPLIT_LABEL,
+  SPLIT_MODE_LEGEND,
+  SPLIT_MODE_OPTIONS,
+} from "./AddExpenseModal.constants";
 import {
   buildAddExpenseFormInitialValues,
   buildPerPersonSummary,
@@ -9,7 +13,7 @@ import {
   toggleParticipantId,
   validateAddExpenseForm,
 } from "./AddExpenseModal.helpers";
-import { useEqualSplitShares } from "./AddExpenseModal.hooks";
+import { useSplitShares } from "./AddExpenseModal.hooks";
 import type {
   IAddExpenseFormErrors,
   IAddExpenseModalProps,
@@ -27,7 +31,7 @@ export function AddExpenseModal({
   );
   const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
 
-  const shares = useEqualSplitShares(values.amount, values.participantIds);
+  const shares = useSplitShares(values);
 
   const resetForm = () => {
     setValues(buildAddExpenseFormInitialValues(members));
@@ -169,6 +173,28 @@ export function AddExpenseModal({
             {errors.participantIds ? (
               <span className={styles.error}>{errors.participantIds}</span>
             ) : null}
+          </fieldset>
+
+          <fieldset className={styles.splitModes}>
+            <legend>{SPLIT_MODE_LEGEND}</legend>
+
+            {SPLIT_MODE_OPTIONS.map((option) => (
+              <label className={styles.splitMode} key={option.value}>
+                <input
+                  checked={values.splitMode === option.value}
+                  name="split-mode"
+                  onChange={() =>
+                    setValues((current) => ({
+                      ...current,
+                      splitMode: option.value,
+                    }))
+                  }
+                  type="radio"
+                />
+
+                <span>{option.label}</span>
+              </label>
+            ))}
           </fieldset>
 
           {shares.length > 0 ? (

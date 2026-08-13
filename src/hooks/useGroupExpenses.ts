@@ -14,6 +14,7 @@ export function useGroupExpenses() {
       amount: Number(values.amount),
       paidById: values.paidById,
       participantIds: values.participantIds,
+      splitMode: values.splitMode,
       shares,
     });
 

@@ -136,6 +136,34 @@
   flex-basis: 100%;
 }
 
+.splitModes {
+  display: flex;
+  gap: 18px;
+
+  margin: 0;
+  padding: 14px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.splitModes legend {
+  padding: 0 6px;
+
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.splitMode {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-weight: 500;
+}
+
 .summary {
   display: flex;
   align-items: center;

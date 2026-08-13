@@ -1,4 +1,5 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
+import { ESplitMode } from "@/types/domain.enums";
 import type { IGroupMember } from "@/types/domain.interfaces";
 import { formatCurrency } from "@/utils/formatCurrency";
 
@@ -23,6 +24,7 @@ export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   amount: "",
   paidById: CURRENT_USER_ID,
   participantIds: [],
+  splitMode: ESplitMode.EQUAL,
 };
 
 export function buildAddExpenseFormInitialValues(

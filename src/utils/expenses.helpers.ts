@@ -12,6 +12,7 @@ export function createExpense(input: ICreateExpenseInput): IExpense {
     amount: input.amount,
     paidById: input.paidById,
     participantIds: input.participantIds,
+    splitMode: input.splitMode,
     shares: input.shares,
   };
 }

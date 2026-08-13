@@ -1,3 +1,4 @@
+import type { ESplitMode } from "@/types/domain.enums";
 import type {
   IExpenseShare,
   IGroupMember,
@@ -8,6 +9,7 @@ export interface IAddExpenseFormValues {
   amount: string;
   paidById: string;
   participantIds: string[];
+  splitMode: ESplitMode;
 }
 
 export interface IAddExpenseFormErrors {

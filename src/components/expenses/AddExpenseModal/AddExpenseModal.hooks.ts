@@ -4,13 +4,13 @@ import type { IExpenseShare } from "@/types/domain.interfaces";
 import { calculateEqualShares } from "@/utils/splits.helpers";
 
 import { parseAmount } from "./AddExpenseModal.helpers";
+import type { IAddExpenseFormValues } from "./AddExpenseModal.interfaces";
 
-export function useEqualSplitShares(
-  amount: string,
-  participantIds: string[],
+export function useSplitShares(
+  values: IAddExpenseFormValues,
 ): IExpenseShare[] {
   return useMemo(
-    () => calculateEqualShares(parseAmount(amount), participantIds),
-    [amount, participantIds],
+    () => calculateEqualShares(parseAmount(values.amount), values.participantIds),
+    [values.amount, values.participantIds],
   );
 }

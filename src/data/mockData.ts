@@ -1,4 +1,4 @@
-import { EBalanceStatus } from "@/types/domain.enums";
+import { EBalanceStatus, ESplitMode } from "@/types/domain.enums";
 import type {
   IExpense,
   IGroupMember,
@@ -54,6 +54,7 @@ export const expenses: IExpense[] = [
     amount: 100,
     paidById: "member-1",
     participantIds: ["member-1", "member-2", "member-3", "member-4", "member-5"],
+    splitMode: ESplitMode.EQUAL,
     shares: [
       { memberId: "member-1", amount: 20 },
       { memberId: "member-2", amount: 20 },
@@ -69,6 +70,7 @@ export const expenses: IExpense[] = [
     amount: 5562,
     paidById: "member-1",
     participantIds: ["member-1", "member-2", "member-3", "member-4", "member-5"],
+    splitMode: ESplitMode.EQUAL,
     shares: [
       { memberId: "member-1", amount: 1112.4 },
       { memberId: "member-2", amount: 1112.4 },
@@ -84,6 +86,7 @@ export const expenses: IExpense[] = [
     amount: 5613,
     paidById: "member-4",
     participantIds: ["member-1", "member-2", "member-3", "member-4"],
+    splitMode: ESplitMode.EQUAL,
     shares: [
       { memberId: "member-1", amount: 1403.25 },
       { memberId: "member-2", amount: 1403.25 },
@@ -98,6 +101,7 @@ export const expenses: IExpense[] = [
     amount: 42,
     paidById: "member-2",
     participantIds: ["member-1", "member-2", "member-3"],
+    splitMode: ESplitMode.EQUAL,
     shares: [
       { memberId: "member-1", amount: 14 },
       { memberId: "member-2", amount: 14 },
