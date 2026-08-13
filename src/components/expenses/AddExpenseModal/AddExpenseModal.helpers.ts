@@ -1,6 +1,9 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
 import { ESplitMode } from "@/types/domain.enums";
-import type { IGroupMember } from "@/types/domain.interfaces";
+import type {
+  IExpenseShare,
+  IGroupMember,
+} from "@/types/domain.interfaces";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 import {
@@ -18,6 +21,7 @@ import type {
   IAddExpenseFormErrors,
   IAddExpenseFormValues,
 } from "./AddExpenseModal.interfaces";
+import type { TCustomShareInputs } from "./AddExpenseModal.types";
 
 export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   description: "",
@@ -25,6 +29,7 @@ export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   paidById: CURRENT_USER_ID,
   participantIds: [],
   splitMode: ESplitMode.EQUAL,
+  customShares: {},
 };
 
 export function buildAddExpenseFormInitialValues(
@@ -81,6 +86,24 @@ export function getAmountError(amount: string): string | undefined {
   }
 
   return undefined;
+}
+
+export function setCustomShare(
+  customShares: TCustomShareInputs,
+  memberId: string,
+  amount: string,
+): TCustomShareInputs {
+  return { ...customShares, [memberId]: amount };
+}
+
+export function buildCustomShares(
+  participantIds: string[],
+  customShares: TCustomShareInputs,
+): IExpenseShare[] {
+  return participantIds.map((memberId) => ({
+    memberId,
+    amount: parseAmount(customShares[memberId] ?? ""),
+  }));
 }
 
 export function parseAmount(amount: string): number {

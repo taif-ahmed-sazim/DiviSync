@@ -164,6 +164,34 @@
   font-weight: 500;
 }
 
+.customShares {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.customShare {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 140px;
+  align-items: center;
+  gap: 12px;
+
+  font-weight: 500;
+}
+
+.customShare input {
+  padding: 10px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  outline: none;
+}
+
+.customShare input:focus {
+  border-color: #6366f1;
+}
+
 .summary {
   display: flex;
   align-items: center;

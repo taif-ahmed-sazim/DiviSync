@@ -4,12 +4,15 @@ import type {
   IGroupMember,
 } from "@/types/domain.interfaces";
 
+import type { TCustomShareInputs } from "./AddExpenseModal.types";
+
 export interface IAddExpenseFormValues {
   description: string;
   amount: string;
   paidById: string;
   participantIds: string[];
   splitMode: ESplitMode;
+  customShares: TCustomShareInputs;
 }
 
 export interface IAddExpenseFormErrors {

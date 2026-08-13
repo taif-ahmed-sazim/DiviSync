@@ -1,6 +1,9 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
+import { ESplitMode } from "@/types/domain.enums";
+import { findMemberName } from "@/utils/members.helpers";
+
 import {
   EQUAL_SPLIT_LABEL,
   SPLIT_MODE_LEGEND,
@@ -10,6 +13,7 @@ import {
   buildAddExpenseFormInitialValues,
   buildPerPersonSummary,
   hasFormErrors,
+  setCustomShare,
   toggleParticipantId,
   validateAddExpenseForm,
 } from "./AddExpenseModal.helpers";
@@ -197,7 +201,36 @@ export function AddExpenseModal({
             ))}
           </fieldset>
 
-          {shares.length > 0 ? (
+          {values.splitMode === ESplitMode.CUSTOM ? (
+            <div className={styles.customShares}>
+              {values.participantIds.map((participantId) => (
+                <label className={styles.customShare} key={participantId}>
+                  <span>{findMemberName(members, participantId)}</span>
+
+                  <input
+                    inputMode="decimal"
+                    min="0"
+                    onChange={(event) =>
+                      setValues((current) => ({
+                        ...current,
+                        customShares: setCustomShare(
+                          current.customShares,
+                          participantId,
+                          event.target.value,
+                        ),
+                      }))
+                    }
+                    placeholder="0.00"
+                    step="0.01"
+                    type="number"
+                    value={values.customShares[participantId] ?? ""}
+                  />
+                </label>
+              ))}
+            </div>
+          ) : null}
+
+          {values.splitMode === ESplitMode.EQUAL && shares.length > 0 ? (
             <p className={styles.summary}>
               <span>{EQUAL_SPLIT_LABEL}</span>
               <strong>{buildPerPersonSummary(shares[0].amount)}</strong>
