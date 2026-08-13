@@ -39,7 +39,7 @@ export function AddExpenseModal({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateAddExpenseForm(values);
+    const nextErrors = validateAddExpenseForm(values, members);
     setErrors(nextErrors);
 
     if (hasFormErrors(nextErrors)) {
@@ -140,6 +140,10 @@ export function AddExpenseModal({
                 </option>
               ))}
             </select>
+
+            {errors.paidById ? (
+              <span className={styles.error}>{errors.paidById}</span>
+            ) : null}
           </label>
 
           <fieldset className={styles.participants}>
@@ -156,6 +160,10 @@ export function AddExpenseModal({
                 <span>{member.name}</span>
               </label>
             ))}
+
+            {errors.participantIds ? (
+              <span className={styles.error}>{errors.participantIds}</span>
+            ) : null}
           </fieldset>
 
           <div className={styles.actions}>

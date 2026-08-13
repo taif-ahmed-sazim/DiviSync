@@ -132,6 +132,10 @@
   font-weight: 500;
 }
 
+.participants .error {
+  flex-basis: 100%;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;

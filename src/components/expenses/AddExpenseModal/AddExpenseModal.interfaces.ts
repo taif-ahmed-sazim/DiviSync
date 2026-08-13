@@ -10,6 +10,8 @@ export interface IAddExpenseFormValues {
 export interface IAddExpenseFormErrors {
   description?: string;
   amount?: string;
+  paidById?: string;
+  participantIds?: string;
 }
 
 export interface IAddExpenseModalProps {
