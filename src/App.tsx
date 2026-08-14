@@ -4,6 +4,7 @@ import { BalanceCard } from "@/components/balances/BalanceCard";
 import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
 import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
+import { SettleUpModal } from "@/components/settlements/SettleUpModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
@@ -16,6 +17,7 @@ import styles from "./App.module.css";
 
 function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
+  const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
   const { expenses, balances, addExpense } = useGroupExpenses(members);
 
   const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
@@ -31,7 +33,10 @@ function App() {
         <TopBar />
 
         <main className={styles.main}>
-          <GroupHeader onNewExpense={() => setIsAddExpenseModalOpen(true)} />
+          <GroupHeader
+            onNewExpense={() => setIsAddExpenseModalOpen(true)}
+            onSettleUp={() => setIsSettleUpModalOpen(true)}
+          />
 
           <nav className={styles.tabs}>
             <button className={styles.activeTab}>
@@ -71,6 +76,13 @@ function App() {
           members={members}
           onClose={() => setIsAddExpenseModalOpen(false)}
           onSubmit={handleAddExpense}
+        />
+      ) : null}
+
+      {isSettleUpModalOpen ? (
+        <SettleUpModal
+          onClose={() => setIsSettleUpModalOpen(false)}
+          onSubmit={() => setIsSettleUpModalOpen(false)}
         />
       ) : null}
     </div>
