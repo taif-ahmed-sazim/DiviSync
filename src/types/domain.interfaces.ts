@@ -28,6 +28,14 @@ export interface IExpense {
   shares: IExpenseShare[];
 }
 
+export interface ISettlement {
+  id: string;
+  date: string;
+  amount: number;
+  fromMemberId: string;
+  toMemberId: string;
+}
+
 export interface ICreateExpenseInput {
   title: string;
   amount: number;
@@ -35,4 +43,10 @@ export interface ICreateExpenseInput {
   participantIds: string[];
   splitMode: ESplitMode;
   shares: IExpenseShare[];
+}
+
+export interface ICreateSettlementInput {
+  amount: number;
+  fromMemberId: string;
+  toMemberId: string;
 }

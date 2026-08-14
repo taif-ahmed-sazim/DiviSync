@@ -8,6 +8,7 @@ import type {
   IExpense,
   IGroupMember,
   IMemberBalance,
+  ISettlement,
 } from "@/types/domain.interfaces";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { fromCents, toCents } from "@/utils/splits.helpers";
@@ -30,6 +31,23 @@ export function calculateNetCents(
       expense.paidById === memberId ? toCents(expense.amount) : 0;
 
     return runningNet + paidCents - calculateOwedCents(memberId, expense);
+  }, 0);
+}
+
+export function calculateSettlementCents(
+  memberId: string,
+  settlements: ISettlement[],
+): number {
+  return settlements.reduce((runningNet, settlement) => {
+    if (settlement.fromMemberId === memberId) {
+      return runningNet + toCents(settlement.amount);
+    }
+
+    if (settlement.toMemberId === memberId) {
+      return runningNet - toCents(settlement.amount);
+    }
+
+    return runningNet;
   }, 0);
 }
 
@@ -60,9 +78,12 @@ export function buildBalanceSummary(balance: IMemberBalance): string {
 export function calculateMemberBalances(
   members: IGroupMember[],
   expenses: IExpense[],
+  settlements: ISettlement[],
 ): IMemberBalance[] {
   return members.map((member) => {
-    const netCents = calculateNetCents(member.id, expenses);
+    const netCents =
+      calculateNetCents(member.id, expenses) +
+      calculateSettlementCents(member.id, settlements);
 
     return {
       id: member.id,

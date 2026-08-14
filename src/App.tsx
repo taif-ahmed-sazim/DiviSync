@@ -5,12 +5,13 @@ import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
 import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
 import { SettleUpModal } from "@/components/settlements/SettleUpModal";
+import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
 
 import { members } from "@/data/mockData";
-import { useGroupExpenses } from "@/hooks/useGroupExpenses";
+import { useGroupLedger } from "@/hooks/useGroupLedger";
 import { findMemberName } from "@/utils/members.helpers";
 
 import styles from "./App.module.css";
@@ -18,11 +19,17 @@ import styles from "./App.module.css";
 function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
-  const { expenses, balances, addExpense } = useGroupExpenses(members);
+  const { expenses, balances, addExpense, addSettlement } =
+    useGroupLedger(members);
 
   const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
     addExpense(payload);
     setIsAddExpenseModalOpen(false);
+  };
+
+  const handleSettleUp = (values: ISettleUpFormValues) => {
+    addSettlement(values);
+    setIsSettleUpModalOpen(false);
   };
 
   return (
@@ -83,7 +90,7 @@ function App() {
         <SettleUpModal
           members={members}
           onClose={() => setIsSettleUpModalOpen(false)}
-          onSubmit={() => setIsSettleUpModalOpen(false)}
+          onSubmit={handleSettleUp}
         />
       ) : null}
     </div>
