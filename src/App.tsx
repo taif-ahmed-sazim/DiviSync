@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { BalanceCard } from "@/components/balances/BalanceCard";
+import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
 import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
@@ -11,6 +12,14 @@ import { TopBar } from "@/components/layout/TopBar";
 import { SettlementRow } from "@/components/settlements/SettlementRow";
 import { SettleUpModal } from "@/components/settlements/SettleUpModal";
 import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
+import {
+  DELETE_EXPENSE_CANCEL_LABEL,
+  DELETE_EXPENSE_CONFIRM_LABEL,
+  DELETE_EXPENSE_DESCRIPTION,
+  DELETE_EXPENSE_EYEBROW,
+  DELETE_EXPENSE_TITLE,
+  DELETE_EXPENSE_TITLE_ID,
+} from "@/constants/expenses.constants";
 import { members } from "@/data/mockData";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
 import { EActivityKind } from "@/types/domain.enums";
@@ -26,12 +35,16 @@ function App() {
     null,
   );
   const [editingExpenseId, setEditingExpenseId] = useState<string | null>(null);
+  const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(
+    null,
+  );
   const {
     expenses,
     activity,
     balances,
     addExpense,
     updateExpense,
+    removeExpense,
     addSettlement,
   } = useGroupLedger(members);
 
@@ -56,6 +69,19 @@ function App() {
     setEditingExpenseId(selectedExpenseId);
     setSelectedExpenseId(null);
     setIsExpenseFormModalOpen(true);
+  };
+
+  const handleDeleteExpense = () => {
+    setDeletingExpenseId(selectedExpenseId);
+    setSelectedExpenseId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingExpenseId !== null) {
+      removeExpense(deletingExpenseId);
+    }
+
+    setDeletingExpenseId(null);
   };
 
   const handleCloseExpenseForm = () => {
@@ -141,7 +167,21 @@ function App() {
           expense={selectedExpense}
           members={members}
           onClose={() => setSelectedExpenseId(null)}
+          onDelete={handleDeleteExpense}
           onEdit={handleEditExpense}
+        />
+      ) : null}
+
+      {deletingExpenseId !== null ? (
+        <ConfirmDialog
+          cancelLabel={DELETE_EXPENSE_CANCEL_LABEL}
+          confirmLabel={DELETE_EXPENSE_CONFIRM_LABEL}
+          description={DELETE_EXPENSE_DESCRIPTION}
+          eyebrow={DELETE_EXPENSE_EYEBROW}
+          onCancel={() => setDeletingExpenseId(null)}
+          onConfirm={handleConfirmDelete}
+          title={DELETE_EXPENSE_TITLE}
+          titleId={DELETE_EXPENSE_TITLE_ID}
         />
       ) : null}
 

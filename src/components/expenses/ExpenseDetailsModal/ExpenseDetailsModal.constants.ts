@@ -9,6 +9,7 @@ export const DATE_LABEL = "Date";
 export const SPLIT_LABEL = "Split";
 export const PARTICIPANTS_HEADING = "Participants";
 export const EDIT_LABEL = "Edit expense";
+export const DELETE_LABEL = "Delete";
 
 export const SPLIT_MODE_LABELS = {
   [ESplitMode.EQUAL]: "Equally",
