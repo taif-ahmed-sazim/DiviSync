@@ -1,0 +1,33 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  margin: 0 0 20px;
+  padding: 16px;
+
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.summary dd {
+  margin: 0;
+
+  font-weight: 600;
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.summaryLabel {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.total {
+  font-size: 18px;
+}
