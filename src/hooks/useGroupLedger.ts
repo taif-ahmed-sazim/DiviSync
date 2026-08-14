@@ -11,6 +11,7 @@ import type {
   IGroupMember,
   ISettlement,
 } from "@/types/domain.interfaces";
+import { buildGroupActivity } from "@/utils/activity.helpers";
 import { calculateMemberBalances } from "@/utils/balances.helpers";
 import { createExpense } from "@/utils/expenses.helpers";
 import { createSettlement } from "@/utils/settlements.helpers";
@@ -19,6 +20,11 @@ export function useGroupLedger(members: IGroupMember[]) {
   const [expenses, setExpenses] = useState<IExpense[]>(initialExpenses);
   const [settlements, setSettlements] =
     useState<ISettlement[]>(initialSettlements);
+
+  const activity = useMemo(
+    () => buildGroupActivity(expenses, settlements),
+    [expenses, settlements],
+  );
 
   const balances = useMemo(
     () => calculateMemberBalances(members, expenses, settlements),
@@ -51,5 +57,12 @@ export function useGroupLedger(members: IGroupMember[]) {
     ]);
   };
 
-  return { expenses, settlements, balances, addExpense, addSettlement };
+  return {
+    expenses,
+    settlements,
+    activity,
+    balances,
+    addExpense,
+    addSettlement,
+  };
 }

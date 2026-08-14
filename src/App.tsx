@@ -4,6 +4,7 @@ import { BalanceCard } from "@/components/balances/BalanceCard";
 import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
 import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
+import { SettlementRow } from "@/components/settlements/SettlementRow";
 import { SettleUpModal } from "@/components/settlements/SettleUpModal";
 import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
@@ -12,6 +13,8 @@ import { TopBar } from "@/components/layout/TopBar";
 
 import { members } from "@/data/mockData";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
+import { EActivityKind } from "@/types/domain.enums";
+import { getActivityId } from "@/utils/activity.helpers";
 import { findMemberName } from "@/utils/members.helpers";
 
 import styles from "./App.module.css";
@@ -19,7 +22,7 @@ import styles from "./App.module.css";
 function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
-  const { expenses, balances, addExpense, addSettlement } =
+  const { activity, balances, addExpense, addSettlement } =
     useGroupLedger(members);
 
   const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
@@ -66,13 +69,25 @@ function App() {
             </h2>
 
             <div className={styles.expenseList}>
-              {expenses.map((expense) => (
-                <ExpenseRow
-                  expense={expense}
-                  key={expense.id}
-                  payerName={findMemberName(members, expense.paidById)}
-                />
-              ))}
+              {activity.map((item) =>
+                item.kind === EActivityKind.EXPENSE ? (
+                  <ExpenseRow
+                    expense={item.expense}
+                    key={getActivityId(item)}
+                    payerName={findMemberName(members, item.expense.paidById)}
+                  />
+                ) : (
+                  <SettlementRow
+                    fromName={findMemberName(
+                      members,
+                      item.settlement.fromMemberId,
+                    )}
+                    key={getActivityId(item)}
+                    settlement={item.settlement}
+                    toName={findMemberName(members, item.settlement.toMemberId)}
+                  />
+                ),
+              )}
             </div>
           </section>
         </main>
