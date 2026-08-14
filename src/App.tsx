@@ -1,17 +1,16 @@
 import { useState } from "react";
 
 import { BalanceCard } from "@/components/balances/BalanceCard";
+import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
 import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
-import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
-import { SettlementRow } from "@/components/settlements/SettlementRow";
-import { SettleUpModal } from "@/components/settlements/SettleUpModal";
-import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
-
+import { SettlementRow } from "@/components/settlements/SettlementRow";
+import { SettleUpModal } from "@/components/settlements/SettleUpModal";
+import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import { members } from "@/data/mockData";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
 import { EActivityKind } from "@/types/domain.enums";
@@ -35,6 +34,11 @@ function App() {
   const handleAddExpense = (payload: IExpenseFormSubmitPayload) => {
     addExpense(payload);
     setIsExpenseFormModalOpen(false);
+  };
+
+  const handleEditExpense = () => {
+    setSelectedExpenseId(null);
+    setIsExpenseFormModalOpen(true);
   };
 
   const handleSettleUp = (values: ISettleUpFormValues) => {
@@ -114,6 +118,7 @@ function App() {
           expense={selectedExpense}
           members={members}
           onClose={() => setSelectedExpenseId(null)}
+          onEdit={handleEditExpense}
         />
       ) : null}
 
