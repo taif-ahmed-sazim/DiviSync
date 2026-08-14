@@ -1,5 +1,8 @@
 import { ESplitMode } from "@/types/domain.enums";
 
+export const ADD_EXPENSE_TITLE = "Add expense";
+export const ADD_EXPENSE_TITLE_ID = "add-expense-title";
+
 export const DESCRIPTION_MAX_LENGTH = 80;
 
 export const DESCRIPTION_REQUIRED_MESSAGE = "Description is required";

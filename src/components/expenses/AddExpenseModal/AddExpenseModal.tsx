@@ -1,11 +1,15 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
+import { Modal } from "@/components/common/Modal";
+import { GROUP_NAME } from "@/constants/group.constants";
 import { ESplitMode } from "@/types/domain.enums";
 import { findMemberName } from "@/utils/members.helpers";
 import { sumShareAmounts } from "@/utils/splits.helpers";
 
 import {
+  ADD_EXPENSE_TITLE,
+  ADD_EXPENSE_TITLE_ID,
   ASSIGNED_LABEL,
   EQUAL_SPLIT_LABEL,
   SPLIT_MODE_LEGEND,
@@ -68,209 +72,189 @@ export function AddExpenseModal({
   };
 
   return (
-    <div className={styles.backdrop}>
-      <section
-        aria-labelledby="add-expense-title"
-        className={styles.modal}
-        role="dialog"
-      >
-        <header className={styles.header}>
-          <div>
-            <p className={styles.eyebrow}>Gamer Bros</p>
+    <Modal
+      eyebrow={GROUP_NAME}
+      onClose={onClose}
+      title={ADD_EXPENSE_TITLE}
+      titleId={ADD_EXPENSE_TITLE_ID}
+    >
+      <form className={styles.form} noValidate onSubmit={handleSubmit}>
+        <label className={styles.field}>
+          <span>Description</span>
 
-            <h2 className={styles.title} id="add-expense-title">
-              Add expense
-            </h2>
+          <input
+            aria-invalid={errors.description !== undefined}
+            onChange={(event) =>
+              setValues((current) => ({
+                ...current,
+                description: event.target.value,
+              }))
+            }
+            placeholder="Dinner, Airbnb, groceries..."
+            type="text"
+            value={values.description}
+          />
+
+          {errors.description ? (
+            <span className={styles.error}>{errors.description}</span>
+          ) : null}
+        </label>
+
+        <label className={styles.field}>
+          <span>Amount</span>
+
+          <input
+            aria-invalid={errors.amount !== undefined}
+            inputMode="decimal"
+            min="0"
+            onChange={(event) =>
+              setValues((current) => ({
+                ...current,
+                amount: event.target.value,
+              }))
+            }
+            placeholder="0.00"
+            step="0.01"
+            type="number"
+            value={values.amount}
+          />
+
+          {errors.amount ? (
+            <span className={styles.error}>{errors.amount}</span>
+          ) : null}
+        </label>
+
+        <label className={styles.field}>
+          <span>Paid by</span>
+
+          <select
+            onChange={(event) =>
+              setValues((current) => ({
+                ...current,
+                paidById: event.target.value,
+              }))
+            }
+            value={values.paidById}
+          >
+            {members.map((member) => (
+              <option key={member.id} value={member.id}>
+                {member.name}
+              </option>
+            ))}
+          </select>
+
+          {errors.paidById ? (
+            <span className={styles.error}>{errors.paidById}</span>
+          ) : null}
+        </label>
+
+        <fieldset className={styles.participants}>
+          <legend>Split between</legend>
+
+          {members.map((member) => (
+            <label className={styles.participant} key={member.id}>
+              <input
+                checked={values.participantIds.includes(member.id)}
+                onChange={() => handleParticipantToggle(member.id)}
+                type="checkbox"
+              />
+
+              <span>{member.name}</span>
+            </label>
+          ))}
+
+          {errors.participantIds ? (
+            <span className={styles.error}>{errors.participantIds}</span>
+          ) : null}
+        </fieldset>
+
+        <fieldset className={styles.splitModes}>
+          <legend>{SPLIT_MODE_LEGEND}</legend>
+
+          {SPLIT_MODE_OPTIONS.map((option) => (
+            <label className={styles.splitMode} key={option.value}>
+              <input
+                checked={values.splitMode === option.value}
+                name="split-mode"
+                onChange={() =>
+                  setValues((current) => ({
+                    ...current,
+                    splitMode: option.value,
+                  }))
+                }
+                type="radio"
+              />
+
+              <span>{option.label}</span>
+            </label>
+          ))}
+        </fieldset>
+
+        {values.splitMode === ESplitMode.CUSTOM ? (
+          <div className={styles.customShares}>
+            {values.participantIds.map((participantId) => (
+              <label className={styles.customShare} key={participantId}>
+                <span>{findMemberName(members, participantId)}</span>
+
+                <input
+                  inputMode="decimal"
+                  min="0"
+                  onChange={(event) =>
+                    setValues((current) => ({
+                      ...current,
+                      customShares: setCustomShare(
+                        current.customShares,
+                        participantId,
+                        event.target.value,
+                      ),
+                    }))
+                  }
+                  placeholder="0.00"
+                  step="0.01"
+                  type="number"
+                  value={values.customShares[participantId] ?? ""}
+                />
+              </label>
+            ))}
+
+            <p className={styles.summary}>
+              <span>{ASSIGNED_LABEL}</span>
+
+              <strong>
+                {buildAssignedSummary(
+                  sumShareAmounts(shares),
+                  parseAmount(values.amount),
+                )}
+              </strong>
+            </p>
+
+            {errors.customShares ? (
+              <span className={styles.error}>{errors.customShares}</span>
+            ) : null}
           </div>
+        ) : null}
 
+        {values.splitMode === ESplitMode.EQUAL && shares.length > 0 ? (
+          <p className={styles.summary}>
+            <span>{EQUAL_SPLIT_LABEL}</span>
+            <strong>{buildPerPersonSummary(shares[0].amount)}</strong>
+          </p>
+        ) : null}
+
+        <div className={styles.actions}>
           <button
-            aria-label="Close"
-            className={styles.closeButton}
+            className={styles.cancelButton}
             onClick={onClose}
             type="button"
           >
-            ×
+            Cancel
           </button>
-        </header>
 
-        <form className={styles.form} noValidate onSubmit={handleSubmit}>
-          <label className={styles.field}>
-            <span>Description</span>
-
-            <input
-              aria-invalid={errors.description !== undefined}
-              onChange={(event) =>
-                setValues((current) => ({
-                  ...current,
-                  description: event.target.value,
-                }))
-              }
-              placeholder="Dinner, Airbnb, groceries..."
-              type="text"
-              value={values.description}
-            />
-
-            {errors.description ? (
-              <span className={styles.error}>{errors.description}</span>
-            ) : null}
-          </label>
-
-          <label className={styles.field}>
-            <span>Amount</span>
-
-            <input
-              aria-invalid={errors.amount !== undefined}
-              inputMode="decimal"
-              min="0"
-              onChange={(event) =>
-                setValues((current) => ({
-                  ...current,
-                  amount: event.target.value,
-                }))
-              }
-              placeholder="0.00"
-              step="0.01"
-              type="number"
-              value={values.amount}
-            />
-
-            {errors.amount ? (
-              <span className={styles.error}>{errors.amount}</span>
-            ) : null}
-          </label>
-
-          <label className={styles.field}>
-            <span>Paid by</span>
-
-            <select
-              onChange={(event) =>
-                setValues((current) => ({
-                  ...current,
-                  paidById: event.target.value,
-                }))
-              }
-              value={values.paidById}
-            >
-              {members.map((member) => (
-                <option key={member.id} value={member.id}>
-                  {member.name}
-                </option>
-              ))}
-            </select>
-
-            {errors.paidById ? (
-              <span className={styles.error}>{errors.paidById}</span>
-            ) : null}
-          </label>
-
-          <fieldset className={styles.participants}>
-            <legend>Split between</legend>
-
-            {members.map((member) => (
-              <label className={styles.participant} key={member.id}>
-                <input
-                  checked={values.participantIds.includes(member.id)}
-                  onChange={() => handleParticipantToggle(member.id)}
-                  type="checkbox"
-                />
-
-                <span>{member.name}</span>
-              </label>
-            ))}
-
-            {errors.participantIds ? (
-              <span className={styles.error}>{errors.participantIds}</span>
-            ) : null}
-          </fieldset>
-
-          <fieldset className={styles.splitModes}>
-            <legend>{SPLIT_MODE_LEGEND}</legend>
-
-            {SPLIT_MODE_OPTIONS.map((option) => (
-              <label className={styles.splitMode} key={option.value}>
-                <input
-                  checked={values.splitMode === option.value}
-                  name="split-mode"
-                  onChange={() =>
-                    setValues((current) => ({
-                      ...current,
-                      splitMode: option.value,
-                    }))
-                  }
-                  type="radio"
-                />
-
-                <span>{option.label}</span>
-              </label>
-            ))}
-          </fieldset>
-
-          {values.splitMode === ESplitMode.CUSTOM ? (
-            <div className={styles.customShares}>
-              {values.participantIds.map((participantId) => (
-                <label className={styles.customShare} key={participantId}>
-                  <span>{findMemberName(members, participantId)}</span>
-
-                  <input
-                    inputMode="decimal"
-                    min="0"
-                    onChange={(event) =>
-                      setValues((current) => ({
-                        ...current,
-                        customShares: setCustomShare(
-                          current.customShares,
-                          participantId,
-                          event.target.value,
-                        ),
-                      }))
-                    }
-                    placeholder="0.00"
-                    step="0.01"
-                    type="number"
-                    value={values.customShares[participantId] ?? ""}
-                  />
-                </label>
-              ))}
-
-              <p className={styles.summary}>
-                <span>{ASSIGNED_LABEL}</span>
-
-                <strong>
-                  {buildAssignedSummary(
-                    sumShareAmounts(shares),
-                    parseAmount(values.amount),
-                  )}
-                </strong>
-              </p>
-
-              {errors.customShares ? (
-                <span className={styles.error}>{errors.customShares}</span>
-              ) : null}
-            </div>
-          ) : null}
-
-          {values.splitMode === ESplitMode.EQUAL && shares.length > 0 ? (
-            <p className={styles.summary}>
-              <span>{EQUAL_SPLIT_LABEL}</span>
-              <strong>{buildPerPersonSummary(shares[0].amount)}</strong>
-            </p>
-          ) : null}
-
-          <div className={styles.actions}>
-            <button
-              className={styles.cancelButton}
-              onClick={onClose}
-              type="button"
-            >
-              Cancel
-            </button>
-
-            <button className={styles.submitButton} type="submit">
-              Add expense
-            </button>
-          </div>
-        </form>
-      </section>
-    </div>
+          <button className={styles.submitButton} type="submit">
+            Add expense
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }

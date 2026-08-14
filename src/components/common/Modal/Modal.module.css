@@ -1,0 +1,64 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  background: rgba(15, 23, 42, 0.45);
+  overflow-y: auto;
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+
+  padding: 24px;
+
+  background: white;
+  border-radius: 14px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.closeButton {
+  padding: 0 4px;
+
+  color: #64748b;
+  background: transparent;
+
+  border: 0;
+
+  font-size: 22px;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: #1f2937;
+}
