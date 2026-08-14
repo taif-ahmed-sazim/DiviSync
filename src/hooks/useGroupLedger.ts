@@ -13,7 +13,10 @@ import type {
 } from "@/types/domain.interfaces";
 import { buildGroupActivity } from "@/utils/activity.helpers";
 import { calculateMemberBalances } from "@/utils/balances.helpers";
-import { createExpense } from "@/utils/expenses.helpers";
+import {
+  applyExpenseUpdate,
+  createExpense,
+} from "@/utils/expenses.helpers";
 import { createSettlement } from "@/utils/settlements.helpers";
 
 export function useGroupLedger(members: IGroupMember[]) {
@@ -44,6 +47,28 @@ export function useGroupLedger(members: IGroupMember[]) {
     setExpenses((currentExpenses) => [expense, ...currentExpenses]);
   };
 
+  const updateExpense = (
+    expenseId: string,
+    { values, shares }: IExpenseFormSubmitPayload,
+  ) => {
+    setExpenses((currentExpenses) =>
+      currentExpenses.map((expense) => {
+        if (expense.id !== expenseId) {
+          return expense;
+        }
+
+        return applyExpenseUpdate(expense, {
+          title: values.description.trim(),
+          amount: Number(values.amount),
+          paidById: values.paidById,
+          participantIds: values.participantIds,
+          splitMode: values.splitMode,
+          shares,
+        });
+      }),
+    );
+  };
+
   const addSettlement = (values: ISettleUpFormValues) => {
     const settlement = createSettlement({
       amount: Number(values.amount),
@@ -63,6 +88,7 @@ export function useGroupLedger(members: IGroupMember[]) {
     activity,
     balances,
     addExpense,
+    updateExpense,
     addSettlement,
   };
 }
