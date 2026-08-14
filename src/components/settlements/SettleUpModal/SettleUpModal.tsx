@@ -7,17 +7,25 @@ import { GROUP_NAME } from "@/constants/group.constants";
 import {
   AMOUNT_LABEL,
   CANCEL_LABEL,
+  PAYER_LABEL,
+  RECEIVER_LABEL,
   SETTLE_UP_TITLE,
   SETTLE_UP_TITLE_ID,
   SUBMIT_LABEL,
 } from "./SettleUpModal.constants";
-import { settleUpFormInitialValues } from "./SettleUpModal.helpers";
+import { buildSettleUpFormInitialValues } from "./SettleUpModal.helpers";
 import type { ISettleUpModalProps } from "./SettleUpModal.interfaces";
 
 import styles from "./SettleUpModal.module.css";
 
-export function SettleUpModal({ onClose, onSubmit }: ISettleUpModalProps) {
-  const [values, setValues] = useState(settleUpFormInitialValues);
+export function SettleUpModal({
+  members,
+  onClose,
+  onSubmit,
+}: ISettleUpModalProps) {
+  const [values, setValues] = useState(() =>
+    buildSettleUpFormInitialValues(members),
+  );
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,6 +41,46 @@ export function SettleUpModal({ onClose, onSubmit }: ISettleUpModalProps) {
       titleId={SETTLE_UP_TITLE_ID}
     >
       <form className={styles.form} noValidate onSubmit={handleSubmit}>
+        <label className={styles.field}>
+          <span>{PAYER_LABEL}</span>
+
+          <select
+            onChange={(event) =>
+              setValues((current) => ({
+                ...current,
+                fromMemberId: event.target.value,
+              }))
+            }
+            value={values.fromMemberId}
+          >
+            {members.map((member) => (
+              <option key={member.id} value={member.id}>
+                {member.name}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className={styles.field}>
+          <span>{RECEIVER_LABEL}</span>
+
+          <select
+            onChange={(event) =>
+              setValues((current) => ({
+                ...current,
+                toMemberId: event.target.value,
+              }))
+            }
+            value={values.toMemberId}
+          >
+            {members.map((member) => (
+              <option key={member.id} value={member.id}>
+                {member.name}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <label className={styles.field}>
           <span>{AMOUNT_LABEL}</span>
 

@@ -81,6 +81,7 @@ function App() {
 
       {isSettleUpModalOpen ? (
         <SettleUpModal
+          members={members}
           onClose={() => setIsSettleUpModalOpen(false)}
           onSubmit={() => setIsSettleUpModalOpen(false)}
         />
