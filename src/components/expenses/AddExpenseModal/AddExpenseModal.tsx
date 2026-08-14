@@ -4,6 +4,7 @@ import type { FormEvent } from "react";
 import { Modal } from "@/components/common/Modal";
 import { GROUP_NAME } from "@/constants/group.constants";
 import { ESplitMode } from "@/types/domain.enums";
+import { parseAmount } from "@/utils/amount.helpers";
 import { findMemberName } from "@/utils/members.helpers";
 import { sumShareAmounts } from "@/utils/splits.helpers";
 
@@ -20,7 +21,6 @@ import {
   buildAssignedSummary,
   buildPerPersonSummary,
   hasFormErrors,
-  parseAmount,
   setCustomShare,
   toggleParticipantId,
   validateAddExpenseForm,
