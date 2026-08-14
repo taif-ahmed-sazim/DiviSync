@@ -4,9 +4,9 @@ import type {
   IGroupMember,
 } from "@/types/domain.interfaces";
 
-import type { TCustomShareInputs } from "./AddExpenseModal.types";
+import type { TCustomShareInputs } from "./ExpenseFormModal.types";
 
-export interface IAddExpenseFormValues {
+export interface IExpenseFormValues {
   description: string;
   amount: string;
   paidById: string;
@@ -15,7 +15,7 @@ export interface IAddExpenseFormValues {
   customShares: TCustomShareInputs;
 }
 
-export interface IAddExpenseFormErrors {
+export interface IExpenseFormErrors {
   description?: string;
   amount?: string;
   paidById?: string;
@@ -23,13 +23,13 @@ export interface IAddExpenseFormErrors {
   customShares?: string;
 }
 
-export interface IAddExpenseSubmitPayload {
-  values: IAddExpenseFormValues;
+export interface IExpenseFormSubmitPayload {
+  values: IExpenseFormValues;
   shares: IExpenseShare[];
 }
 
-export interface IAddExpenseModalProps {
+export interface IExpenseFormModalProps {
   members: IGroupMember[];
   onClose: () => void;
-  onSubmit: (payload: IAddExpenseSubmitPayload) => void;
+  onSubmit: (payload: IExpenseFormSubmitPayload) => void;
 }

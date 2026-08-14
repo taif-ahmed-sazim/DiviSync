@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
+import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
 import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import {
   expenses as initialExpenses,
@@ -31,7 +31,7 @@ export function useGroupLedger(members: IGroupMember[]) {
     [members, expenses, settlements],
   );
 
-  const addExpense = ({ values, shares }: IAddExpenseSubmitPayload) => {
+  const addExpense = ({ values, shares }: IExpenseFormSubmitPayload) => {
     const expense = createExpense({
       title: values.description.trim(),
       amount: Number(values.amount),

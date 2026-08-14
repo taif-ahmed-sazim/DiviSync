@@ -16,14 +16,14 @@ import {
   PAYER_REQUIRED_MESSAGE,
   PER_PERSON_LABEL,
   SPLIT_TOTAL_MISMATCH_MESSAGE,
-} from "./AddExpenseModal.constants";
+} from "./ExpenseFormModal.constants";
 import type {
-  IAddExpenseFormErrors,
-  IAddExpenseFormValues,
-} from "./AddExpenseModal.interfaces";
-import type { TCustomShareInputs } from "./AddExpenseModal.types";
+  IExpenseFormErrors,
+  IExpenseFormValues,
+} from "./ExpenseFormModal.interfaces";
+import type { TCustomShareInputs } from "./ExpenseFormModal.types";
 
-export const addExpenseFormInitialValues: IAddExpenseFormValues = {
+export const expenseFormInitialValues: IExpenseFormValues = {
   description: "",
   amount: "",
   paidById: CURRENT_USER_ID,
@@ -32,11 +32,11 @@ export const addExpenseFormInitialValues: IAddExpenseFormValues = {
   customShares: {},
 };
 
-export function buildAddExpenseFormInitialValues(
+export function buildExpenseFormInitialValues(
   members: IGroupMember[],
-): IAddExpenseFormValues {
+): IExpenseFormValues {
   return {
-    ...addExpenseFormInitialValues,
+    ...expenseFormInitialValues,
     participantIds: members.map((member) => member.id),
   };
 }
@@ -136,11 +136,11 @@ export function buildAssignedSummary(
   return `${formatCurrency(assignedAmount)} of ${formatCurrency(totalAmount)}`;
 }
 
-export function validateAddExpenseForm(
-  values: IAddExpenseFormValues,
+export function validateExpenseForm(
+  values: IExpenseFormValues,
   members: IGroupMember[],
   shares: IExpenseShare[],
-): IAddExpenseFormErrors {
+): IExpenseFormErrors {
   return {
     description: getDescriptionError(values.description),
     amount: getAmountError(values.amount),
@@ -150,6 +150,6 @@ export function validateAddExpenseForm(
   };
 }
 
-export function hasFormErrors(errors: IAddExpenseFormErrors): boolean {
+export function hasFormErrors(errors: IExpenseFormErrors): boolean {
   return Object.values(errors).some((error) => error !== undefined);
 }

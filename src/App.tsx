@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { BalanceCard } from "@/components/balances/BalanceCard";
-import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
-import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
+import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
+import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
 import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
 import { SettlementRow } from "@/components/settlements/SettlementRow";
@@ -21,7 +21,7 @@ import { findMemberName } from "@/utils/members.helpers";
 import styles from "./App.module.css";
 
 function App() {
-  const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
+  const [isExpenseFormModalOpen, setIsExpenseFormModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
@@ -32,9 +32,9 @@ function App() {
   const selectedExpense =
     expenses.find((expense) => expense.id === selectedExpenseId) ?? null;
 
-  const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
+  const handleAddExpense = (payload: IExpenseFormSubmitPayload) => {
     addExpense(payload);
-    setIsAddExpenseModalOpen(false);
+    setIsExpenseFormModalOpen(false);
   };
 
   const handleSettleUp = (values: ISettleUpFormValues) => {
@@ -51,7 +51,7 @@ function App() {
 
         <main className={styles.main}>
           <GroupHeader
-            onNewExpense={() => setIsAddExpenseModalOpen(true)}
+            onNewExpense={() => setIsExpenseFormModalOpen(true)}
             onSettleUp={() => setIsSettleUpModalOpen(true)}
           />
 
@@ -101,10 +101,10 @@ function App() {
         </main>
       </div>
 
-      {isAddExpenseModalOpen ? (
-        <AddExpenseModal
+      {isExpenseFormModalOpen ? (
+        <ExpenseFormModal
           members={members}
-          onClose={() => setIsAddExpenseModalOpen(false)}
+          onClose={() => setIsExpenseFormModalOpen(false)}
           onSubmit={handleAddExpense}
         />
       ) : null}

@@ -10,43 +10,43 @@ import { sumShareAmounts } from "@/utils/splits.helpers";
 
 import {
   ADD_EXPENSE_TITLE,
-  ADD_EXPENSE_TITLE_ID,
+  EXPENSE_FORM_TITLE_ID,
   ASSIGNED_LABEL,
   EQUAL_SPLIT_LABEL,
   SPLIT_MODE_LEGEND,
   SPLIT_MODE_OPTIONS,
-} from "./AddExpenseModal.constants";
+} from "./ExpenseFormModal.constants";
 import {
-  buildAddExpenseFormInitialValues,
+  buildExpenseFormInitialValues,
   buildAssignedSummary,
   buildPerPersonSummary,
   hasFormErrors,
   setCustomShare,
   toggleParticipantId,
-  validateAddExpenseForm,
-} from "./AddExpenseModal.helpers";
-import { useSplitShares } from "./AddExpenseModal.hooks";
+  validateExpenseForm,
+} from "./ExpenseFormModal.helpers";
+import { useSplitShares } from "./ExpenseFormModal.hooks";
 import type {
-  IAddExpenseFormErrors,
-  IAddExpenseModalProps,
-} from "./AddExpenseModal.interfaces";
+  IExpenseFormErrors,
+  IExpenseFormModalProps,
+} from "./ExpenseFormModal.interfaces";
 
-import styles from "./AddExpenseModal.module.css";
+import styles from "./ExpenseFormModal.module.css";
 
-export function AddExpenseModal({
+export function ExpenseFormModal({
   members,
   onClose,
   onSubmit,
-}: IAddExpenseModalProps) {
+}: IExpenseFormModalProps) {
   const [values, setValues] = useState(() =>
-    buildAddExpenseFormInitialValues(members),
+    buildExpenseFormInitialValues(members),
   );
-  const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
+  const [errors, setErrors] = useState<IExpenseFormErrors>({});
 
   const shares = useSplitShares(values);
 
   const resetForm = () => {
-    setValues(buildAddExpenseFormInitialValues(members));
+    setValues(buildExpenseFormInitialValues(members));
     setErrors({});
   };
 
@@ -60,7 +60,7 @@ export function AddExpenseModal({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateAddExpenseForm(values, members, shares);
+    const nextErrors = validateExpenseForm(values, members, shares);
     setErrors(nextErrors);
 
     if (hasFormErrors(nextErrors)) {
@@ -76,7 +76,7 @@ export function AddExpenseModal({
       eyebrow={GROUP_NAME}
       onClose={onClose}
       title={ADD_EXPENSE_TITLE}
-      titleId={ADD_EXPENSE_TITLE_ID}
+      titleId={EXPENSE_FORM_TITLE_ID}
     >
       <form className={styles.form} noValidate onSubmit={handleSubmit}>
         <label className={styles.field}>
