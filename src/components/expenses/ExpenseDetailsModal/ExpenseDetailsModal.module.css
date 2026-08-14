@@ -31,3 +31,40 @@
 .total {
   font-size: 18px;
 }
+
+.heading {
+  margin: 0 0 10px;
+
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.participants {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.participant {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.participant:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}

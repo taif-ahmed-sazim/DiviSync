@@ -8,6 +8,7 @@ import {
   EXPENSE_DETAILS_EYEBROW,
   EXPENSE_DETAILS_TITLE_ID,
   PAID_BY_LABEL,
+  PARTICIPANTS_HEADING,
   SPLIT_LABEL,
   SPLIT_MODE_LABELS,
   TOTAL_LABEL,
@@ -52,6 +53,19 @@ export function ExpenseDetailsModal({
           <dd>{SPLIT_MODE_LABELS[expense.splitMode]}</dd>
         </div>
       </dl>
+
+      <section>
+        <h3 className={styles.heading}>{PARTICIPANTS_HEADING}</h3>
+
+        <ul className={styles.participants}>
+          {expense.shares.map((share) => (
+            <li className={styles.participant} key={share.memberId}>
+              <span>{findMemberName(members, share.memberId)}</span>
+              <strong>{formatCurrency(share.amount)}</strong>
+            </li>
+          ))}
+        </ul>
+      </section>
     </Modal>
   );
 }
