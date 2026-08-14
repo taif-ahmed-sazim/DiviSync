@@ -1,6 +1,7 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
 import { ESplitMode } from "@/types/domain.enums";
 import type {
+  IExpense,
   IExpenseShare,
   IGroupMember,
 } from "@/types/domain.interfaces";
@@ -38,6 +39,33 @@ export function buildExpenseFormInitialValues(
   return {
     ...expenseFormInitialValues,
     participantIds: members.map((member) => member.id),
+  };
+}
+
+export function buildCustomShareInputs(
+  shares: IExpenseShare[],
+): TCustomShareInputs {
+  return shares.reduce<TCustomShareInputs>(
+    (inputs, share) => ({ ...inputs, [share.memberId]: String(share.amount) }),
+    {},
+  );
+}
+
+export function buildExpenseFormValues(
+  members: IGroupMember[],
+  expense?: IExpense,
+): IExpenseFormValues {
+  if (expense === undefined) {
+    return buildExpenseFormInitialValues(members);
+  }
+
+  return {
+    description: expense.title,
+    amount: String(expense.amount),
+    paidById: expense.paidById,
+    participantIds: expense.participantIds,
+    splitMode: expense.splitMode,
+    customShares: buildCustomShareInputs(expense.shares),
   };
 }
 

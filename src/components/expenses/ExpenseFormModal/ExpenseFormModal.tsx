@@ -10,15 +10,19 @@ import { sumShareAmounts } from "@/utils/splits.helpers";
 
 import {
   ADD_EXPENSE_TITLE,
-  EXPENSE_FORM_TITLE_ID,
   ASSIGNED_LABEL,
+  CANCEL_LABEL,
+  CREATE_SUBMIT_LABEL,
+  EDIT_EXPENSE_TITLE,
   EQUAL_SPLIT_LABEL,
+  EXPENSE_FORM_TITLE_ID,
+  SAVE_SUBMIT_LABEL,
   SPLIT_MODE_LEGEND,
   SPLIT_MODE_OPTIONS,
 } from "./ExpenseFormModal.constants";
 import {
-  buildExpenseFormInitialValues,
   buildAssignedSummary,
+  buildExpenseFormValues,
   buildPerPersonSummary,
   hasFormErrors,
   setCustomShare,
@@ -34,19 +38,22 @@ import type {
 import styles from "./ExpenseFormModal.module.css";
 
 export function ExpenseFormModal({
+  expense,
   members,
   onClose,
   onSubmit,
 }: IExpenseFormModalProps) {
+  const isEditing = expense !== undefined;
+
   const [values, setValues] = useState(() =>
-    buildExpenseFormInitialValues(members),
+    buildExpenseFormValues(members, expense),
   );
   const [errors, setErrors] = useState<IExpenseFormErrors>({});
 
   const shares = useSplitShares(values);
 
   const resetForm = () => {
-    setValues(buildExpenseFormInitialValues(members));
+    setValues(buildExpenseFormValues(members, expense));
     setErrors({});
   };
 
@@ -75,7 +82,7 @@ export function ExpenseFormModal({
     <Modal
       eyebrow={GROUP_NAME}
       onClose={onClose}
-      title={ADD_EXPENSE_TITLE}
+      title={isEditing ? EDIT_EXPENSE_TITLE : ADD_EXPENSE_TITLE}
       titleId={EXPENSE_FORM_TITLE_ID}
     >
       <form className={styles.form} noValidate onSubmit={handleSubmit}>
@@ -247,11 +254,11 @@ export function ExpenseFormModal({
             onClick={onClose}
             type="button"
           >
-            Cancel
+            {CANCEL_LABEL}
           </button>
 
           <button className={styles.submitButton} type="submit">
-            Add expense
+            {isEditing ? SAVE_SUBMIT_LABEL : CREATE_SUBMIT_LABEL}
           </button>
         </div>
       </form>

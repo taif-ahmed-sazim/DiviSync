@@ -25,11 +25,16 @@ function App() {
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
   );
+  const [editingExpenseId, setEditingExpenseId] = useState<string | null>(null);
   const { expenses, activity, balances, addExpense, addSettlement } =
     useGroupLedger(members);
 
   const selectedExpense =
     expenses.find((expense) => expense.id === selectedExpenseId) ?? null;
+
+  const editingExpense = expenses.find(
+    (expense) => expense.id === editingExpenseId,
+  );
 
   const handleAddExpense = (payload: IExpenseFormSubmitPayload) => {
     addExpense(payload);
@@ -37,8 +42,14 @@ function App() {
   };
 
   const handleEditExpense = () => {
+    setEditingExpenseId(selectedExpenseId);
     setSelectedExpenseId(null);
     setIsExpenseFormModalOpen(true);
+  };
+
+  const handleCloseExpenseForm = () => {
+    setEditingExpenseId(null);
+    setIsExpenseFormModalOpen(false);
   };
 
   const handleSettleUp = (values: ISettleUpFormValues) => {
@@ -107,8 +118,9 @@ function App() {
 
       {isExpenseFormModalOpen ? (
         <ExpenseFormModal
+          expense={editingExpense}
           members={members}
-          onClose={() => setIsExpenseFormModalOpen(false)}
+          onClose={handleCloseExpenseForm}
           onSubmit={handleAddExpense}
         />
       ) : null}

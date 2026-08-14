@@ -1,5 +1,6 @@
 import type { ESplitMode } from "@/types/domain.enums";
 import type {
+  IExpense,
   IExpenseShare,
   IGroupMember,
 } from "@/types/domain.interfaces";
@@ -29,6 +30,7 @@ export interface IExpenseFormSubmitPayload {
 }
 
 export interface IExpenseFormModalProps {
+  expense?: IExpense;
   members: IGroupMember[];
   onClose: () => void;
   onSubmit: (payload: IExpenseFormSubmitPayload) => void;
