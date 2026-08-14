@@ -1,0 +1,46 @@
+.description {
+  margin: 0;
+
+  color: #475569;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+
+  color: #1f2937;
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.cancelButton:hover {
+  background: #f8fafc;
+}
+
+.confirmButton {
+  padding: 10px 16px;
+
+  color: white;
+  background: #dc2626;
+
+  border: 0;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.confirmButton:hover {
+  background: #b91c1c;
+}
