@@ -1,9 +1,15 @@
+import {
+  GETS_LABEL,
+  OWES_LABEL,
+  SETTLED_LABEL,
+} from "@/constants/balances.constants";
 import { EBalanceStatus } from "@/types/domain.enums";
 import type {
   IExpense,
   IGroupMember,
   IMemberBalance,
 } from "@/types/domain.interfaces";
+import { formatCurrency } from "@/utils/formatCurrency";
 import { fromCents, toCents } from "@/utils/splits.helpers";
 
 export function calculateOwedCents(
@@ -37,6 +43,18 @@ export function resolveBalanceStatus(netCents: number): EBalanceStatus {
   }
 
   return EBalanceStatus.SETTLED;
+}
+
+export function buildBalanceSummary(balance: IMemberBalance): string {
+  if (balance.status === EBalanceStatus.SETTLED) {
+    return SETTLED_LABEL;
+  }
+
+  if (balance.status === EBalanceStatus.GETS) {
+    return `${GETS_LABEL} ${formatCurrency(balance.amount)}`;
+  }
+
+  return `${OWES_LABEL} ${formatCurrency(balance.amount)}`;
 }
 
 export function calculateMemberBalances(
