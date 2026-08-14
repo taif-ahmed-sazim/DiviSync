@@ -1,7 +1,15 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
 import type { IGroupMember } from "@/types/domain.interfaces";
+import { getAmountError } from "@/utils/amount.helpers";
 
-import type { ISettleUpFormValues } from "./SettleUpModal.interfaces";
+import {
+  MEMBER_REQUIRED_MESSAGE,
+  SAME_MEMBER_MESSAGE,
+} from "./SettleUpModal.constants";
+import type {
+  ISettleUpFormErrors,
+  ISettleUpFormValues,
+} from "./SettleUpModal.interfaces";
 
 export const settleUpFormInitialValues: ISettleUpFormValues = {
   fromMemberId: CURRENT_USER_ID,
@@ -18,4 +26,49 @@ export function buildSettleUpFormInitialValues(
     ...settleUpFormInitialValues,
     toMemberId: receiver?.id ?? "",
   };
+}
+
+export function getMemberError(
+  memberId: string,
+  members: IGroupMember[],
+): string | undefined {
+  const isGroupMember = members.some((member) => member.id === memberId);
+
+  if (!isGroupMember) {
+    return MEMBER_REQUIRED_MESSAGE;
+  }
+
+  return undefined;
+}
+
+export function getReceiverError(
+  values: ISettleUpFormValues,
+  members: IGroupMember[],
+): string | undefined {
+  const memberError = getMemberError(values.toMemberId, members);
+
+  if (memberError !== undefined) {
+    return memberError;
+  }
+
+  if (values.toMemberId === values.fromMemberId) {
+    return SAME_MEMBER_MESSAGE;
+  }
+
+  return undefined;
+}
+
+export function validateSettleUpForm(
+  values: ISettleUpFormValues,
+  members: IGroupMember[],
+): ISettleUpFormErrors {
+  return {
+    fromMemberId: getMemberError(values.fromMemberId, members),
+    toMemberId: getReceiverError(values, members),
+    amount: getAmountError(values.amount),
+  };
+}
+
+export function hasSettleUpFormErrors(errors: ISettleUpFormErrors): boolean {
+  return Object.values(errors).some((error) => error !== undefined);
 }

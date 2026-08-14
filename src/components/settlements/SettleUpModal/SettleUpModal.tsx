@@ -13,8 +13,15 @@ import {
   SETTLE_UP_TITLE_ID,
   SUBMIT_LABEL,
 } from "./SettleUpModal.constants";
-import { buildSettleUpFormInitialValues } from "./SettleUpModal.helpers";
-import type { ISettleUpModalProps } from "./SettleUpModal.interfaces";
+import {
+  buildSettleUpFormInitialValues,
+  hasSettleUpFormErrors,
+  validateSettleUpForm,
+} from "./SettleUpModal.helpers";
+import type {
+  ISettleUpFormErrors,
+  ISettleUpModalProps,
+} from "./SettleUpModal.interfaces";
 
 import styles from "./SettleUpModal.module.css";
 
@@ -26,9 +33,17 @@ export function SettleUpModal({
   const [values, setValues] = useState(() =>
     buildSettleUpFormInitialValues(members),
   );
+  const [errors, setErrors] = useState<ISettleUpFormErrors>({});
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const nextErrors = validateSettleUpForm(values, members);
+    setErrors(nextErrors);
+
+    if (hasSettleUpFormErrors(nextErrors)) {
+      return;
+    }
 
     onSubmit(values);
   };
@@ -59,6 +74,10 @@ export function SettleUpModal({
               </option>
             ))}
           </select>
+
+          {errors.fromMemberId ? (
+            <span className={styles.error}>{errors.fromMemberId}</span>
+          ) : null}
         </label>
 
         <label className={styles.field}>
@@ -79,12 +98,17 @@ export function SettleUpModal({
               </option>
             ))}
           </select>
+
+          {errors.toMemberId ? (
+            <span className={styles.error}>{errors.toMemberId}</span>
+          ) : null}
         </label>
 
         <label className={styles.field}>
           <span>{AMOUNT_LABEL}</span>
 
           <input
+            aria-invalid={errors.amount !== undefined}
             inputMode="decimal"
             min="0"
             onChange={(event) =>
@@ -98,6 +122,10 @@ export function SettleUpModal({
             type="number"
             value={values.amount}
           />
+
+          {errors.amount ? (
+            <span className={styles.error}>{errors.amount}</span>
+          ) : null}
         </label>
 
         <div className={styles.actions}>
