@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
 import { expenses as initialExpenses } from "@/data/mockData";
-import type { IExpense } from "@/types/domain.interfaces";
+import type { IExpense, IGroupMember } from "@/types/domain.interfaces";
+import { calculateMemberBalances } from "@/utils/balances.helpers";
 import { createExpense } from "@/utils/expenses.helpers";
 
-export function useGroupExpenses() {
+export function useGroupExpenses(members: IGroupMember[]) {
   const [expenses, setExpenses] = useState<IExpense[]>(initialExpenses);
+
+  const balances = useMemo(
+    () => calculateMemberBalances(members, expenses),
+    [members, expenses],
+  );
 
   const addExpense = ({ values, shares }: IAddExpenseSubmitPayload) => {
     const expense = createExpense({
@@ -21,5 +27,5 @@ export function useGroupExpenses() {
     setExpenses((currentExpenses) => [expense, ...currentExpenses]);
   };
 
-  return { expenses, addExpense };
+  return { expenses, balances, addExpense };
 }

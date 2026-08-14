@@ -1,9 +1,5 @@
-import { EBalanceStatus, ESplitMode } from "@/types/domain.enums";
-import type {
-  IExpense,
-  IGroupMember,
-  IMemberBalance,
-} from "@/types/domain.interfaces";
+import { ESplitMode } from "@/types/domain.enums";
+import type { IExpense, IGroupMember } from "@/types/domain.interfaces";
 
 export const members: IGroupMember[] = [
   { id: "member-1", name: "Turjo" },
@@ -11,39 +7,6 @@ export const members: IGroupMember[] = [
   { id: "member-3", name: "Sadik" },
   { id: "member-4", name: "Wardat" },
   { id: "member-5", name: "Amio" },
-];
-
-export const balances: IMemberBalance[] = [
-  {
-    id: "member-1",
-    name: "Turjo",
-    amount: 3805,
-    status: EBalanceStatus.GETS,
-  },
-  {
-    id: "member-2",
-    name: "Asif",
-    amount: 20,
-    status: EBalanceStatus.OWES,
-  },
-  {
-    id: "member-3",
-    name: "Sadik",
-    amount: 20,
-    status: EBalanceStatus.OWES,
-  },
-  {
-    id: "member-4",
-    name: "Wardat",
-    amount: 1882.5,
-    status: EBalanceStatus.OWES,
-  },
-  {
-    id: "member-5",
-    name: "Amio",
-    amount: 1882.5,
-    status: EBalanceStatus.OWES,
-  },
 ];
 
 export const expenses: IExpense[] = [

@@ -8,7 +8,7 @@ import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
 
-import { balances, members } from "@/data/mockData";
+import { members } from "@/data/mockData";
 import { useGroupExpenses } from "@/hooks/useGroupExpenses";
 import { findMemberName } from "@/utils/members.helpers";
 
@@ -16,7 +16,7 @@ import styles from "./App.module.css";
 
 function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
-  const { expenses, addExpense } = useGroupExpenses();
+  const { expenses, balances, addExpense } = useGroupExpenses(members);
 
   const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
     addExpense(payload);
@@ -44,10 +44,7 @@ function App() {
 
           <section className={styles.balanceGrid}>
             {balances.map((balance) => (
-              <BalanceCard
-                balance={balance}
-                key={balance.id}
-              />
+              <BalanceCard balance={balance} key={balance.id} />
             ))}
           </section>
 
