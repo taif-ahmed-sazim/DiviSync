@@ -69,6 +69,12 @@ export function useGroupLedger(members: IGroupMember[]) {
     );
   };
 
+  const removeExpense = (expenseId: string) => {
+    setExpenses((currentExpenses) =>
+      currentExpenses.filter((expense) => expense.id !== expenseId),
+    );
+  };
+
   const addSettlement = (values: ISettleUpFormValues) => {
     const settlement = createSettlement({
       amount: Number(values.amount),
@@ -89,6 +95,7 @@ export function useGroupLedger(members: IGroupMember[]) {
     balances,
     addExpense,
     updateExpense,
+    removeExpense,
     addSettlement,
   };
 }
