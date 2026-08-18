@@ -8,4 +8,5 @@ export interface INavItem {
 export interface ISidebarProps {
   activeGroupId: string | null;
   groups: IGroup[];
+  onSelectGroup: (groupId: string) => void;
 }

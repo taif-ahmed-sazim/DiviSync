@@ -41,7 +41,8 @@ function App() {
     null,
   );
   const { people } = usePeople();
-  const { groups, activeGroup, activeMembers } = useGroups(people);
+  const { groups, activeGroup, activeMembers, selectGroup } =
+    useGroups(people);
   const currency = activeGroup?.currency ?? DEFAULT_CURRENCY;
   const {
     expenses,
@@ -101,7 +102,11 @@ function App() {
 
   return (
     <div className={styles.shell}>
-      <Sidebar activeGroupId={activeGroup?.id ?? null} groups={groups} />
+      <Sidebar
+        activeGroupId={activeGroup?.id ?? null}
+        groups={groups}
+        onSelectGroup={selectGroup}
+      />
 
       <div className={styles.content}>
         <TopBar />

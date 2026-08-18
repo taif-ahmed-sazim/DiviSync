@@ -7,7 +7,11 @@ import type { ISidebarProps } from "./Sidebar.interfaces";
 
 import styles from "./Sidebar.module.css";
 
-export function Sidebar({ activeGroupId, groups }: ISidebarProps) {
+export function Sidebar({
+  activeGroupId,
+  groups,
+  onSelectGroup,
+}: ISidebarProps) {
   return (
     <aside className={styles.sidebar}>
       <h1 className={styles.brand}>{SIDEBAR_BRAND}</h1>
@@ -31,6 +35,7 @@ export function Sidebar({ activeGroupId, groups }: ISidebarProps) {
                 : styles.groupButton
             }
             key={group.id}
+            onClick={() => onSelectGroup(group.id)}
             type="button"
           >
             {group.name}
