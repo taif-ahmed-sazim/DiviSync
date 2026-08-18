@@ -13,6 +13,7 @@ export interface ISettleUpFormErrors {
 }
 
 export interface ISettleUpModalProps {
+  groupName: string;
   members: IPerson[];
   onClose: () => void;
   onSubmit: (values: ISettleUpFormValues) => void;

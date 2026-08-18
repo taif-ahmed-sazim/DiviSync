@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 import { Modal } from "@/components/common/Modal";
-import { GROUP_NAME } from "@/constants/group.constants";
 import { ESplitMode } from "@/types/domain.enums";
 import { parseAmount } from "@/utils/amount.helpers";
 import { findMemberName } from "@/utils/members.helpers";
@@ -40,6 +39,7 @@ import styles from "./ExpenseFormModal.module.css";
 export function ExpenseFormModal({
   currency,
   expense,
+  groupName,
   members,
   onClose,
   onSubmit,
@@ -81,7 +81,7 @@ export function ExpenseFormModal({
 
   return (
     <Modal
-      eyebrow={GROUP_NAME}
+      eyebrow={groupName}
       onClose={onClose}
       title={isEditing ? EDIT_EXPENSE_TITLE : ADD_EXPENSE_TITLE}
       titleId={EXPENSE_FORM_TITLE_ID}

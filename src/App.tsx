@@ -179,6 +179,7 @@ function App() {
         <ExpenseFormModal
           currency={currency}
           expense={editingExpense}
+          groupName={activeGroup?.name ?? ""}
           members={activeMembers}
           onClose={handleCloseExpenseForm}
           onSubmit={handleSubmitExpense}
@@ -211,6 +212,7 @@ function App() {
 
       {isSettleUpModalOpen ? (
         <SettleUpModal
+          groupName={activeGroup?.name ?? ""}
           members={activeMembers}
           onClose={() => setIsSettleUpModalOpen(false)}
           onSubmit={handleSettleUp}

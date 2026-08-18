@@ -31,6 +31,7 @@ export interface IExpenseFormSubmitPayload {
 
 export interface IExpenseFormModalProps {
   currency: ECurrency;
+  groupName: string;
   expense?: IExpense;
   members: IPerson[];
   onClose: () => void;
