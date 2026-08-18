@@ -53,6 +53,16 @@ export interface IExpense {
   shares: IExpenseShare[];
 }
 
+export interface IDirectExpense {
+  id: string;
+  friendId: string;
+  title: string;
+  date: string;
+  amount: number;
+  paidById: string;
+  shares: IExpenseShare[];
+}
+
 export interface ISettlement {
   id: string;
   groupId: string;
