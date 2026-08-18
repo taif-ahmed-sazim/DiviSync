@@ -20,8 +20,9 @@ import {
   DELETE_EXPENSE_TITLE,
   DELETE_EXPENSE_TITLE_ID,
 } from "@/constants/expenses.constants";
-import { people } from "@/data/mockData";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
+import { useGroups } from "@/hooks/useGroups";
+import { usePeople } from "@/hooks/usePeople";
 import { EActivityKind } from "@/types/domain.enums";
 import { getActivityId } from "@/utils/activity.helpers";
 import { findMemberName } from "@/utils/members.helpers";
@@ -38,6 +39,8 @@ function App() {
   const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(
     null,
   );
+  const { people } = usePeople();
+  const { activeMembers } = useGroups(people);
   const {
     expenses,
     activity,
@@ -46,7 +49,7 @@ function App() {
     updateExpense,
     removeExpense,
     addSettlement,
-  } = useGroupLedger(people);
+  } = useGroupLedger(activeMembers);
 
   const selectedExpense =
     expenses.find((expense) => expense.id === selectedExpenseId) ?? null;
@@ -134,17 +137,17 @@ function App() {
                     expense={item.expense}
                     key={getActivityId(item)}
                     onSelect={() => setSelectedExpenseId(item.expense.id)}
-                    payerName={findMemberName(people, item.expense.paidById)}
+                    payerName={findMemberName(activeMembers, item.expense.paidById)}
                   />
                 ) : (
                   <SettlementRow
                     fromName={findMemberName(
-                      people,
+                      activeMembers,
                       item.settlement.fromMemberId,
                     )}
                     key={getActivityId(item)}
                     settlement={item.settlement}
-                    toName={findMemberName(people, item.settlement.toMemberId)}
+                    toName={findMemberName(activeMembers, item.settlement.toMemberId)}
                   />
                 ),
               )}
@@ -156,7 +159,7 @@ function App() {
       {isExpenseFormModalOpen ? (
         <ExpenseFormModal
           expense={editingExpense}
-          members={people}
+          members={activeMembers}
           onClose={handleCloseExpenseForm}
           onSubmit={handleSubmitExpense}
         />
@@ -165,7 +168,7 @@ function App() {
       {selectedExpense ? (
         <ExpenseDetailsModal
           expense={selectedExpense}
-          members={people}
+          members={activeMembers}
           onClose={() => setSelectedExpenseId(null)}
           onDelete={handleDeleteExpense}
           onEdit={handleEditExpense}
@@ -187,7 +190,7 @@ function App() {
 
       {isSettleUpModalOpen ? (
         <SettleUpModal
-          members={people}
+          members={activeMembers}
           onClose={() => setIsSettleUpModalOpen(false)}
           onSubmit={handleSettleUp}
         />
