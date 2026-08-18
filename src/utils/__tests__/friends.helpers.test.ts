@@ -53,18 +53,20 @@ describe("resolveFriends", () => {
 });
 
 describe("calculateFriendNetCents", () => {
-  it("should be positive when the friend owes the current user", () => {
-    expect(calculateFriendNetCents("person-2", [paidByCurrentUser])).toBe(2000);
+  it("should be negative when the friend owes the current user", () => {
+    expect(calculateFriendNetCents("person-2", [paidByCurrentUser])).toBe(
+      -2000,
+    );
   });
 
-  it("should be negative when the current user owes the friend", () => {
-    expect(calculateFriendNetCents("person-2", [paidByFriend])).toBe(-3000);
+  it("should be positive when the current user owes the friend", () => {
+    expect(calculateFriendNetCents("person-2", [paidByFriend])).toBe(3000);
   });
 
   it("should net expenses in both directions", () => {
     expect(
       calculateFriendNetCents("person-2", [paidByCurrentUser, paidByFriend]),
-    ).toBe(-1000);
+    ).toBe(1000);
   });
 
   it("should ignore expenses belonging to another friend", () => {
@@ -83,15 +85,25 @@ describe("calculateFriendBalances", () => {
       [paidByCurrentUser],
     );
 
-    expect(balance.status).toBe(EBalanceStatus.GETS);
+    expect(balance.status).toBe(EBalanceStatus.OWES);
     expect(balance.amount).toBe(20);
   });
 
   it("should report a friend the current user owes", () => {
     const [balance] = calculateFriendBalances([people[1]], [paidByFriend]);
 
-    expect(balance.status).toBe(EBalanceStatus.OWES);
+    expect(balance.status).toBe(EBalanceStatus.GETS);
     expect(balance.amount).toBe(30);
+  });
+
+  it("should net a friendship with expenses in both directions", () => {
+    const [balance] = calculateFriendBalances(
+      [people[1]],
+      [paidByCurrentUser, paidByFriend],
+    );
+
+    expect(balance.status).toBe(EBalanceStatus.GETS);
+    expect(balance.amount).toBe(10);
   });
 
   it("should report a settled friend with no direct expenses", () => {

@@ -1,4 +1,3 @@
-import { CURRENT_USER_ID } from "@/constants/group.constants";
 import type {
   IDirectExpense,
   IMemberBalance,
@@ -22,12 +21,12 @@ export function calculateFriendNetCents(
     .filter((directExpense) => directExpense.friendId === friendId)
     .reduce((runningNet, directExpense) => {
       const paidCents =
-        directExpense.paidById === CURRENT_USER_ID
+        directExpense.paidById === friendId
           ? toCents(directExpense.amount)
           : 0;
 
       const owedCents = directExpense.shares
-        .filter((share) => share.memberId === CURRENT_USER_ID)
+        .filter((share) => share.memberId === friendId)
         .reduce(
           (runningTotal, share) => runningTotal + toCents(share.amount),
           0,
