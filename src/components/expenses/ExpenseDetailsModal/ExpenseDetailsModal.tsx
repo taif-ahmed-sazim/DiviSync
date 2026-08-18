@@ -20,6 +20,7 @@ import type { IExpenseDetailsModalProps } from "./ExpenseDetailsModal.interfaces
 import styles from "./ExpenseDetailsModal.module.css";
 
 export function ExpenseDetailsModal({
+  currency,
   expense,
   members,
   onClose,
@@ -38,7 +39,7 @@ export function ExpenseDetailsModal({
           <dt className={styles.summaryLabel}>{TOTAL_LABEL}</dt>
 
           <dd className={styles.total}>
-            <strong>{formatCurrency(expense.amount)}</strong>
+            <strong>{formatCurrency(expense.amount, currency)}</strong>
           </dd>
         </div>
 
@@ -65,7 +66,7 @@ export function ExpenseDetailsModal({
           {expense.shares.map((share) => (
             <li className={styles.participant} key={share.memberId}>
               <span>{findMemberName(members, share.memberId)}</span>
-              <strong>{formatCurrency(share.amount)}</strong>
+              <strong>{formatCurrency(share.amount, currency)}</strong>
             </li>
           ))}
         </ul>

@@ -1,4 +1,4 @@
-import type { ESplitMode } from "@/types/domain.enums";
+import type { ECurrency, ESplitMode } from "@/types/domain.enums";
 import type {
   IExpense,
   IExpenseShare,
@@ -30,6 +30,7 @@ export interface IExpenseFormSubmitPayload {
 }
 
 export interface IExpenseFormModalProps {
+  currency: ECurrency;
   expense?: IExpense;
   members: IPerson[];
   onClose: () => void;

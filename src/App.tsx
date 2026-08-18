@@ -20,6 +20,7 @@ import {
   DELETE_EXPENSE_TITLE,
   DELETE_EXPENSE_TITLE_ID,
 } from "@/constants/expenses.constants";
+import { DEFAULT_CURRENCY } from "@/constants/group.constants";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
 import { useGroups } from "@/hooks/useGroups";
 import { usePeople } from "@/hooks/usePeople";
@@ -41,6 +42,7 @@ function App() {
   );
   const { people } = usePeople();
   const { activeGroup, activeMembers } = useGroups(people);
+  const currency = activeGroup?.currency ?? DEFAULT_CURRENCY;
   const {
     expenses,
     activity,
@@ -121,7 +123,11 @@ function App() {
 
           <section className={styles.balanceGrid}>
             {balances.map((balance) => (
-              <BalanceCard balance={balance} key={balance.id} />
+              <BalanceCard
+                balance={balance}
+                currency={currency}
+                key={balance.id}
+              />
             ))}
           </section>
 
@@ -134,6 +140,7 @@ function App() {
               {activity.map((item) =>
                 item.kind === EActivityKind.EXPENSE ? (
                   <ExpenseRow
+                    currency={currency}
                     expense={item.expense}
                     key={getActivityId(item)}
                     onSelect={() => setSelectedExpenseId(item.expense.id)}
@@ -141,6 +148,7 @@ function App() {
                   />
                 ) : (
                   <SettlementRow
+                    currency={currency}
                     fromName={findMemberName(
                       activeMembers,
                       item.settlement.fromMemberId,
@@ -158,6 +166,7 @@ function App() {
 
       {isExpenseFormModalOpen ? (
         <ExpenseFormModal
+          currency={currency}
           expense={editingExpense}
           members={activeMembers}
           onClose={handleCloseExpenseForm}
@@ -167,6 +176,7 @@ function App() {
 
       {selectedExpense ? (
         <ExpenseDetailsModal
+          currency={currency}
           expense={selectedExpense}
           members={activeMembers}
           onClose={() => setSelectedExpenseId(null)}

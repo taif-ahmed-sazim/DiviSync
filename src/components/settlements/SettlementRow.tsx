@@ -1,3 +1,4 @@
+import type { ECurrency } from "@/types/domain.enums";
 import type { ISettlement } from "@/types/domain.interfaces";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { formatExpenseDate } from "@/utils/formatDate";
@@ -7,17 +8,19 @@ import styles from "./SettlementRow.module.css";
 const PAYMENT_TAG = "Payment";
 
 interface ISettlementRowProps {
+  currency: ECurrency;
   fromName: string;
   settlement: ISettlement;
   toName: string;
 }
 
 export function SettlementRow({
+  currency,
   fromName,
   settlement,
   toName,
 }: ISettlementRowProps) {
-  const formattedAmount = formatCurrency(settlement.amount);
+  const formattedAmount = formatCurrency(settlement.amount, currency);
   const formattedDate = formatExpenseDate(settlement.date);
 
   return (

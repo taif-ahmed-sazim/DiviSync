@@ -38,6 +38,7 @@ import type {
 import styles from "./ExpenseFormModal.module.css";
 
 export function ExpenseFormModal({
+  currency,
   expense,
   members,
   onClose,
@@ -231,6 +232,7 @@ export function ExpenseFormModal({
                 {buildAssignedSummary(
                   sumShareAmounts(shares),
                   parseAmount(values.amount),
+                  currency,
                 )}
               </strong>
             </p>
@@ -244,7 +246,7 @@ export function ExpenseFormModal({
         {values.splitMode === ESplitMode.EQUAL && shares.length > 0 ? (
           <p className={styles.summary}>
             <span>{EQUAL_SPLIT_LABEL}</span>
-            <strong>{buildPerPersonSummary(shares[0].amount)}</strong>
+            <strong>{buildPerPersonSummary(shares[0].amount, currency)}</strong>
           </p>
         ) : null}
 
