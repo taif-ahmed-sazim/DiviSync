@@ -7,6 +7,7 @@ const ISO_DATE_FORMAT = "YYYY-MM-DD";
 export function createExpense(input: ICreateExpenseInput): IExpense {
   return {
     id: crypto.randomUUID(),
+    groupId: input.groupId,
     title: input.title,
     date: dayjs().format(ISO_DATE_FORMAT),
     amount: input.amount,

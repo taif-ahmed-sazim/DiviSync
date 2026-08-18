@@ -40,7 +40,7 @@ function App() {
     null,
   );
   const { people } = usePeople();
-  const { activeMembers } = useGroups(people);
+  const { activeGroup, activeMembers } = useGroups(people);
   const {
     expenses,
     activity,
@@ -49,7 +49,7 @@ function App() {
     updateExpense,
     removeExpense,
     addSettlement,
-  } = useGroupLedger(activeMembers);
+  } = useGroupLedger(activeGroup, activeMembers);
 
   const selectedExpense =
     expenses.find((expense) => expense.id === selectedExpenseId) ?? null;

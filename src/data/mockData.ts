@@ -41,6 +41,7 @@ export const groups: IGroup[] = [
 export const expenses: IExpense[] = [
   {
     id: "expense-1",
+    groupId: "group-1",
     title: "Shawpno groceries",
     date: "2026-01-18",
     amount: 100,
@@ -57,6 +58,7 @@ export const expenses: IExpense[] = [
   },
   {
     id: "expense-2",
+    groupId: "group-1",
     title: "Hotel booking",
     date: "2026-01-16",
     amount: 5562,
@@ -73,6 +75,7 @@ export const expenses: IExpense[] = [
   },
   {
     id: "expense-3",
+    groupId: "group-1",
     title: "Lunch",
     date: "2026-01-13",
     amount: 5613,
@@ -88,6 +91,7 @@ export const expenses: IExpense[] = [
   },
   {
     id: "expense-4",
+    groupId: "group-1",
     title: "Snacks",
     date: "2026-01-07",
     amount: 42,
@@ -100,14 +104,68 @@ export const expenses: IExpense[] = [
       { memberId: "person-3", amount: 14 },
     ],
   },
+  {
+    id: "expense-5",
+    groupId: "group-2",
+    title: "Flight tickets",
+    date: "2026-01-22",
+    amount: 900,
+    paidById: "person-1",
+    participantIds: ["person-1", "person-2", "person-4"],
+    splitMode: ESplitMode.EQUAL,
+    shares: [
+      { memberId: "person-1", amount: 300 },
+      { memberId: "person-2", amount: 300 },
+      { memberId: "person-4", amount: 300 },
+    ],
+  },
+  {
+    id: "expense-6",
+    groupId: "group-2",
+    title: "Villa stay",
+    date: "2026-01-23",
+    amount: 600,
+    paidById: "person-2",
+    participantIds: ["person-1", "person-2", "person-4"],
+    splitMode: ESplitMode.EQUAL,
+    shares: [
+      { memberId: "person-1", amount: 200 },
+      { memberId: "person-2", amount: 200 },
+      { memberId: "person-4", amount: 200 },
+    ],
+  },
+  {
+    id: "expense-7",
+    groupId: "group-3",
+    title: "Birthday cake",
+    date: "2026-01-25",
+    amount: 1500,
+    paidById: "person-3",
+    participantIds: ["person-1", "person-2", "person-3"],
+    splitMode: ESplitMode.EQUAL,
+    shares: [
+      { memberId: "person-1", amount: 500 },
+      { memberId: "person-2", amount: 500 },
+      { memberId: "person-3", amount: 500 },
+    ],
+  },
 ];
 
 export const settlements: ISettlement[] = [
   {
     id: "settlement-1",
+    groupId: "group-1",
     date: "2026-01-20",
     amount: 500,
     fromMemberId: "person-5",
+    toMemberId: "person-1",
+  },
+  {
+    id: "settlement-2",
+    groupId: "group-2",
+    date: "2026-01-24",
+    amount: 100,
+    fromMemberId: "person-4",
     toMemberId: "person-1",
   },
 ];

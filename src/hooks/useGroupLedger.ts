@@ -8,6 +8,7 @@ import {
 } from "@/data/mockData";
 import type {
   IExpense,
+  IGroup,
   IPerson,
   ISettlement,
 } from "@/types/domain.interfaces";
@@ -19,23 +20,44 @@ import {
 } from "@/utils/expenses.helpers";
 import { createSettlement } from "@/utils/settlements.helpers";
 
-export function useGroupLedger(members: IPerson[]) {
+export function useGroupLedger(group: IGroup | null, members: IPerson[]) {
   const [expenses, setExpenses] = useState<IExpense[]>(initialExpenses);
   const [settlements, setSettlements] =
     useState<ISettlement[]>(initialSettlements);
 
+  const groupExpenses = useMemo(() => {
+    if (group === null) {
+      return [];
+    }
+
+    return expenses.filter((expense) => expense.groupId === group.id);
+  }, [expenses, group]);
+
+  const groupSettlements = useMemo(() => {
+    if (group === null) {
+      return [];
+    }
+
+    return settlements.filter((settlement) => settlement.groupId === group.id);
+  }, [settlements, group]);
+
   const activity = useMemo(
-    () => buildGroupActivity(expenses, settlements),
-    [expenses, settlements],
+    () => buildGroupActivity(groupExpenses, groupSettlements),
+    [groupExpenses, groupSettlements],
   );
 
   const balances = useMemo(
-    () => calculateMemberBalances(members, expenses, settlements),
-    [members, expenses, settlements],
+    () => calculateMemberBalances(members, groupExpenses, groupSettlements),
+    [members, groupExpenses, groupSettlements],
   );
 
   const addExpense = ({ values, shares }: IExpenseFormSubmitPayload) => {
+    if (group === null) {
+      return;
+    }
+
     const expense = createExpense({
+      groupId: group.id,
       title: values.description.trim(),
       amount: Number(values.amount),
       paidById: values.paidById,
@@ -58,6 +80,7 @@ export function useGroupLedger(members: IPerson[]) {
         }
 
         return applyExpenseUpdate(expense, {
+          groupId: expense.groupId,
           title: values.description.trim(),
           amount: Number(values.amount),
           paidById: values.paidById,
@@ -76,7 +99,12 @@ export function useGroupLedger(members: IPerson[]) {
   };
 
   const addSettlement = (values: ISettleUpFormValues) => {
+    if (group === null) {
+      return;
+    }
+
     const settlement = createSettlement({
+      groupId: group.id,
       amount: Number(values.amount),
       fromMemberId: values.fromMemberId,
       toMemberId: values.toMemberId,
@@ -89,8 +117,8 @@ export function useGroupLedger(members: IPerson[]) {
   };
 
   return {
-    expenses,
-    settlements,
+    expenses: groupExpenses,
+    settlements: groupSettlements,
     activity,
     balances,
     addExpense,

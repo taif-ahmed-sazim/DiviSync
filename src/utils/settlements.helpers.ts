@@ -12,6 +12,7 @@ export function createSettlement(
 ): ISettlement {
   return {
     id: crypto.randomUUID(),
+    groupId: input.groupId,
     date: dayjs().format(ISO_DATE_FORMAT),
     amount: input.amount,
     fromMemberId: input.fromMemberId,
