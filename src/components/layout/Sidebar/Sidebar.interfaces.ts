@@ -1,9 +1,11 @@
+import type { IGroup } from "@/types/domain.interfaces";
+
 export interface INavItem {
   id: string;
   label: string;
 }
 
-export interface IGroupItem {
-  id: string;
-  name: string;
+export interface ISidebarProps {
+  activeGroupId: string | null;
+  groups: IGroup[];
 }
