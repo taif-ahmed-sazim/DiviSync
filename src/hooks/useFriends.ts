@@ -9,9 +9,13 @@ import {
   calculateFriendBalances,
   resolveFriends,
 } from "@/utils/friends.helpers";
+import { findPersonByName } from "@/utils/people.helpers";
 
-export function useFriends(people: IPerson[]) {
-  const [friendIds] = useState<string[]>(initialFriendIds);
+export function useFriends(
+  people: IPerson[],
+  addPerson: (name: string) => IPerson,
+) {
+  const [friendIds, setFriendIds] = useState<string[]>(initialFriendIds);
   const [directExpenses] =
     useState<IDirectExpense[]>(initialDirectExpenses);
 
@@ -25,5 +29,22 @@ export function useFriends(people: IPerson[]) {
     [friends, directExpenses],
   );
 
-  return { friends, friendBalances };
+  const addFriend = (name: string) => {
+    const existingPerson = findPersonByName(people, name);
+
+    if (existingPerson !== null) {
+      setFriendIds((currentFriendIds) => [
+        ...currentFriendIds,
+        existingPerson.id,
+      ]);
+
+      return;
+    }
+
+    const person = addPerson(name);
+
+    setFriendIds((currentFriendIds) => [...currentFriendIds, person.id]);
+  };
+
+  return { friends, friendBalances, addFriend };
 }

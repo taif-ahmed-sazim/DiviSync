@@ -2,6 +2,7 @@ import { EBalanceStatus } from "@/types/domain.enums";
 import { buildBalanceSummary } from "@/utils/balances.helpers";
 
 import {
+  ADD_FRIEND_LABEL,
   FRIENDS_SUBTITLE,
   FRIENDS_TITLE,
   NO_FRIENDS_MESSAGE,
@@ -10,7 +11,11 @@ import type { IFriendsViewProps } from "./FriendsView.interfaces";
 
 import styles from "./FriendsView.module.css";
 
-export function FriendsView({ balances, currency }: IFriendsViewProps) {
+export function FriendsView({
+  balances,
+  currency,
+  onAddFriend,
+}: IFriendsViewProps) {
   return (
     <section className={styles.view}>
       <header className={styles.header}>
@@ -18,6 +23,14 @@ export function FriendsView({ balances, currency }: IFriendsViewProps) {
           <h1 className={styles.title}>{FRIENDS_TITLE}</h1>
           <p className={styles.subtitle}>{FRIENDS_SUBTITLE}</p>
         </div>
+
+        <button
+          className={styles.addButton}
+          onClick={onAddFriend}
+          type="button"
+        >
+          {ADD_FRIEND_LABEL}
+        </button>
       </header>
 
       {balances.length === 0 ? (

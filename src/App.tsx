@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { BalanceCard } from "@/components/balances/BalanceCard";
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
+import { AddFriendModal } from "@/components/friends/AddFriendModal";
 import { FriendsView } from "@/components/friends/FriendsView";
 import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
@@ -54,6 +55,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<EGroupTab>(EGroupTab.BALANCES);
   const [activeView, setActiveView] = useState<EAppView>(EAppView.GROUP);
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+  const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
   );
@@ -61,7 +63,7 @@ function App() {
   const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(
     null,
   );
-  const { people } = usePeople();
+  const { people, addPerson } = usePeople();
   const {
     groups,
     activeGroup,
@@ -71,7 +73,7 @@ function App() {
     removeMember,
     selectGroup,
   } = useGroups(people);
-  const { friendBalances } = useFriends(people);
+  const { friends, friendBalances, addFriend } = useFriends(people, addPerson);
   const currency = activeGroup?.currency ?? DEFAULT_CURRENCY;
   const {
     expenses,
@@ -125,6 +127,11 @@ function App() {
     setIsExpenseFormModalOpen(false);
   };
 
+  const handleAddFriend = (name: string) => {
+    addFriend(name);
+    setIsAddFriendModalOpen(false);
+  };
+
   const handleSelectGroup = (groupId: string) => {
     selectGroup(groupId);
     setActiveView(EAppView.GROUP);
@@ -164,6 +171,7 @@ function App() {
             <FriendsView
               balances={friendBalances}
               currency={DEFAULT_CURRENCY}
+              onAddFriend={() => setIsAddFriendModalOpen(true)}
             />
           ) : (
             <>
@@ -293,6 +301,14 @@ function App() {
           onConfirm={handleConfirmDelete}
           title={DELETE_EXPENSE_TITLE}
           titleId={DELETE_EXPENSE_TITLE_ID}
+        />
+      ) : null}
+
+      {isAddFriendModalOpen ? (
+        <AddFriendModal
+          friends={friends}
+          onClose={() => setIsAddFriendModalOpen(false)}
+          onSubmit={handleAddFriend}
         />
       ) : null}
 
