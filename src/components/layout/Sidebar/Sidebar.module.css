@@ -106,3 +106,18 @@
 .newGroupButton:hover {
   background: #f8fafc;
 }
+
+.activeNavButton {
+  width: 100%;
+  padding: 10px 12px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: #eef2ff;
+
+  color: #4338ca;
+
+  font-weight: 600;
+  text-align: left;
+}

@@ -24,3 +24,8 @@ export enum EGroupTab {
   BALANCES = "balances",
   MEMBERS = "members",
 }
+
+export enum EAppView {
+  GROUP = "group",
+  FRIENDS = "friends",
+}

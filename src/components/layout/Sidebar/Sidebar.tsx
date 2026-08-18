@@ -4,23 +4,42 @@ import {
   NEW_GROUP_LABEL,
   SIDEBAR_BRAND,
 } from "./Sidebar.constants";
-import type { ISidebarProps } from "./Sidebar.interfaces";
+import type { INavItem, ISidebarProps } from "./Sidebar.interfaces";
 
 import styles from "./Sidebar.module.css";
 
 export function Sidebar({
   activeGroupId,
+  activeView,
   groups,
   onCreateGroup,
   onSelectGroup,
+  onSelectView,
 }: ISidebarProps) {
+  const handleSelectNavItem = (item: INavItem) => {
+    if (item.view === undefined) {
+      return;
+    }
+
+    onSelectView(item.view);
+  };
+
   return (
     <aside className={styles.sidebar}>
       <h1 className={styles.brand}>{SIDEBAR_BRAND}</h1>
 
       <nav className={styles.navigation}>
         {NAVIGATION_ITEMS.map((item) => (
-          <button className={styles.navButton} key={item.id}>
+          <button
+            className={
+              item.view === activeView
+                ? styles.activeNavButton
+                : styles.navButton
+            }
+            key={item.id}
+            onClick={() => handleSelectNavItem(item)}
+            type="button"
+          >
             {item.label}
           </button>
         ))}
