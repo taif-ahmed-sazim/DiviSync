@@ -1,3 +1,5 @@
+import { EAppView } from "@/types/domain.enums";
+
 import {
   GROUPS_SECTION_TITLE,
   NAVIGATION_ITEMS,
@@ -16,6 +18,10 @@ export function Sidebar({
   onSelectGroup,
   onSelectView,
 }: ISidebarProps) {
+  const isGroupActive = (groupId: string) => {
+    return activeView === EAppView.GROUP && groupId === activeGroupId;
+  };
+
   const handleSelectNavItem = (item: INavItem) => {
     if (item.view === undefined) {
       return;
@@ -51,7 +57,7 @@ export function Sidebar({
         {groups.map((group) => (
           <button
             className={
-              group.id === activeGroupId
+              isGroupActive(group.id)
                 ? styles.activeGroupButton
                 : styles.groupButton
             }

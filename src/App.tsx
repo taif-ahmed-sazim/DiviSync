@@ -144,6 +144,8 @@ function App() {
 
   const handleCreateGroup = (values: ICreateGroupFormValues) => {
     addGroup(values);
+    setActiveView(EAppView.GROUP);
+    setActiveTab(EGroupTab.BALANCES);
     setIsCreateGroupModalOpen(false);
   };
 

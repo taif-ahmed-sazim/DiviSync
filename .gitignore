@@ -28,3 +28,4 @@ ENGINEERING_CONVENTIONS.md
 .specstory/
 .cursorindexingignore
 .envrc
+.gstack/
