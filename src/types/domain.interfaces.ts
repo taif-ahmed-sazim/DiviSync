@@ -1,8 +1,27 @@
-import type { EBalanceStatus, ESplitMode } from "@/types/domain.enums";
+import type {
+  EBalanceStatus,
+  ECurrency,
+  ESplitMode,
+} from "@/types/domain.enums";
 
 export interface IPerson {
   id: string;
   name: string;
+}
+
+export interface IGroup {
+  id: string;
+  name: string;
+  description: string;
+  currency: ECurrency;
+  memberIds: string[];
+}
+
+export interface ICreateGroupInput {
+  name: string;
+  description: string;
+  currency: ECurrency;
+  memberIds: string[];
 }
 
 export interface IMemberBalance {

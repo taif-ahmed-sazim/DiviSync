@@ -13,3 +13,9 @@ export enum EActivityKind {
   EXPENSE = "expense",
   SETTLEMENT = "settlement",
 }
+
+export enum ECurrency {
+  BDT = "BDT",
+  USD = "USD",
+  EUR = "EUR",
+}
