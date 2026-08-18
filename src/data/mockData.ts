@@ -1,11 +1,11 @@
 import { ESplitMode } from "@/types/domain.enums";
 import type {
   IExpense,
-  IGroupMember,
+  IPerson,
   ISettlement,
 } from "@/types/domain.interfaces";
 
-export const members: IGroupMember[] = [
+export const members: IPerson[] = [
   { id: "member-1", name: "Turjo" },
   { id: "member-2", name: "Asif" },
   { id: "member-3", name: "Sadik" },

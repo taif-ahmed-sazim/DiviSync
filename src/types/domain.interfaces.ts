@@ -1,6 +1,6 @@
 import type { EBalanceStatus, ESplitMode } from "@/types/domain.enums";
 
-export interface IGroupMember {
+export interface IPerson {
   id: string;
   name: string;
 }

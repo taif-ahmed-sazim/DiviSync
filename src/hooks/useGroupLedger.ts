@@ -8,7 +8,7 @@ import {
 } from "@/data/mockData";
 import type {
   IExpense,
-  IGroupMember,
+  IPerson,
   ISettlement,
 } from "@/types/domain.interfaces";
 import { buildGroupActivity } from "@/utils/activity.helpers";
@@ -19,7 +19,7 @@ import {
 } from "@/utils/expenses.helpers";
 import { createSettlement } from "@/utils/settlements.helpers";
 
-export function useGroupLedger(members: IGroupMember[]) {
+export function useGroupLedger(members: IPerson[]) {
   const [expenses, setExpenses] = useState<IExpense[]>(initialExpenses);
   const [settlements, setSettlements] =
     useState<ISettlement[]>(initialSettlements);

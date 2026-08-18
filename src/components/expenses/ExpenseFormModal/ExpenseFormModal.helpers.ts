@@ -3,7 +3,7 @@ import { ESplitMode } from "@/types/domain.enums";
 import type {
   IExpense,
   IExpenseShare,
-  IGroupMember,
+  IPerson,
 } from "@/types/domain.interfaces";
 import { getAmountError, parseAmount } from "@/utils/amount.helpers";
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -34,7 +34,7 @@ export const expenseFormInitialValues: IExpenseFormValues = {
 };
 
 export function buildExpenseFormInitialValues(
-  members: IGroupMember[],
+  members: IPerson[],
 ): IExpenseFormValues {
   return {
     ...expenseFormInitialValues,
@@ -52,7 +52,7 @@ export function buildCustomShareInputs(
 }
 
 export function buildExpenseFormValues(
-  members: IGroupMember[],
+  members: IPerson[],
   expense?: IExpense,
 ): IExpenseFormValues {
   if (expense === undefined) {
@@ -120,7 +120,7 @@ export function buildPerPersonSummary(perPersonAmount: number): string {
 
 export function getPayerError(
   paidById: string,
-  members: IGroupMember[],
+  members: IPerson[],
 ): string | undefined {
   const isGroupMember = members.some((member) => member.id === paidById);
 
@@ -166,7 +166,7 @@ export function buildAssignedSummary(
 
 export function validateExpenseForm(
   values: IExpenseFormValues,
-  members: IGroupMember[],
+  members: IPerson[],
   shares: IExpenseShare[],
 ): IExpenseFormErrors {
   return {

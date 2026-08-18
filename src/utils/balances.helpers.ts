@@ -6,7 +6,7 @@ import {
 import { EBalanceStatus } from "@/types/domain.enums";
 import type {
   IExpense,
-  IGroupMember,
+  IPerson,
   IMemberBalance,
   ISettlement,
 } from "@/types/domain.interfaces";
@@ -76,7 +76,7 @@ export function buildBalanceSummary(balance: IMemberBalance): string {
 }
 
 export function calculateMemberBalances(
-  members: IGroupMember[],
+  members: IPerson[],
   expenses: IExpense[],
   settlements: ISettlement[],
 ): IMemberBalance[] {

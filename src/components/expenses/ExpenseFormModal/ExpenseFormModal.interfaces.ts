@@ -2,7 +2,7 @@ import type { ESplitMode } from "@/types/domain.enums";
 import type {
   IExpense,
   IExpenseShare,
-  IGroupMember,
+  IPerson,
 } from "@/types/domain.interfaces";
 
 import type { TCustomShareInputs } from "./ExpenseFormModal.types";
@@ -31,7 +31,7 @@ export interface IExpenseFormSubmitPayload {
 
 export interface IExpenseFormModalProps {
   expense?: IExpense;
-  members: IGroupMember[];
+  members: IPerson[];
   onClose: () => void;
   onSubmit: (payload: IExpenseFormSubmitPayload) => void;
 }

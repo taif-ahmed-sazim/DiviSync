@@ -1,8 +1,8 @@
-import type { IExpense, IGroupMember } from "@/types/domain.interfaces";
+import type { IExpense, IPerson } from "@/types/domain.interfaces";
 
 export interface IExpenseDetailsModalProps {
   expense: IExpense;
-  members: IGroupMember[];
+  members: IPerson[];
   onClose: () => void;
   onDelete: () => void;
   onEdit: () => void;

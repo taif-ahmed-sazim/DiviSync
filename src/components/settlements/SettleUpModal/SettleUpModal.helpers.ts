@@ -1,5 +1,5 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
-import type { IGroupMember } from "@/types/domain.interfaces";
+import type { IPerson } from "@/types/domain.interfaces";
 import { getAmountError } from "@/utils/amount.helpers";
 
 import {
@@ -18,7 +18,7 @@ export const settleUpFormInitialValues: ISettleUpFormValues = {
 };
 
 export function buildSettleUpFormInitialValues(
-  members: IGroupMember[],
+  members: IPerson[],
 ): ISettleUpFormValues {
   const receiver = members.find((member) => member.id !== CURRENT_USER_ID);
 
@@ -30,7 +30,7 @@ export function buildSettleUpFormInitialValues(
 
 export function getMemberError(
   memberId: string,
-  members: IGroupMember[],
+  members: IPerson[],
 ): string | undefined {
   const isGroupMember = members.some((member) => member.id === memberId);
 
@@ -43,7 +43,7 @@ export function getMemberError(
 
 export function getReceiverError(
   values: ISettleUpFormValues,
-  members: IGroupMember[],
+  members: IPerson[],
 ): string | undefined {
   const memberError = getMemberError(values.toMemberId, members);
 
@@ -60,7 +60,7 @@ export function getReceiverError(
 
 export function validateSettleUpForm(
   values: ISettleUpFormValues,
-  members: IGroupMember[],
+  members: IPerson[],
 ): ISettleUpFormErrors {
   return {
     fromMemberId: getMemberError(values.fromMemberId, members),
