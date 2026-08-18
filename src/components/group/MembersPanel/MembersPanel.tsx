@@ -1,3 +1,4 @@
+import { REMOVE_MEMBER_LABEL } from "@/constants/members.constants";
 import { EBalanceStatus } from "@/types/domain.enums";
 import { buildBalanceSummary } from "@/utils/balances.helpers";
 
@@ -10,9 +11,10 @@ import type { IMembersPanelProps } from "./MembersPanel.interfaces";
 import styles from "./MembersPanel.module.css";
 
 export function MembersPanel({
-  balances,
   currency,
   onAddMember,
+  onRemoveMember,
+  rows,
 }: IMembersPanelProps) {
   return (
     <section className={styles.panel}>
@@ -29,25 +31,44 @@ export function MembersPanel({
       </header>
 
       <ul className={styles.list}>
-        {balances.map((balance) => {
+        {rows.map((row) => {
           let statusClassName = styles.neutral;
 
-          if (balance.status === EBalanceStatus.GETS) {
+          if (row.balance.status === EBalanceStatus.GETS) {
             statusClassName = styles.positive;
-          } else if (balance.status === EBalanceStatus.OWES) {
+          } else if (row.balance.status === EBalanceStatus.OWES) {
             statusClassName = styles.negative;
           }
 
           return (
-            <li className={styles.member} key={balance.id}>
-              <span className={styles.avatar}>{balance.name.charAt(0)}</span>
+            <li className={styles.member} key={row.balance.id}>
+              <span className={styles.avatar}>
+                {row.balance.name.charAt(0)}
+              </span>
 
               <div className={styles.details}>
-                <strong>{balance.name}</strong>
+                <strong>{row.balance.name}</strong>
 
                 <span className={statusClassName}>
-                  {buildBalanceSummary(balance, currency)}
+                  {buildBalanceSummary(row.balance, currency)}
                 </span>
+              </div>
+
+              <div className={styles.removal}>
+                <button
+                  className={styles.removeButton}
+                  disabled={row.removalError !== undefined}
+                  onClick={() => onRemoveMember(row.balance.id)}
+                  type="button"
+                >
+                  {REMOVE_MEMBER_LABEL}
+                </button>
+
+                {row.removalError ? (
+                  <span className={styles.removalReason}>
+                    {row.removalError}
+                  </span>
+                ) : null}
               </div>
             </li>
           );

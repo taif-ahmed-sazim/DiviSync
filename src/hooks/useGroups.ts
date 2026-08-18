@@ -51,12 +51,30 @@ export function useGroups(people: IPerson[]) {
     );
   };
 
+  const removeMember = (personId: string) => {
+    setGroups((currentGroups) =>
+      currentGroups.map((group) => {
+        if (group.id !== activeGroupId) {
+          return group;
+        }
+
+        return {
+          ...group,
+          memberIds: group.memberIds.filter(
+            (memberId) => memberId !== personId,
+          ),
+        };
+      }),
+    );
+  };
+
   return {
     groups,
     activeGroup,
     activeMembers,
     addGroup,
     addMember,
+    removeMember,
     selectGroup,
   };
 }

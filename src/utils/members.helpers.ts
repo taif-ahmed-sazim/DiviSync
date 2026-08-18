@@ -9,6 +9,7 @@ import { EBalanceStatus } from "@/types/domain.enums";
 import type {
   IExpense,
   IMemberBalance,
+  IMemberRow,
   IPerson,
   ISettlement,
 } from "@/types/domain.interfaces";
@@ -79,4 +80,20 @@ export function getMemberRemovalError(
   }
 
   return undefined;
+}
+
+export function buildMemberRows(
+  balances: IMemberBalance[],
+  expenses: IExpense[],
+  settlements: ISettlement[],
+): IMemberRow[] {
+  return balances.map((balance) => ({
+    balance,
+    removalError: getMemberRemovalError(
+      balance.id,
+      balances,
+      expenses,
+      settlements,
+    ),
+  }));
 }

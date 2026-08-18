@@ -39,6 +39,7 @@ import { getActivityId } from "@/utils/activity.helpers";
 import { resolveNonMembers } from "@/utils/group.helpers";
 import {
   buildMemberNamesSummary,
+  buildMemberRows,
   findMemberName,
 } from "@/utils/members.helpers";
 
@@ -64,11 +65,13 @@ function App() {
     activeMembers,
     addGroup,
     addMember,
+    removeMember,
     selectGroup,
   } = useGroups(people);
   const currency = activeGroup?.currency ?? DEFAULT_CURRENCY;
   const {
     expenses,
+    settlements,
     activity,
     balances,
     addExpense,
@@ -229,9 +232,10 @@ function App() {
             </>
           ) : (
             <MembersPanel
-              balances={balances}
               currency={currency}
               onAddMember={() => setIsAddMemberModalOpen(true)}
+              onRemoveMember={removeMember}
+              rows={buildMemberRows(balances, expenses, settlements)}
             />
           )}
         </main>

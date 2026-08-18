@@ -31,6 +31,11 @@ export interface IMemberBalance {
   status: EBalanceStatus;
 }
 
+export interface IMemberRow {
+  balance: IMemberBalance;
+  removalError?: string;
+}
+
 export interface IExpenseShare {
   memberId: string;
   amount: number;
