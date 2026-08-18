@@ -19,3 +19,8 @@ export enum ECurrency {
   USD = "USD",
   EUR = "EUR",
 }
+
+export enum EGroupTab {
+  BALANCES = "balances",
+  MEMBERS = "members",
+}

@@ -9,6 +9,7 @@ import { ExpenseRow } from "@/components/expenses/ExpenseRow";
 import { CreateGroupModal } from "@/components/group/CreateGroupModal";
 import type { ICreateGroupFormValues } from "@/components/group/CreateGroupModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
+import { MembersPanel } from "@/components/group/MembersPanel";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
 import { SettlementRow } from "@/components/settlements/SettlementRow";
@@ -22,11 +23,17 @@ import {
   DELETE_EXPENSE_TITLE,
   DELETE_EXPENSE_TITLE_ID,
 } from "@/constants/expenses.constants";
-import { DEFAULT_CURRENCY } from "@/constants/group.constants";
+import {
+  BALANCES_TAB_LABEL,
+  DEFAULT_CURRENCY,
+  EXPENSE_HISTORY_HEADING,
+  MEMBERS_TAB_LABEL,
+  STATS_TAB_LABEL,
+} from "@/constants/group.constants";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
 import { useGroups } from "@/hooks/useGroups";
 import { usePeople } from "@/hooks/usePeople";
-import { EActivityKind } from "@/types/domain.enums";
+import { EActivityKind, EGroupTab } from "@/types/domain.enums";
 import { getActivityId } from "@/utils/activity.helpers";
 import {
   buildMemberNamesSummary,
@@ -39,6 +46,7 @@ function App() {
   const [isExpenseFormModalOpen, setIsExpenseFormModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<EGroupTab>(EGroupTab.BALANCES);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
   );
@@ -133,54 +141,81 @@ function App() {
           />
 
           <nav className={styles.tabs}>
-            <button className={styles.activeTab}>
-              Balances
+            <button
+              className={
+                activeTab === EGroupTab.BALANCES ? styles.activeTab : undefined
+              }
+              onClick={() => setActiveTab(EGroupTab.BALANCES)}
+              type="button"
+            >
+              {BALANCES_TAB_LABEL}
             </button>
 
-            <button>Stats</button>
-            <button>Members</button>
+            <button type="button">{STATS_TAB_LABEL}</button>
+
+            <button
+              className={
+                activeTab === EGroupTab.MEMBERS ? styles.activeTab : undefined
+              }
+              onClick={() => setActiveTab(EGroupTab.MEMBERS)}
+              type="button"
+            >
+              {MEMBERS_TAB_LABEL}
+            </button>
           </nav>
 
-          <section className={styles.balanceGrid}>
-            {balances.map((balance) => (
-              <BalanceCard
-                balance={balance}
-                currency={currency}
-                key={balance.id}
-              />
-            ))}
-          </section>
-
-          <section className={styles.expenseSection}>
-            <h2 className={styles.sectionHeading}>
-              January 2026
-            </h2>
-
-            <div className={styles.expenseList}>
-              {activity.map((item) =>
-                item.kind === EActivityKind.EXPENSE ? (
-                  <ExpenseRow
+          {activeTab === EGroupTab.BALANCES ? (
+            <>
+              <section className={styles.balanceGrid}>
+                {balances.map((balance) => (
+                  <BalanceCard
+                    balance={balance}
                     currency={currency}
-                    expense={item.expense}
-                    key={getActivityId(item)}
-                    onSelect={() => setSelectedExpenseId(item.expense.id)}
-                    payerName={findMemberName(activeMembers, item.expense.paidById)}
+                    key={balance.id}
                   />
-                ) : (
-                  <SettlementRow
-                    currency={currency}
-                    fromName={findMemberName(
-                      activeMembers,
-                      item.settlement.fromMemberId,
-                    )}
-                    key={getActivityId(item)}
-                    settlement={item.settlement}
-                    toName={findMemberName(activeMembers, item.settlement.toMemberId)}
-                  />
-                ),
-              )}
-            </div>
-          </section>
+                ))}
+              </section>
+
+              <section className={styles.expenseSection}>
+                <h2 className={styles.sectionHeading}>
+                  {EXPENSE_HISTORY_HEADING}
+                </h2>
+
+                <div className={styles.expenseList}>
+                  {activity.map((item) =>
+                    item.kind === EActivityKind.EXPENSE ? (
+                      <ExpenseRow
+                        currency={currency}
+                        expense={item.expense}
+                        key={getActivityId(item)}
+                        onSelect={() => setSelectedExpenseId(item.expense.id)}
+                        payerName={findMemberName(
+                          activeMembers,
+                          item.expense.paidById,
+                        )}
+                      />
+                    ) : (
+                      <SettlementRow
+                        currency={currency}
+                        fromName={findMemberName(
+                          activeMembers,
+                          item.settlement.fromMemberId,
+                        )}
+                        key={getActivityId(item)}
+                        settlement={item.settlement}
+                        toName={findMemberName(
+                          activeMembers,
+                          item.settlement.toMemberId,
+                        )}
+                      />
+                    ),
+                  )}
+                </div>
+              </section>
+            </>
+          ) : (
+            <MembersPanel balances={balances} currency={currency} />
+          )}
         </main>
       </div>
 
