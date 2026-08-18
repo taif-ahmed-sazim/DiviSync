@@ -8,7 +8,7 @@
 }
 
 .title {
-  margin: 0 0 1rem;
+  margin: 0;
 
   font-size: 1rem;
   font-weight: 700;
@@ -70,4 +70,28 @@
 .neutral {
   color: #64748b;
   font-size: 0.875rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+}
+
+.addButton {
+  padding: 0.5rem 0.875rem;
+
+  color: white;
+  background: #4f46e5;
+
+  border: 0;
+  border-radius: 0.5rem;
+
+  font-weight: 600;
+}
+
+.addButton:hover {
+  background: #4338ca;
 }

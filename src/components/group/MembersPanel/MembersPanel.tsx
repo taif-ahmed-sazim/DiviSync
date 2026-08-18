@@ -1,15 +1,32 @@
 import { EBalanceStatus } from "@/types/domain.enums";
 import { buildBalanceSummary } from "@/utils/balances.helpers";
 
-import { MEMBERS_PANEL_TITLE } from "./MembersPanel.constants";
+import {
+  ADD_MEMBER_LABEL,
+  MEMBERS_PANEL_TITLE,
+} from "./MembersPanel.constants";
 import type { IMembersPanelProps } from "./MembersPanel.interfaces";
 
 import styles from "./MembersPanel.module.css";
 
-export function MembersPanel({ balances, currency }: IMembersPanelProps) {
+export function MembersPanel({
+  balances,
+  currency,
+  onAddMember,
+}: IMembersPanelProps) {
   return (
     <section className={styles.panel}>
-      <h2 className={styles.title}>{MEMBERS_PANEL_TITLE}</h2>
+      <header className={styles.header}>
+        <h2 className={styles.title}>{MEMBERS_PANEL_TITLE}</h2>
+
+        <button
+          className={styles.addButton}
+          onClick={onAddMember}
+          type="button"
+        >
+          {ADD_MEMBER_LABEL}
+        </button>
+      </header>
 
       <ul className={styles.list}>
         {balances.map((balance) => {

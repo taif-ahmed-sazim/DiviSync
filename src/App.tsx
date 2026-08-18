@@ -6,6 +6,7 @@ import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
 import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
+import { AddMemberModal } from "@/components/group/AddMemberModal";
 import { CreateGroupModal } from "@/components/group/CreateGroupModal";
 import type { ICreateGroupFormValues } from "@/components/group/CreateGroupModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
@@ -35,6 +36,7 @@ import { useGroups } from "@/hooks/useGroups";
 import { usePeople } from "@/hooks/usePeople";
 import { EActivityKind, EGroupTab } from "@/types/domain.enums";
 import { getActivityId } from "@/utils/activity.helpers";
+import { resolveNonMembers } from "@/utils/group.helpers";
 import {
   buildMemberNamesSummary,
   findMemberName,
@@ -47,6 +49,7 @@ function App() {
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<EGroupTab>(EGroupTab.BALANCES);
+  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
   );
@@ -55,8 +58,14 @@ function App() {
     null,
   );
   const { people } = usePeople();
-  const { groups, activeGroup, activeMembers, addGroup, selectGroup } =
-    useGroups(people);
+  const {
+    groups,
+    activeGroup,
+    activeMembers,
+    addGroup,
+    addMember,
+    selectGroup,
+  } = useGroups(people);
   const currency = activeGroup?.currency ?? DEFAULT_CURRENCY;
   const {
     expenses,
@@ -107,6 +116,11 @@ function App() {
   const handleCloseExpenseForm = () => {
     setEditingExpenseId(null);
     setIsExpenseFormModalOpen(false);
+  };
+
+  const handleAddMember = (personId: string) => {
+    addMember(personId);
+    setIsAddMemberModalOpen(false);
   };
 
   const handleCreateGroup = (values: ICreateGroupFormValues) => {
@@ -214,7 +228,11 @@ function App() {
               </section>
             </>
           ) : (
-            <MembersPanel balances={balances} currency={currency} />
+            <MembersPanel
+              balances={balances}
+              currency={currency}
+              onAddMember={() => setIsAddMemberModalOpen(true)}
+            />
           )}
         </main>
       </div>
@@ -251,6 +269,15 @@ function App() {
           onConfirm={handleConfirmDelete}
           title={DELETE_EXPENSE_TITLE}
           titleId={DELETE_EXPENSE_TITLE_ID}
+        />
+      ) : null}
+
+      {isAddMemberModalOpen ? (
+        <AddMemberModal
+          candidates={resolveNonMembers(people, activeGroup)}
+          groupName={activeGroup?.name ?? ""}
+          onClose={() => setIsAddMemberModalOpen(false)}
+          onSubmit={handleAddMember}
         />
       ) : null}
 

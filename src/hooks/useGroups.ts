@@ -39,5 +39,24 @@ export function useGroups(people: IPerson[]) {
     setActiveGroupId(group.id);
   };
 
-  return { groups, activeGroup, activeMembers, addGroup, selectGroup };
+  const addMember = (personId: string) => {
+    setGroups((currentGroups) =>
+      currentGroups.map((group) => {
+        if (group.id !== activeGroupId) {
+          return group;
+        }
+
+        return { ...group, memberIds: [...group.memberIds, personId] };
+      }),
+    );
+  };
+
+  return {
+    groups,
+    activeGroup,
+    activeMembers,
+    addGroup,
+    addMember,
+    selectGroup,
+  };
 }

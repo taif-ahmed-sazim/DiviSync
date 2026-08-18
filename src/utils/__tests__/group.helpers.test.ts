@@ -6,6 +6,7 @@ import {
   createGroup,
   findGroupById,
   resolveGroupMembers,
+  resolveNonMembers,
 } from "@/utils/group.helpers";
 
 const people: IPerson[] = [
@@ -53,6 +54,27 @@ describe("resolveGroupMembers", () => {
     expect(resolveGroupMembers(people, groupWithMissingPerson)).toEqual([
       { id: "person-1", name: "Turjo" },
     ]);
+  });
+});
+
+describe("resolveNonMembers", () => {
+  it("should return the people who are not members", () => {
+    expect(resolveNonMembers(people, group)).toEqual([
+      { id: "person-2", name: "Asif" },
+    ]);
+  });
+
+  it("should return an empty list when there is no active group", () => {
+    expect(resolveNonMembers(people, null)).toEqual([]);
+  });
+
+  it("should return an empty list when everyone is a member", () => {
+    const groupWithEveryone: IGroup = {
+      ...group,
+      memberIds: ["person-1", "person-2", "person-3"],
+    };
+
+    expect(resolveNonMembers(people, groupWithEveryone)).toEqual([]);
   });
 });
 

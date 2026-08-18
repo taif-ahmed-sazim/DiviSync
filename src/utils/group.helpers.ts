@@ -24,6 +24,17 @@ export function resolveGroupMembers(
   return people.filter((person) => group.memberIds.includes(person.id));
 }
 
+export function resolveNonMembers(
+  people: IPerson[],
+  group: IGroup | null,
+): IPerson[] {
+  if (group === null) {
+    return [];
+  }
+
+  return people.filter((person) => !group.memberIds.includes(person.id));
+}
+
 export function createGroup(input: ICreateGroupInput): IGroup {
   return {
     id: crypto.randomUUID(),
