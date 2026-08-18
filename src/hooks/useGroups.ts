@@ -1,11 +1,19 @@
 import { useMemo, useState } from "react";
 
 import { groups as initialGroups } from "@/data/mockData";
-import type { IGroup, IPerson } from "@/types/domain.interfaces";
-import { findGroupById, resolveGroupMembers } from "@/utils/group.helpers";
+import type {
+  ICreateGroupInput,
+  IGroup,
+  IPerson,
+} from "@/types/domain.interfaces";
+import {
+  createGroup,
+  findGroupById,
+  resolveGroupMembers,
+} from "@/utils/group.helpers";
 
 export function useGroups(people: IPerson[]) {
-  const [groups] = useState<IGroup[]>(initialGroups);
+  const [groups, setGroups] = useState<IGroup[]>(initialGroups);
   const [activeGroupId, setActiveGroupId] = useState<string>(
     initialGroups[0].id,
   );
@@ -24,5 +32,12 @@ export function useGroups(people: IPerson[]) {
     setActiveGroupId(groupId);
   };
 
-  return { groups, activeGroup, activeMembers, selectGroup };
+  const addGroup = (input: ICreateGroupInput) => {
+    const group = createGroup(input);
+
+    setGroups((currentGroups) => [...currentGroups, group]);
+    setActiveGroupId(group.id);
+  };
+
+  return { groups, activeGroup, activeMembers, addGroup, selectGroup };
 }

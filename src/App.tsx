@@ -6,6 +6,8 @@ import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
 import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
+import { CreateGroupModal } from "@/components/group/CreateGroupModal";
+import type { ICreateGroupFormValues } from "@/components/group/CreateGroupModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
@@ -36,6 +38,7 @@ import styles from "./App.module.css";
 function App() {
   const [isExpenseFormModalOpen, setIsExpenseFormModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
   );
@@ -44,7 +47,7 @@ function App() {
     null,
   );
   const { people } = usePeople();
-  const { groups, activeGroup, activeMembers, selectGroup } =
+  const { groups, activeGroup, activeMembers, addGroup, selectGroup } =
     useGroups(people);
   const currency = activeGroup?.currency ?? DEFAULT_CURRENCY;
   const {
@@ -98,6 +101,11 @@ function App() {
     setIsExpenseFormModalOpen(false);
   };
 
+  const handleCreateGroup = (values: ICreateGroupFormValues) => {
+    addGroup(values);
+    setIsCreateGroupModalOpen(false);
+  };
+
   const handleSettleUp = (values: ISettleUpFormValues) => {
     addSettlement(values);
     setIsSettleUpModalOpen(false);
@@ -108,6 +116,7 @@ function App() {
       <Sidebar
         activeGroupId={activeGroup?.id ?? null}
         groups={groups}
+        onCreateGroup={() => setIsCreateGroupModalOpen(true)}
         onSelectGroup={selectGroup}
       />
 
@@ -207,6 +216,14 @@ function App() {
           onConfirm={handleConfirmDelete}
           title={DELETE_EXPENSE_TITLE}
           titleId={DELETE_EXPENSE_TITLE_ID}
+        />
+      ) : null}
+
+      {isCreateGroupModalOpen ? (
+        <CreateGroupModal
+          onClose={() => setIsCreateGroupModalOpen(false)}
+          onSubmit={handleCreateGroup}
+          people={people}
         />
       ) : null}
 

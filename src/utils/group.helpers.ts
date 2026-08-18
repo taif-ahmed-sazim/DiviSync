@@ -1,4 +1,8 @@
-import type { IGroup, IPerson } from "@/types/domain.interfaces";
+import type {
+  ICreateGroupInput,
+  IGroup,
+  IPerson,
+} from "@/types/domain.interfaces";
 
 export function findGroupById(
   groups: IGroup[],
@@ -18,4 +22,14 @@ export function resolveGroupMembers(
   }
 
   return people.filter((person) => group.memberIds.includes(person.id));
+}
+
+export function createGroup(input: ICreateGroupInput): IGroup {
+  return {
+    id: crypto.randomUUID(),
+    name: input.name.trim(),
+    description: input.description.trim(),
+    currency: input.currency,
+    memberIds: input.memberIds,
+  };
 }

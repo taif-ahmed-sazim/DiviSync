@@ -1,6 +1,7 @@
 import {
   GROUPS_SECTION_TITLE,
   NAVIGATION_ITEMS,
+  NEW_GROUP_LABEL,
   SIDEBAR_BRAND,
 } from "./Sidebar.constants";
 import type { ISidebarProps } from "./Sidebar.interfaces";
@@ -10,6 +11,7 @@ import styles from "./Sidebar.module.css";
 export function Sidebar({
   activeGroupId,
   groups,
+  onCreateGroup,
   onSelectGroup,
 }: ISidebarProps) {
   return (
@@ -41,6 +43,14 @@ export function Sidebar({
             {group.name}
           </button>
         ))}
+
+        <button
+          className={styles.newGroupButton}
+          onClick={onCreateGroup}
+          type="button"
+        >
+          {NEW_GROUP_LABEL}
+        </button>
       </section>
     </aside>
   );

@@ -84,3 +84,25 @@
   font-weight: 600;
   text-align: left;
 }
+
+.newGroupButton {
+  display: block;
+
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px 12px;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #4f46e5;
+
+  font-weight: 600;
+  text-align: left;
+}
+
+.newGroupButton:hover {
+  background: #f8fafc;
+}

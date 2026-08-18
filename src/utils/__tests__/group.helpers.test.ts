@@ -2,7 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import { ECurrency } from "@/types/domain.enums";
 import type { IGroup, IPerson } from "@/types/domain.interfaces";
-import { findGroupById, resolveGroupMembers } from "@/utils/group.helpers";
+import {
+  createGroup,
+  findGroupById,
+  resolveGroupMembers,
+} from "@/utils/group.helpers";
 
 const people: IPerson[] = [
   { id: "person-1", name: "Turjo" },
@@ -49,5 +53,42 @@ describe("resolveGroupMembers", () => {
     expect(resolveGroupMembers(people, groupWithMissingPerson)).toEqual([
       { id: "person-1", name: "Turjo" },
     ]);
+  });
+});
+
+describe("createGroup", () => {
+  it("should trim the name and description", () => {
+    const created = createGroup({
+      name: "  Bali Trip  ",
+      description: "  Five days away  ",
+      currency: ECurrency.USD,
+      memberIds: ["person-1", "person-2"],
+    });
+
+    expect(created.name).toBe("Bali Trip");
+    expect(created.description).toBe("Five days away");
+  });
+
+  it("should keep the chosen currency and members", () => {
+    const created = createGroup({
+      name: "Bali Trip",
+      description: "",
+      currency: ECurrency.USD,
+      memberIds: ["person-1", "person-2"],
+    });
+
+    expect(created.currency).toBe(ECurrency.USD);
+    expect(created.memberIds).toEqual(["person-1", "person-2"]);
+  });
+
+  it("should give each group its own id", () => {
+    const input = {
+      name: "Bali Trip",
+      description: "",
+      currency: ECurrency.USD,
+      memberIds: ["person-1", "person-2"],
+    };
+
+    expect(createGroup(input).id).not.toBe(createGroup(input).id);
   });
 });
