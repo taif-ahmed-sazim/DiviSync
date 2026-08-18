@@ -20,9 +20,12 @@ export const GROUP_NAME_MAX_LENGTH = 50;
 export const GROUP_DESCRIPTION_MAX_LENGTH = 120;
 
 export const GROUP_NAME_REQUIRED_MESSAGE = "Group name is required";
-export const GROUP_NAME_MIN_LENGTH_MESSAGE = `Group name must be at least ${GROUP_NAME_MIN_LENGTH} characters`;
-export const GROUP_NAME_MAX_LENGTH_MESSAGE = `Group name must be at most ${GROUP_NAME_MAX_LENGTH} characters`;
-export const GROUP_DESCRIPTION_MAX_LENGTH_MESSAGE = `Description must be at most ${GROUP_DESCRIPTION_MAX_LENGTH} characters`;
+export const GROUP_NAME_MIN_LENGTH_MESSAGE =
+  `Group name must be at least ${GROUP_NAME_MIN_LENGTH} characters`;
+export const GROUP_NAME_MAX_LENGTH_MESSAGE =
+  `Group name must be at most ${GROUP_NAME_MAX_LENGTH} characters`;
+export const GROUP_DESCRIPTION_MAX_LENGTH_MESSAGE =
+  `Description must be at most ${GROUP_DESCRIPTION_MAX_LENGTH} characters`;
 export const GROUP_MEMBERS_REQUIRED_MESSAGE =
   "Select at least one other member";
 
