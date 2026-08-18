@@ -26,7 +26,10 @@ import { useGroups } from "@/hooks/useGroups";
 import { usePeople } from "@/hooks/usePeople";
 import { EActivityKind } from "@/types/domain.enums";
 import { getActivityId } from "@/utils/activity.helpers";
-import { findMemberName } from "@/utils/members.helpers";
+import {
+  buildMemberNamesSummary,
+  findMemberName,
+} from "@/utils/members.helpers";
 
 import styles from "./App.module.css";
 
@@ -113,6 +116,9 @@ function App() {
 
         <main className={styles.main}>
           <GroupHeader
+            description={activeGroup?.description ?? ""}
+            membersSummary={buildMemberNamesSummary(activeMembers)}
+            name={activeGroup?.name ?? ""}
             onNewExpense={() => setIsExpenseFormModalOpen(true)}
             onSettleUp={() => setIsSettleUpModalOpen(true)}
           />
