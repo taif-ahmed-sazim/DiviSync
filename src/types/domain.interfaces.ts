@@ -1,8 +1,27 @@
-import type { EBalanceStatus, ESplitMode } from "@/types/domain.enums";
+import type {
+  EBalanceStatus,
+  ECurrency,
+  ESplitMode,
+} from "@/types/domain.enums";
 
-export interface IGroupMember {
+export interface IPerson {
   id: string;
   name: string;
+}
+
+export interface IGroup {
+  id: string;
+  name: string;
+  description: string;
+  currency: ECurrency;
+  memberIds: string[];
+}
+
+export interface ICreateGroupInput {
+  name: string;
+  description: string;
+  currency: ECurrency;
+  memberIds: string[];
 }
 
 export interface IMemberBalance {
@@ -12,6 +31,11 @@ export interface IMemberBalance {
   status: EBalanceStatus;
 }
 
+export interface IMemberRow {
+  balance: IMemberBalance;
+  removalError?: string;
+}
+
 export interface IExpenseShare {
   memberId: string;
   amount: number;
@@ -19,6 +43,7 @@ export interface IExpenseShare {
 
 export interface IExpense {
   id: string;
+  groupId: string;
   title: string;
   date: string;
   amount: number;
@@ -28,8 +53,19 @@ export interface IExpense {
   shares: IExpenseShare[];
 }
 
+export interface IDirectExpense {
+  id: string;
+  friendId: string;
+  title: string;
+  date: string;
+  amount: number;
+  paidById: string;
+  shares: IExpenseShare[];
+}
+
 export interface ISettlement {
   id: string;
+  groupId: string;
   date: string;
   amount: number;
   fromMemberId: string;
@@ -37,6 +73,7 @@ export interface ISettlement {
 }
 
 export interface ICreateExpenseInput {
+  groupId: string;
   title: string;
   amount: number;
   paidById: string;
@@ -46,6 +83,7 @@ export interface ICreateExpenseInput {
 }
 
 export interface ICreateSettlementInput {
+  groupId: string;
   amount: number;
   fromMemberId: string;
   toMemberId: string;

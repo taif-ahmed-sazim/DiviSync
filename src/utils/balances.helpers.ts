@@ -4,9 +4,10 @@ import {
   SETTLED_LABEL,
 } from "@/constants/balances.constants";
 import { EBalanceStatus } from "@/types/domain.enums";
+import type { ECurrency } from "@/types/domain.enums";
 import type {
   IExpense,
-  IGroupMember,
+  IPerson,
   IMemberBalance,
   ISettlement,
 } from "@/types/domain.interfaces";
@@ -63,20 +64,23 @@ export function resolveBalanceStatus(netCents: number): EBalanceStatus {
   return EBalanceStatus.SETTLED;
 }
 
-export function buildBalanceSummary(balance: IMemberBalance): string {
+export function buildBalanceSummary(
+  balance: IMemberBalance,
+  currency: ECurrency,
+): string {
   if (balance.status === EBalanceStatus.SETTLED) {
     return SETTLED_LABEL;
   }
 
   if (balance.status === EBalanceStatus.GETS) {
-    return `${GETS_LABEL} ${formatCurrency(balance.amount)}`;
+    return `${GETS_LABEL} ${formatCurrency(balance.amount, currency)}`;
   }
 
-  return `${OWES_LABEL} ${formatCurrency(balance.amount)}`;
+  return `${OWES_LABEL} ${formatCurrency(balance.amount, currency)}`;
 }
 
 export function calculateMemberBalances(
-  members: IGroupMember[],
+  members: IPerson[],
   expenses: IExpense[],
   settlements: ISettlement[],
 ): IMemberBalance[] {

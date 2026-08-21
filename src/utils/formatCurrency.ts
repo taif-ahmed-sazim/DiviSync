@@ -1,10 +1,11 @@
-const CURRENCY_LOCALE = "en-US";
-const CURRENCY_CODE = "BDT";
+import type { ECurrency } from "@/types/domain.enums";
 
-export function formatCurrency(amount: number): string {
+const CURRENCY_LOCALE = "en-US";
+
+export function formatCurrency(amount: number, currency: ECurrency): string {
   return amount.toLocaleString(CURRENCY_LOCALE, {
     style: "currency",
-    currency: CURRENCY_CODE,
+    currency,
     currencyDisplay: "narrowSymbol",
   });
 }

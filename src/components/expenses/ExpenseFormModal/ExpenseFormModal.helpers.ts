@@ -1,9 +1,10 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
 import { ESplitMode } from "@/types/domain.enums";
+import type { ECurrency } from "@/types/domain.enums";
 import type {
   IExpense,
   IExpenseShare,
-  IGroupMember,
+  IPerson,
 } from "@/types/domain.interfaces";
 import { getAmountError, parseAmount } from "@/utils/amount.helpers";
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -34,7 +35,7 @@ export const expenseFormInitialValues: IExpenseFormValues = {
 };
 
 export function buildExpenseFormInitialValues(
-  members: IGroupMember[],
+  members: IPerson[],
 ): IExpenseFormValues {
   return {
     ...expenseFormInitialValues,
@@ -52,7 +53,7 @@ export function buildCustomShareInputs(
 }
 
 export function buildExpenseFormValues(
-  members: IGroupMember[],
+  members: IPerson[],
   expense?: IExpense,
 ): IExpenseFormValues {
   if (expense === undefined) {
@@ -114,13 +115,16 @@ export function buildCustomShares(
   }));
 }
 
-export function buildPerPersonSummary(perPersonAmount: number): string {
-  return `${formatCurrency(perPersonAmount)} ${PER_PERSON_LABEL}`;
+export function buildPerPersonSummary(
+  perPersonAmount: number,
+  currency: ECurrency,
+): string {
+  return `${formatCurrency(perPersonAmount, currency)} ${PER_PERSON_LABEL}`;
 }
 
 export function getPayerError(
   paidById: string,
-  members: IGroupMember[],
+  members: IPerson[],
 ): string | undefined {
   const isGroupMember = members.some((member) => member.id === paidById);
 
@@ -160,13 +164,17 @@ export function getCustomSplitError(
 export function buildAssignedSummary(
   assignedAmount: number,
   totalAmount: number,
+  currency: ECurrency,
 ): string {
-  return `${formatCurrency(assignedAmount)} of ${formatCurrency(totalAmount)}`;
+  return `${formatCurrency(assignedAmount, currency)} of ${formatCurrency(
+    totalAmount,
+    currency,
+  )}`;
 }
 
 export function validateExpenseForm(
   values: IExpenseFormValues,
-  members: IGroupMember[],
+  members: IPerson[],
   shares: IExpenseShare[],
 ): IExpenseFormErrors {
   return {

@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 import { Modal } from "@/components/common/Modal";
-import { GROUP_NAME } from "@/constants/group.constants";
 
 import {
   AMOUNT_LABEL,
@@ -26,6 +25,7 @@ import type {
 import styles from "./SettleUpModal.module.css";
 
 export function SettleUpModal({
+  groupName,
   members,
   onClose,
   onSubmit,
@@ -50,7 +50,7 @@ export function SettleUpModal({
 
   return (
     <Modal
-      eyebrow={GROUP_NAME}
+      eyebrow={groupName}
       onClose={onClose}
       title={SETTLE_UP_TITLE}
       titleId={SETTLE_UP_TITLE_ID}

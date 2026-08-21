@@ -1,8 +1,10 @@
-import type { IExpense, IGroupMember } from "@/types/domain.interfaces";
+import type { ECurrency } from "@/types/domain.enums";
+import type { IExpense, IPerson } from "@/types/domain.interfaces";
 
 export interface IExpenseDetailsModalProps {
+  currency: ECurrency;
   expense: IExpense;
-  members: IGroupMember[];
+  members: IPerson[];
   onClose: () => void;
   onDelete: () => void;
   onEdit: () => void;

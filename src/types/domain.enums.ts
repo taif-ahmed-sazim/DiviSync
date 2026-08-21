@@ -13,3 +13,19 @@ export enum EActivityKind {
   EXPENSE = "expense",
   SETTLEMENT = "settlement",
 }
+
+export enum ECurrency {
+  BDT = "BDT",
+  USD = "USD",
+  EUR = "EUR",
+}
+
+export enum EGroupTab {
+  BALANCES = "balances",
+  MEMBERS = "members",
+}
+
+export enum EAppView {
+  GROUP = "group",
+  FRIENDS = "friends",
+}

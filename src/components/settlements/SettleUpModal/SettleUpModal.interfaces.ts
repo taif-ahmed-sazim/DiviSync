@@ -1,4 +1,4 @@
-import type { IGroupMember } from "@/types/domain.interfaces";
+import type { IPerson } from "@/types/domain.interfaces";
 
 export interface ISettleUpFormValues {
   fromMemberId: string;
@@ -13,7 +13,8 @@ export interface ISettleUpFormErrors {
 }
 
 export interface ISettleUpModalProps {
-  members: IGroupMember[];
+  groupName: string;
+  members: IPerson[];
   onClose: () => void;
   onSubmit: (values: ISettleUpFormValues) => void;
 }

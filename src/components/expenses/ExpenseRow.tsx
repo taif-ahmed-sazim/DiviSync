@@ -1,3 +1,4 @@
+import type { ECurrency } from "@/types/domain.enums";
 import type { IExpense } from "@/types/domain.interfaces";
 
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -6,17 +7,19 @@ import { formatExpenseDate } from "@/utils/formatDate";
 import styles from "./ExpenseRow.module.css";
 
 interface IExpenseRowProps {
+  currency: ECurrency;
   expense: IExpense;
   onSelect: () => void;
   payerName: string;
 }
 
 export function ExpenseRow({
+  currency,
   expense,
   onSelect,
   payerName,
 }: IExpenseRowProps) {
-  const formattedAmount = formatCurrency(expense.amount);
+  const formattedAmount = formatCurrency(expense.amount, currency);
   const formattedDate = formatExpenseDate(expense.date);
 
   return (
