@@ -5,6 +5,7 @@ import { findMemberName } from "@/utils/members.helpers";
 
 import {
   DATE_LABEL,
+  DELETE_LABEL,
   EDIT_LABEL,
   EXPENSE_DETAILS_EYEBROW,
   EXPENSE_DETAILS_TITLE_ID,
@@ -22,6 +23,7 @@ export function ExpenseDetailsModal({
   expense,
   members,
   onClose,
+  onDelete,
   onEdit,
 }: IExpenseDetailsModalProps) {
   return (
@@ -70,6 +72,14 @@ export function ExpenseDetailsModal({
       </section>
 
       <div className={styles.actions}>
+        <button
+          className={styles.deleteButton}
+          onClick={onDelete}
+          type="button"
+        >
+          {DELETE_LABEL}
+        </button>
+
         <button className={styles.editButton} onClick={onEdit} type="button">
           {EDIT_LABEL}
         </button>
