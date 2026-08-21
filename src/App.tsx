@@ -2,17 +2,25 @@ import { useState } from "react";
 
 import { BalanceCard } from "./components/balances/BalanceCard";
 import { AddExpenseModal } from "./components/expenses/AddExpenseModal";
+import type { AddExpenseFormValues } from "./components/expenses/AddExpenseModal";
 import { ExpenseRow } from "./components/expenses/ExpenseRow";
 import { GroupHeader } from "./components/group/GroupHeader";
 import { Sidebar } from "./components/layout/Sidebar";
 import { TopBar } from "./components/layout/TopBar";
 
-import { balances, expenses } from "./data/mockData";
+import { balances } from "./data/mockData";
+import { useGroupExpenses } from "./hooks/useGroupExpenses";
 
 import styles from "./App.module.css";
 
 function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
+  const { expenses, addExpense } = useGroupExpenses();
+
+  const handleAddExpense = (values: AddExpenseFormValues) => {
+    addExpense(values);
+    setIsAddExpenseModalOpen(false);
+  };
 
   return (
     <div className={styles.shell}>
@@ -60,7 +68,10 @@ function App() {
       </div>
 
       {isAddExpenseModalOpen ? (
-        <AddExpenseModal onClose={() => setIsAddExpenseModalOpen(false)} />
+        <AddExpenseModal
+          onClose={() => setIsAddExpenseModalOpen(false)}
+          onSubmit={handleAddExpense}
+        />
       ) : null}
     </div>
   );

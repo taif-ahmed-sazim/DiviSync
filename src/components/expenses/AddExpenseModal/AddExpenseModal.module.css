@@ -89,6 +89,17 @@
   border-color: #6366f1;
 }
 
+.field input[aria-invalid="true"] {
+  border-color: #ef4444;
+}
+
+.error {
+  color: #b91c1c;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
