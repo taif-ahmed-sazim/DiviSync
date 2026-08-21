@@ -2,30 +2,44 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 
 import {
-  addExpenseFormInitialValues,
+  buildAddExpenseFormInitialValues,
   hasFormErrors,
+  toggleParticipantId,
   validateAddExpenseForm,
 } from "./AddExpenseModal.helpers";
 import type {
-  AddExpenseFormErrors,
-  AddExpenseModalProps,
+  IAddExpenseFormErrors,
+  IAddExpenseModalProps,
 } from "./AddExpenseModal.interfaces";
 
 import styles from "./AddExpenseModal.module.css";
 
-export function AddExpenseModal({ onClose, onSubmit }: AddExpenseModalProps) {
-  const [values, setValues] = useState(addExpenseFormInitialValues);
-  const [errors, setErrors] = useState<AddExpenseFormErrors>({});
+export function AddExpenseModal({
+  members,
+  onClose,
+  onSubmit,
+}: IAddExpenseModalProps) {
+  const [values, setValues] = useState(() =>
+    buildAddExpenseFormInitialValues(members),
+  );
+  const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
 
   const resetForm = () => {
-    setValues(addExpenseFormInitialValues);
+    setValues(buildAddExpenseFormInitialValues(members));
     setErrors({});
+  };
+
+  const handleParticipantToggle = (memberId: string) => {
+    setValues((current) => ({
+      ...current,
+      participantIds: toggleParticipantId(current.participantIds, memberId),
+    }));
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextErrors = validateAddExpenseForm(values);
+    const nextErrors = validateAddExpenseForm(values, members);
     setErrors(nextErrors);
 
     if (hasFormErrors(nextErrors)) {
@@ -107,6 +121,50 @@ export function AddExpenseModal({ onClose, onSubmit }: AddExpenseModalProps) {
               <span className={styles.error}>{errors.amount}</span>
             ) : null}
           </label>
+
+          <label className={styles.field}>
+            <span>Paid by</span>
+
+            <select
+              onChange={(event) =>
+                setValues((current) => ({
+                  ...current,
+                  paidById: event.target.value,
+                }))
+              }
+              value={values.paidById}
+            >
+              {members.map((member) => (
+                <option key={member.id} value={member.id}>
+                  {member.name}
+                </option>
+              ))}
+            </select>
+
+            {errors.paidById ? (
+              <span className={styles.error}>{errors.paidById}</span>
+            ) : null}
+          </label>
+
+          <fieldset className={styles.participants}>
+            <legend>Split between</legend>
+
+            {members.map((member) => (
+              <label className={styles.participant} key={member.id}>
+                <input
+                  checked={values.participantIds.includes(member.id)}
+                  onChange={() => handleParticipantToggle(member.id)}
+                  type="checkbox"
+                />
+
+                <span>{member.name}</span>
+              </label>
+            ))}
+
+            {errors.participantIds ? (
+              <span className={styles.error}>{errors.participantIds}</span>
+            ) : null}
+          </fieldset>
 
           <div className={styles.actions}>
             <button

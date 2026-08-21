@@ -1,15 +1,16 @@
-import type { Expense } from "../../types/domain";
+import type { IExpense } from "@/types/domain.interfaces";
 
-import { formatCurrency } from "../../utils/formatCurrency";
-import { formatExpenseDate } from "../../utils/formatDate";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { formatExpenseDate } from "@/utils/formatDate";
 
 import styles from "./ExpenseRow.module.css";
 
-interface ExpenseRowProps {
-  expense: Expense;
+interface IExpenseRowProps {
+  expense: IExpense;
+  payerName: string;
 }
 
-export function ExpenseRow({ expense }: ExpenseRowProps) {
+export function ExpenseRow({ expense, payerName }: IExpenseRowProps) {
   const formattedAmount = formatCurrency(expense.amount);
   const formattedDate = formatExpenseDate(expense.date);
 
@@ -22,12 +23,12 @@ export function ExpenseRow({ expense }: ExpenseRowProps) {
 
       <div className={styles.details}>
         <div>
-          <span>{expense.paidBy} paid </span>
+          <span>{payerName} paid </span>
           <strong>{formattedAmount}</strong>
         </div>
 
         <span className={styles.participants}>
-          {expense.participantCount} people
+          {expense.participantIds.length} people
         </span>
       </div>
     </article>

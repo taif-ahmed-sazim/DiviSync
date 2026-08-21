@@ -1,14 +1,21 @@
-export interface AddExpenseFormValues {
+import type { IGroupMember } from "@/types/domain.interfaces";
+
+export interface IAddExpenseFormValues {
   description: string;
   amount: string;
+  paidById: string;
+  participantIds: string[];
 }
 
-export interface AddExpenseFormErrors {
+export interface IAddExpenseFormErrors {
   description?: string;
   amount?: string;
+  paidById?: string;
+  participantIds?: string;
 }
 
-export interface AddExpenseModalProps {
+export interface IAddExpenseModalProps {
+  members: IGroupMember[];
   onClose: () => void;
-  onSubmit: (values: AddExpenseFormValues) => void;
+  onSubmit: (values: IAddExpenseFormValues) => void;
 }

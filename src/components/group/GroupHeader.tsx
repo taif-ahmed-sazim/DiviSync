@@ -1,10 +1,10 @@
 import styles from "./GroupHeader.module.css";
 
-interface GroupHeaderProps {
+interface IGroupHeaderProps {
   onNewExpense: () => void;
 }
 
-export function GroupHeader({ onNewExpense }: GroupHeaderProps) {
+export function GroupHeader({ onNewExpense }: IGroupHeaderProps) {
   return (
     <section className={styles.header}>
       <div>

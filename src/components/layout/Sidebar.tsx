@@ -1,16 +1,16 @@
 import styles from "./Sidebar.module.css";
 
-interface NavItem {
+interface INavItem {
   id: string;
   label: string;
 }
 
-interface GroupItem {
+interface IGroupItem {
   id: string;
   name: string;
 }
 
-const navigationItems: NavItem[] = [
+const navigationItems: INavItem[] = [
   { id: "home", label: "Home" },
   { id: "friends", label: "Friends" },
   { id: "groups", label: "Groups" },
@@ -19,7 +19,7 @@ const navigationItems: NavItem[] = [
   { id: "settings", label: "Settings" },
 ];
 
-const groups: GroupItem[] = [
+const groups: IGroupItem[] = [
   {
     id: "group-gamer-bros",
     name: "Gamer Bros",

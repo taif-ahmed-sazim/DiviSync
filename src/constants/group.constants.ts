@@ -1,2 +1,1 @@
-export const CURRENT_USER_NAME = "Turjo";
-export const GROUP_MEMBER_COUNT = 5;
+export const CURRENT_USER_ID = "member-1";

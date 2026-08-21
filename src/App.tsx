@@ -1,15 +1,16 @@
 import { useState } from "react";
 
-import { BalanceCard } from "./components/balances/BalanceCard";
-import { AddExpenseModal } from "./components/expenses/AddExpenseModal";
-import type { AddExpenseFormValues } from "./components/expenses/AddExpenseModal";
-import { ExpenseRow } from "./components/expenses/ExpenseRow";
-import { GroupHeader } from "./components/group/GroupHeader";
-import { Sidebar } from "./components/layout/Sidebar";
-import { TopBar } from "./components/layout/TopBar";
+import { BalanceCard } from "@/components/balances/BalanceCard";
+import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
+import type { IAddExpenseFormValues } from "@/components/expenses/AddExpenseModal";
+import { ExpenseRow } from "@/components/expenses/ExpenseRow";
+import { GroupHeader } from "@/components/group/GroupHeader";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { TopBar } from "@/components/layout/TopBar";
 
-import { balances } from "./data/mockData";
-import { useGroupExpenses } from "./hooks/useGroupExpenses";
+import { balances, members } from "@/data/mockData";
+import { useGroupExpenses } from "@/hooks/useGroupExpenses";
+import { findMemberName } from "@/utils/members.helpers";
 
 import styles from "./App.module.css";
 
@@ -17,7 +18,7 @@ function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
   const { expenses, addExpense } = useGroupExpenses();
 
-  const handleAddExpense = (values: AddExpenseFormValues) => {
+  const handleAddExpense = (values: IAddExpenseFormValues) => {
     addExpense(values);
     setIsAddExpenseModalOpen(false);
   };
@@ -60,6 +61,7 @@ function App() {
                 <ExpenseRow
                   expense={expense}
                   key={expense.id}
+                  payerName={findMemberName(members, expense.paidById)}
                 />
               ))}
             </div>
@@ -69,6 +71,7 @@ function App() {
 
       {isAddExpenseModalOpen ? (
         <AddExpenseModal
+          members={members}
           onClose={() => setIsAddExpenseModalOpen(false)}
           onSubmit={handleAddExpense}
         />
