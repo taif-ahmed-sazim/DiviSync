@@ -7,15 +7,20 @@ import styles from "./ExpenseRow.module.css";
 
 interface IExpenseRowProps {
   expense: IExpense;
+  onSelect: () => void;
   payerName: string;
 }
 
-export function ExpenseRow({ expense, payerName }: IExpenseRowProps) {
+export function ExpenseRow({
+  expense,
+  onSelect,
+  payerName,
+}: IExpenseRowProps) {
   const formattedAmount = formatCurrency(expense.amount);
   const formattedDate = formatExpenseDate(expense.date);
 
   return (
-    <article className={styles.row}>
+    <button className={styles.row} onClick={onSelect} type="button">
       <div>
         <strong>{expense.title}</strong>
         <p className={styles.date}>{formattedDate}</p>
@@ -31,6 +36,6 @@ export function ExpenseRow({ expense, payerName }: IExpenseRowProps) {
           {expense.participantIds.length} people
         </span>
       </div>
-    </article>
+    </button>
   );
 }

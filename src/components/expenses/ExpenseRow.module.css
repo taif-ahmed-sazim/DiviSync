@@ -3,10 +3,19 @@
     align-items: center;
     justify-content: space-between;
   
+    width: 100%;
     padding: 18px 20px;
   
+    color: inherit;
     background: white;
+    border: 0;
     border-bottom: 1px solid #f1f5f9;
+  
+    text-align: left;
+  }
+  
+  .row:hover {
+    background: #f8fafc;
   }
   
   .row:first-child {

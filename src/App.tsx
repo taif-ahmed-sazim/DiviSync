@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BalanceCard } from "@/components/balances/BalanceCard";
 import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
 import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
+import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
 import { SettlementRow } from "@/components/settlements/SettlementRow";
 import { SettleUpModal } from "@/components/settlements/SettleUpModal";
@@ -22,8 +23,14 @@ import styles from "./App.module.css";
 function App() {
   const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
-  const { activity, balances, addExpense, addSettlement } =
+  const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
+    null,
+  );
+  const { expenses, activity, balances, addExpense, addSettlement } =
     useGroupLedger(members);
+
+  const selectedExpense =
+    expenses.find((expense) => expense.id === selectedExpenseId) ?? null;
 
   const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
     addExpense(payload);
@@ -74,6 +81,7 @@ function App() {
                   <ExpenseRow
                     expense={item.expense}
                     key={getActivityId(item)}
+                    onSelect={() => setSelectedExpenseId(item.expense.id)}
                     payerName={findMemberName(members, item.expense.paidById)}
                   />
                 ) : (
@@ -98,6 +106,14 @@ function App() {
           members={members}
           onClose={() => setIsAddExpenseModalOpen(false)}
           onSubmit={handleAddExpense}
+        />
+      ) : null}
+
+      {selectedExpense ? (
+        <ExpenseDetailsModal
+          expense={selectedExpense}
+          members={members}
+          onClose={() => setSelectedExpenseId(null)}
         />
       ) : null}
 
