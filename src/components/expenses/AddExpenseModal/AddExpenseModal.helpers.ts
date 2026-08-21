@@ -1,5 +1,6 @@
 import { CURRENT_USER_ID } from "@/constants/group.constants";
 import type { IGroupMember } from "@/types/domain.interfaces";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 import {
   AMOUNT_INVALID_MESSAGE,
@@ -10,6 +11,7 @@ import {
   DESCRIPTION_REQUIRED_MESSAGE,
   PARTICIPANTS_REQUIRED_MESSAGE,
   PAYER_REQUIRED_MESSAGE,
+  PER_PERSON_LABEL,
 } from "./AddExpenseModal.constants";
 import type {
   IAddExpenseFormErrors,
@@ -77,6 +79,20 @@ export function getAmountError(amount: string): string | undefined {
   }
 
   return undefined;
+}
+
+export function parseAmount(amount: string): number {
+  const parsedAmount = Number(amount.trim());
+
+  if (Number.isNaN(parsedAmount)) {
+    return 0;
+  }
+
+  return parsedAmount;
+}
+
+export function buildPerPersonSummary(perPersonAmount: number): string {
+  return `${formatCurrency(perPersonAmount)} ${PER_PERSON_LABEL}`;
 }
 
 export function getPayerError(

@@ -54,6 +54,13 @@ export const expenses: IExpense[] = [
     amount: 100,
     paidById: "member-1",
     participantIds: ["member-1", "member-2", "member-3", "member-4", "member-5"],
+    shares: [
+      { memberId: "member-1", amount: 20 },
+      { memberId: "member-2", amount: 20 },
+      { memberId: "member-3", amount: 20 },
+      { memberId: "member-4", amount: 20 },
+      { memberId: "member-5", amount: 20 },
+    ],
   },
   {
     id: "expense-2",
@@ -62,6 +69,13 @@ export const expenses: IExpense[] = [
     amount: 5562,
     paidById: "member-1",
     participantIds: ["member-1", "member-2", "member-3", "member-4", "member-5"],
+    shares: [
+      { memberId: "member-1", amount: 1112.4 },
+      { memberId: "member-2", amount: 1112.4 },
+      { memberId: "member-3", amount: 1112.4 },
+      { memberId: "member-4", amount: 1112.4 },
+      { memberId: "member-5", amount: 1112.4 },
+    ],
   },
   {
     id: "expense-3",
@@ -70,6 +84,12 @@ export const expenses: IExpense[] = [
     amount: 5613,
     paidById: "member-4",
     participantIds: ["member-1", "member-2", "member-3", "member-4"],
+    shares: [
+      { memberId: "member-1", amount: 1403.25 },
+      { memberId: "member-2", amount: 1403.25 },
+      { memberId: "member-3", amount: 1403.25 },
+      { memberId: "member-4", amount: 1403.25 },
+    ],
   },
   {
     id: "expense-4",
@@ -78,5 +98,10 @@ export const expenses: IExpense[] = [
     amount: 42,
     paidById: "member-2",
     participantIds: ["member-1", "member-2", "member-3"],
+    shares: [
+      { memberId: "member-1", amount: 14 },
+      { memberId: "member-2", amount: 14 },
+      { memberId: "member-3", amount: 14 },
+    ],
   },
 ];

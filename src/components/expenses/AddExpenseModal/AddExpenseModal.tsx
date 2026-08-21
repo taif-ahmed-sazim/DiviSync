@@ -1,12 +1,15 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
+import { EQUAL_SPLIT_LABEL } from "./AddExpenseModal.constants";
 import {
   buildAddExpenseFormInitialValues,
+  buildPerPersonSummary,
   hasFormErrors,
   toggleParticipantId,
   validateAddExpenseForm,
 } from "./AddExpenseModal.helpers";
+import { useEqualSplitShares } from "./AddExpenseModal.hooks";
 import type {
   IAddExpenseFormErrors,
   IAddExpenseModalProps,
@@ -23,6 +26,8 @@ export function AddExpenseModal({
     buildAddExpenseFormInitialValues(members),
   );
   const [errors, setErrors] = useState<IAddExpenseFormErrors>({});
+
+  const shares = useEqualSplitShares(values.amount, values.participantIds);
 
   const resetForm = () => {
     setValues(buildAddExpenseFormInitialValues(members));
@@ -46,7 +51,7 @@ export function AddExpenseModal({
       return;
     }
 
-    onSubmit(values);
+    onSubmit({ values, shares });
     resetForm();
   };
 
@@ -165,6 +170,13 @@ export function AddExpenseModal({
               <span className={styles.error}>{errors.participantIds}</span>
             ) : null}
           </fieldset>
+
+          {shares.length > 0 ? (
+            <p className={styles.summary}>
+              <span>{EQUAL_SPLIT_LABEL}</span>
+              <strong>{buildPerPersonSummary(shares[0].amount)}</strong>
+            </p>
+          ) : null}
 
           <div className={styles.actions}>
             <button

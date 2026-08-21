@@ -12,6 +12,11 @@ export interface IMemberBalance {
   status: EBalanceStatus;
 }
 
+export interface IExpenseShare {
+  memberId: string;
+  amount: number;
+}
+
 export interface IExpense {
   id: string;
   title: string;
@@ -19,6 +24,7 @@ export interface IExpense {
   amount: number;
   paidById: string;
   participantIds: string[];
+  shares: IExpenseShare[];
 }
 
 export interface ICreateExpenseInput {
@@ -26,4 +32,5 @@ export interface ICreateExpenseInput {
   amount: number;
   paidById: string;
   participantIds: string[];
+  shares: IExpenseShare[];
 }

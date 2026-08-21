@@ -136,6 +136,22 @@
   flex-basis: 100%;
 }
 
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin: 0;
+  padding: 12px 14px;
+
+  color: #3730a3;
+  background: #eef2ff;
+  border-radius: 8px;
+
+  font-size: 14px;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
