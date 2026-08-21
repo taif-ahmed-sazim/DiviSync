@@ -1,6 +1,10 @@
 import styles from "./GroupHeader.module.css";
 
-export function GroupHeader() {
+interface GroupHeaderProps {
+  onNewExpense: () => void;
+}
+
+export function GroupHeader({ onNewExpense }: GroupHeaderProps) {
   return (
     <section className={styles.header}>
       <div>
@@ -12,11 +16,15 @@ export function GroupHeader() {
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.primaryButton}>
+        <button
+          className={styles.primaryButton}
+          onClick={onNewExpense}
+          type="button"
+        >
           New expense
         </button>
 
-        <button className={styles.secondaryButton}>
+        <button className={styles.secondaryButton} type="button">
           Settle up
         </button>
       </div>
