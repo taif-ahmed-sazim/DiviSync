@@ -2,9 +2,10 @@ import { useMemo } from "react";
 
 import { ESplitMode } from "@/types/domain.enums";
 import type { IExpenseShare } from "@/types/domain.interfaces";
+import { parseAmount } from "@/utils/amount.helpers";
 import { calculateEqualShares } from "@/utils/splits.helpers";
 
-import { buildCustomShares, parseAmount } from "./AddExpenseModal.helpers";
+import { buildCustomShares } from "./AddExpenseModal.helpers";
 import type { IAddExpenseFormValues } from "./AddExpenseModal.interfaces";
 
 export function useSplitShares(

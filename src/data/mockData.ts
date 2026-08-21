@@ -1,5 +1,9 @@
 import { ESplitMode } from "@/types/domain.enums";
-import type { IExpense, IGroupMember } from "@/types/domain.interfaces";
+import type {
+  IExpense,
+  IGroupMember,
+  ISettlement,
+} from "@/types/domain.interfaces";
 
 export const members: IGroupMember[] = [
   { id: "member-1", name: "Turjo" },
@@ -70,5 +74,15 @@ export const expenses: IExpense[] = [
       { memberId: "member-2", amount: 14 },
       { memberId: "member-3", amount: 14 },
     ],
+  },
+];
+
+export const settlements: ISettlement[] = [
+  {
+    id: "settlement-1",
+    date: "2026-01-20",
+    amount: 500,
+    fromMemberId: "member-5",
+    toMemberId: "member-1",
   },
 ];

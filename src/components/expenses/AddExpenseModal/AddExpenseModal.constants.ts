@@ -1,5 +1,8 @@
 import { ESplitMode } from "@/types/domain.enums";
 
+export const ADD_EXPENSE_TITLE = "Add expense";
+export const ADD_EXPENSE_TITLE_ID = "add-expense-title";
+
 export const DESCRIPTION_MAX_LENGTH = 80;
 
 export const DESCRIPTION_REQUIRED_MESSAGE = "Description is required";
@@ -23,6 +26,3 @@ export const PAYER_REQUIRED_MESSAGE = "Select who paid for this expense";
 export const PARTICIPANTS_REQUIRED_MESSAGE =
   "Select at least one participant";
 
-export const AMOUNT_REQUIRED_MESSAGE = "Amount is required";
-export const AMOUNT_INVALID_MESSAGE = "Amount must be a valid number";
-export const AMOUNT_MIN_MESSAGE = "Amount must be greater than zero";

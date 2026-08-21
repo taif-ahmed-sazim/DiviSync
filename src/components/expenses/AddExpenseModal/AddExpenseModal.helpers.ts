@@ -4,13 +4,11 @@ import type {
   IExpenseShare,
   IGroupMember,
 } from "@/types/domain.interfaces";
+import { getAmountError, parseAmount } from "@/utils/amount.helpers";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { sumShareAmounts, toCents } from "@/utils/splits.helpers";
 
 import {
-  AMOUNT_INVALID_MESSAGE,
-  AMOUNT_MIN_MESSAGE,
-  AMOUNT_REQUIRED_MESSAGE,
   DESCRIPTION_MAX_LENGTH,
   DESCRIPTION_MAX_LENGTH_MESSAGE,
   DESCRIPTION_REQUIRED_MESSAGE,
@@ -70,26 +68,6 @@ export function getDescriptionError(description: string): string | undefined {
   return undefined;
 }
 
-export function getAmountError(amount: string): string | undefined {
-  const trimmedAmount = amount.trim();
-
-  if (trimmedAmount.length === 0) {
-    return AMOUNT_REQUIRED_MESSAGE;
-  }
-
-  const parsedAmount = Number(trimmedAmount);
-
-  if (Number.isNaN(parsedAmount)) {
-    return AMOUNT_INVALID_MESSAGE;
-  }
-
-  if (parsedAmount <= 0) {
-    return AMOUNT_MIN_MESSAGE;
-  }
-
-  return undefined;
-}
-
 export function setCustomShare(
   customShares: TCustomShareInputs,
   memberId: string,
@@ -106,16 +84,6 @@ export function buildCustomShares(
     memberId,
     amount: parseAmount(customShares[memberId] ?? ""),
   }));
-}
-
-export function parseAmount(amount: string): number {
-  const parsedAmount = Number(amount.trim());
-
-  if (Number.isNaN(parsedAmount)) {
-    return 0;
-  }
-
-  return parsedAmount;
 }
 
 export function buildPerPersonSummary(perPersonAmount: number): string {

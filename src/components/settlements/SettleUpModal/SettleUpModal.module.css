@@ -1,0 +1,80 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  padding: 12px 14px;
+
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #6366f1;
+}
+
+.field input[aria-invalid="true"] {
+  border-color: #ef4444;
+}
+
+.error {
+  color: #b91c1c;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 8px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+
+  color: #1f2937;
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.cancelButton:hover {
+  background: #f8fafc;
+}
+
+.submitButton {
+  padding: 10px 16px;
+
+  color: white;
+  background: #4f46e5;
+
+  border: 0;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.submitButton:hover {
+  background: #4338ca;
+}

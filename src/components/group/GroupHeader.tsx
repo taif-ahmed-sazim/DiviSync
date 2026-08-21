@@ -2,9 +2,10 @@ import styles from "./GroupHeader.module.css";
 
 interface IGroupHeaderProps {
   onNewExpense: () => void;
+  onSettleUp: () => void;
 }
 
-export function GroupHeader({ onNewExpense }: IGroupHeaderProps) {
+export function GroupHeader({ onNewExpense, onSettleUp }: IGroupHeaderProps) {
   return (
     <section className={styles.header}>
       <div>
@@ -24,7 +25,11 @@ export function GroupHeader({ onNewExpense }: IGroupHeaderProps) {
           New expense
         </button>
 
-        <button className={styles.secondaryButton} type="button">
+        <button
+          className={styles.secondaryButton}
+          onClick={onSettleUp}
+          type="button"
+        >
           Settle up
         </button>
       </div>
