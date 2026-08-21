@@ -1,13 +1,18 @@
+import type { ESplitMode } from "@/types/domain.enums";
 import type {
   IExpenseShare,
   IGroupMember,
 } from "@/types/domain.interfaces";
+
+import type { TCustomShareInputs } from "./AddExpenseModal.types";
 
 export interface IAddExpenseFormValues {
   description: string;
   amount: string;
   paidById: string;
   participantIds: string[];
+  splitMode: ESplitMode;
+  customShares: TCustomShareInputs;
 }
 
 export interface IAddExpenseFormErrors {
@@ -15,6 +20,7 @@ export interface IAddExpenseFormErrors {
   amount?: string;
   paidById?: string;
   participantIds?: string;
+  customShares?: string;
 }
 
 export interface IAddExpenseSubmitPayload {

@@ -1,4 +1,4 @@
-import type { EBalanceStatus } from "@/types/domain.enums";
+import type { EBalanceStatus, ESplitMode } from "@/types/domain.enums";
 
 export interface IGroupMember {
   id: string;
@@ -24,6 +24,7 @@ export interface IExpense {
   amount: number;
   paidById: string;
   participantIds: string[];
+  splitMode: ESplitMode;
   shares: IExpenseShare[];
 }
 
@@ -32,5 +33,6 @@ export interface ICreateExpenseInput {
   amount: number;
   paidById: string;
   participantIds: string[];
+  splitMode: ESplitMode;
   shares: IExpenseShare[];
 }

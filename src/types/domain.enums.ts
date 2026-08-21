@@ -3,3 +3,8 @@ export enum EBalanceStatus {
   OWES = "owes",
   SETTLED = "settled",
 }
+
+export enum ESplitMode {
+  EQUAL = "equal",
+  CUSTOM = "custom",
+}
