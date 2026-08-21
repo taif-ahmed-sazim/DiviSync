@@ -16,3 +16,18 @@ export function createExpense(input: ICreateExpenseInput): IExpense {
     shares: input.shares,
   };
 }
+
+export function applyExpenseUpdate(
+  expense: IExpense,
+  input: ICreateExpenseInput,
+): IExpense {
+  return {
+    ...expense,
+    title: input.title,
+    amount: input.amount,
+    paidById: input.paidById,
+    participantIds: input.participantIds,
+    splitMode: input.splitMode,
+    shares: input.shares,
+  };
+}

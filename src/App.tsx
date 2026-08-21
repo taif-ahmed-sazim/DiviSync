@@ -1,17 +1,16 @@
 import { useState } from "react";
 
 import { BalanceCard } from "@/components/balances/BalanceCard";
-import { AddExpenseModal } from "@/components/expenses/AddExpenseModal";
-import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
 import { ExpenseDetailsModal } from "@/components/expenses/ExpenseDetailsModal";
+import { ExpenseFormModal } from "@/components/expenses/ExpenseFormModal";
+import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
 import { ExpenseRow } from "@/components/expenses/ExpenseRow";
-import { SettlementRow } from "@/components/settlements/SettlementRow";
-import { SettleUpModal } from "@/components/settlements/SettleUpModal";
-import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import { GroupHeader } from "@/components/group/GroupHeader";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { TopBar } from "@/components/layout/TopBar";
-
+import { SettlementRow } from "@/components/settlements/SettlementRow";
+import { SettleUpModal } from "@/components/settlements/SettleUpModal";
+import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import { members } from "@/data/mockData";
 import { useGroupLedger } from "@/hooks/useGroupLedger";
 import { EActivityKind } from "@/types/domain.enums";
@@ -21,20 +20,47 @@ import { findMemberName } from "@/utils/members.helpers";
 import styles from "./App.module.css";
 
 function App() {
-  const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState(false);
+  const [isExpenseFormModalOpen, setIsExpenseFormModalOpen] = useState(false);
   const [isSettleUpModalOpen, setIsSettleUpModalOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(
     null,
   );
-  const { expenses, activity, balances, addExpense, addSettlement } =
-    useGroupLedger(members);
+  const [editingExpenseId, setEditingExpenseId] = useState<string | null>(null);
+  const {
+    expenses,
+    activity,
+    balances,
+    addExpense,
+    updateExpense,
+    addSettlement,
+  } = useGroupLedger(members);
 
   const selectedExpense =
     expenses.find((expense) => expense.id === selectedExpenseId) ?? null;
 
-  const handleAddExpense = (payload: IAddExpenseSubmitPayload) => {
-    addExpense(payload);
-    setIsAddExpenseModalOpen(false);
+  const editingExpense = expenses.find(
+    (expense) => expense.id === editingExpenseId,
+  );
+
+  const handleSubmitExpense = (payload: IExpenseFormSubmitPayload) => {
+    if (editingExpenseId === null) {
+      addExpense(payload);
+    } else {
+      updateExpense(editingExpenseId, payload);
+    }
+
+    handleCloseExpenseForm();
+  };
+
+  const handleEditExpense = () => {
+    setEditingExpenseId(selectedExpenseId);
+    setSelectedExpenseId(null);
+    setIsExpenseFormModalOpen(true);
+  };
+
+  const handleCloseExpenseForm = () => {
+    setEditingExpenseId(null);
+    setIsExpenseFormModalOpen(false);
   };
 
   const handleSettleUp = (values: ISettleUpFormValues) => {
@@ -51,7 +77,7 @@ function App() {
 
         <main className={styles.main}>
           <GroupHeader
-            onNewExpense={() => setIsAddExpenseModalOpen(true)}
+            onNewExpense={() => setIsExpenseFormModalOpen(true)}
             onSettleUp={() => setIsSettleUpModalOpen(true)}
           />
 
@@ -101,11 +127,12 @@ function App() {
         </main>
       </div>
 
-      {isAddExpenseModalOpen ? (
-        <AddExpenseModal
+      {isExpenseFormModalOpen ? (
+        <ExpenseFormModal
+          expense={editingExpense}
           members={members}
-          onClose={() => setIsAddExpenseModalOpen(false)}
-          onSubmit={handleAddExpense}
+          onClose={handleCloseExpenseForm}
+          onSubmit={handleSubmitExpense}
         />
       ) : null}
 
@@ -114,6 +141,7 @@ function App() {
           expense={selectedExpense}
           members={members}
           onClose={() => setSelectedExpenseId(null)}
+          onEdit={handleEditExpense}
         />
       ) : null}
 

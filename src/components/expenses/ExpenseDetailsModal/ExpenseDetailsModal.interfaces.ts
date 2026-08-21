@@ -4,4 +4,5 @@ export interface IExpenseDetailsModalProps {
   expense: IExpense;
   members: IGroupMember[];
   onClose: () => void;
+  onEdit: () => void;
 }

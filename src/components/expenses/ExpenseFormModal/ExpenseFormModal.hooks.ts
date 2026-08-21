@@ -5,11 +5,11 @@ import type { IExpenseShare } from "@/types/domain.interfaces";
 import { parseAmount } from "@/utils/amount.helpers";
 import { calculateEqualShares } from "@/utils/splits.helpers";
 
-import { buildCustomShares } from "./AddExpenseModal.helpers";
-import type { IAddExpenseFormValues } from "./AddExpenseModal.interfaces";
+import { buildCustomShares } from "./ExpenseFormModal.helpers";
+import type { IExpenseFormValues } from "./ExpenseFormModal.interfaces";
 
 export function useSplitShares(
-  values: IAddExpenseFormValues,
+  values: IExpenseFormValues,
 ): IExpenseShare[] {
   return useMemo(() => {
     if (values.splitMode === ESplitMode.CUSTOM) {

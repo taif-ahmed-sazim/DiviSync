@@ -1,7 +1,11 @@
 import { ESplitMode } from "@/types/domain.enums";
 
 export const ADD_EXPENSE_TITLE = "Add expense";
-export const ADD_EXPENSE_TITLE_ID = "add-expense-title";
+export const EDIT_EXPENSE_TITLE = "Edit expense";
+export const CANCEL_LABEL = "Cancel";
+export const CREATE_SUBMIT_LABEL = "Add expense";
+export const SAVE_SUBMIT_LABEL = "Save changes";
+export const EXPENSE_FORM_TITLE_ID = "add-expense-title";
 
 export const DESCRIPTION_MAX_LENGTH = 80;
 

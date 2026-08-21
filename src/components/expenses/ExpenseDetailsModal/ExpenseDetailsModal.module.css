@@ -68,3 +68,27 @@
   padding-bottom: 0;
   border-bottom: 0;
 }
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.editButton {
+  padding: 10px 16px;
+
+  color: #1f2937;
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+.editButton:hover {
+  background: #f8fafc;
+}

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import type { IAddExpenseSubmitPayload } from "@/components/expenses/AddExpenseModal";
+import type { IExpenseFormSubmitPayload } from "@/components/expenses/ExpenseFormModal";
 import type { ISettleUpFormValues } from "@/components/settlements/SettleUpModal";
 import {
   expenses as initialExpenses,
@@ -13,7 +13,10 @@ import type {
 } from "@/types/domain.interfaces";
 import { buildGroupActivity } from "@/utils/activity.helpers";
 import { calculateMemberBalances } from "@/utils/balances.helpers";
-import { createExpense } from "@/utils/expenses.helpers";
+import {
+  applyExpenseUpdate,
+  createExpense,
+} from "@/utils/expenses.helpers";
 import { createSettlement } from "@/utils/settlements.helpers";
 
 export function useGroupLedger(members: IGroupMember[]) {
@@ -31,7 +34,7 @@ export function useGroupLedger(members: IGroupMember[]) {
     [members, expenses, settlements],
   );
 
-  const addExpense = ({ values, shares }: IAddExpenseSubmitPayload) => {
+  const addExpense = ({ values, shares }: IExpenseFormSubmitPayload) => {
     const expense = createExpense({
       title: values.description.trim(),
       amount: Number(values.amount),
@@ -42,6 +45,28 @@ export function useGroupLedger(members: IGroupMember[]) {
     });
 
     setExpenses((currentExpenses) => [expense, ...currentExpenses]);
+  };
+
+  const updateExpense = (
+    expenseId: string,
+    { values, shares }: IExpenseFormSubmitPayload,
+  ) => {
+    setExpenses((currentExpenses) =>
+      currentExpenses.map((expense) => {
+        if (expense.id !== expenseId) {
+          return expense;
+        }
+
+        return applyExpenseUpdate(expense, {
+          title: values.description.trim(),
+          amount: Number(values.amount),
+          paidById: values.paidById,
+          participantIds: values.participantIds,
+          splitMode: values.splitMode,
+          shares,
+        });
+      }),
+    );
   };
 
   const addSettlement = (values: ISettleUpFormValues) => {
@@ -63,6 +88,7 @@ export function useGroupLedger(members: IGroupMember[]) {
     activity,
     balances,
     addExpense,
+    updateExpense,
     addSettlement,
   };
 }
